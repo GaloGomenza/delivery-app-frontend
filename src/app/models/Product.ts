@@ -9,5 +9,4 @@ export interface Product{
     imageURL : string;
     status : string;
     store : Store;
-    orders : [Order];
 }
