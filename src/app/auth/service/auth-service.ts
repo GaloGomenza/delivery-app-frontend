@@ -12,7 +12,7 @@ export class AuthService {
 
     private tokenService = inject(TokenService);
     private http = inject(HttpClient);
-    private apiUrl = "http://localhost:8447/api/v1/auth/register";
+    private apiUrl = "api/v1/auth/register";
 
     public readonly isUserLogged = signal<boolean>(false);
     public readonly loggedUser = null;
