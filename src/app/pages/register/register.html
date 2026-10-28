@@ -1,0 +1,29 @@
+<p>Registración</p>
+
+<div>
+    <form [formGroup]="formulario">
+        <label for="name">Nombre</label>
+        <input type="text" formControlName="name" name="name">
+
+        <label for="lastName">Apellido</label>
+        <input type="text" formControlName="lastName" name="lastName">
+
+        <label for="email">Email</label>
+        <input type="email" formControlName="email" name="email">
+
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" name="password">
+
+        <label for="role">Tipo de Cuenta</label>
+        <select name="role" id="role">
+            <option value="CONSUMER" selected>Consumidor</option>
+            <option value="MERCHANT">Comerciante</option>
+            <option value="RIDER">Repartidor</option>
+        </select>
+
+        <button (click)="registrar()" [disabled]="formulario.invalid">Registrarme</button>
+
+    </form>
+
+
+</div>
