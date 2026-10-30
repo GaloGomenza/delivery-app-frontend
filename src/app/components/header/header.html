@@ -1,1 +1,14 @@
-<p>header works!</p>
+<nav>
+    <p>Delivery App</p>
+    @if (authService.isUserLogged()) {
+    <div>
+        <p>{{authService.loggedUser()?.email}}</p>
+        <a href=# (click)="authService.logout()">Cerrar Sesion</a>
+    </div>
+    }@else {
+    <div>
+        <a routerLink="register">Registrarme</a>
+        <a routerLink="login">Iniciar Sesion</a>
+    </div>
+    }
+</nav>

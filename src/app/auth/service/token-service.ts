@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { jwtDecode } from "jwt-decode";
+import { TokenDecoded } from "../models/TokenDecoded";
 
 @Injectable({
   providedIn: 'root',
@@ -20,10 +21,10 @@ export class TokenService {
         sessionStorage.removeItem(this.jwtToken);
     }
 
-    public decodeToken(token: string){
+    public decodeToken(token: string) : TokenDecoded | null {
         try{
-            const decodedPayload = jwtDecode(token);
-            return decodedPayload;
+            const tokenDecoded :TokenDecoded = jwtDecode(token);
+            return tokenDecoded;
         }catch(error){
             console.error('Token invalido', error);
             return null;
