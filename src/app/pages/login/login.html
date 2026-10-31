@@ -50,6 +50,10 @@
 
 
         </div>
+        @if (authService.error() != null) {
+            <p>Error: {{authService.error()}}</p>
+  
+        }
 
     </div>
 

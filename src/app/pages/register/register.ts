@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class Register {
 
-  private authService = inject(AuthService);
+  public authService = inject(AuthService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   

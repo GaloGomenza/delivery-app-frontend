@@ -2,7 +2,7 @@
     <p>Delivery App</p>
     @if (authService.isUserLogged()) {
     <div>
-        <p>{{authService.loggedUser()?.email}}</p>
+        <a routerLink="myProfile">{{authService.loggedUser()?.email}}</a>
         <a href=# (click)="authService.logout()">Cerrar Sesion</a>
     </div>
     }@else {

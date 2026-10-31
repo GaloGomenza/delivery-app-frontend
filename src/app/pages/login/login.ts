@@ -12,7 +12,7 @@ import { LoginRequest } from '../../auth/dtos/loginRequest';
 })
 export class Login {
 
-  private authService = inject(AuthService);
+  public authService = inject(AuthService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   
