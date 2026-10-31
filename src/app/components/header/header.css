@@ -2,6 +2,7 @@ nav{
     display: flex;
     justify-content: space-between;
     background-color:khaki;
+    align-items: center;
 }
 
 nav div{
