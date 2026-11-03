@@ -20,16 +20,19 @@ export const routes: Routes = [
     {
         path: 'register',
         component: Register,
+        title: 'Registración',
         canActivate: [authGuardFnLogin]
     },
     {
         path: 'login', 
         component: Login,
+        title: 'Iniciar Sesion',
         canActivate: [authGuardFnLogin]
     },
     {
         path: 'myProfile',
         component: MyProfile,
+        title: 'Mi Perfil',
         canActivate: [authGuardFn]
     },
     {
