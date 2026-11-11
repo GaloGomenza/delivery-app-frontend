@@ -3,13 +3,6 @@ import { Home } from './pages/home/home';
 import { StoreList } from './pages/store-list/store-list';
 import { StoreDetail } from './pages/store-detail/store-detail';
 import { StoreForm } from './pages/store-form/store-form';
-
-export const routes: Routes = [
-    {path: '', component : Home},
-    {path: 'store/list', component : StoreList},
-    {path: 'store/form', component : StoreForm},
-    {path: 'store/form/:id', component : StoreForm},
-    {path: 'store/detail/:id', component : StoreDetail},
 import { Register } from './pages/register/register';
 import { Login } from './pages/login/login';
 import { authGuardFnLogin } from './auth/guards/auth.guard.fn.login';
@@ -19,7 +12,12 @@ import { MyProfile } from './pages/my-profile/my-profile';
 import { OrderStatusPage } from './pages/order-status/order-status';
 
 export const routes: Routes = [
-    {   path: '', 
+    {path: '', component : Home},
+    {path: 'store/list', component : StoreList},
+    {path: 'store/form', component : StoreForm},
+    {path: 'store/form/:id', component : StoreForm},
+    {path: 'store/detail/:id', component : StoreDetail},
+    {   path: '',
         component: Landing
     },
     {
@@ -34,7 +32,7 @@ export const routes: Routes = [
         canActivate: [authGuardFnLogin]
     },
     {
-        path: 'login', 
+        path: 'login',
         component: Login,
         title: 'Iniciar Sesion',
         canActivate: [authGuardFnLogin]
@@ -55,7 +53,5 @@ export const routes: Routes = [
         component: OrderStatusPage,
         title: 'Estado del pedido',
         canActivate: [authGuardFn]
-    },
-
-
+    }
 ];
