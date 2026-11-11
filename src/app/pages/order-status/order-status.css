@@ -1,0 +1,11 @@
+.steps li {
+    opacity: 0.4;
+}
+
+.steps li.done, .steps li.current {
+    opacity: 1;
+}
+
+.error, .cancelled {
+    color: #b00020;
+}
