@@ -7,6 +7,7 @@ import { authGuardFnLogin } from './auth/guards/auth.guard.fn.login';
 import { authGuardFn } from './auth/guards/auth.guard.fn';
 import { Landing } from './pages/landing/landing';
 import { MyProfile } from './pages/my-profile/my-profile';
+import { OrderStatusPage } from './pages/order-status/order-status';
 
 export const routes: Routes = [
     {   path: '', 
@@ -38,6 +39,12 @@ export const routes: Routes = [
     {
         path: 'storeList',
         component : StoreList,
+        canActivate: [authGuardFn]
+    },
+    {
+        path: 'orders/:id',
+        component: OrderStatusPage,
+        title: 'Estado del pedido',
         canActivate: [authGuardFn]
     },
 
