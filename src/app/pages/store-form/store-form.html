@@ -1,1 +1,53 @@
-<p>store-form works!</p>
+<div class="contenedor">
+    <div class="encabezado">
+        <h2>{{id ? `Editar comercio ${id}` : "Crear nuevo comercio"}}</h2>
+    </div>
+
+    <form [formGroup]="formStore" (ngSubmit)="onSubmit()" class="formulario">
+
+        <div class="grupo-form">
+            <label for="name">Nombre del comercio</label>
+            <input id="name" formControlName = "name" placeholder="Nombre del comercio" >
+            @if (formStore.get('name')?.invalid && formStore.get('name')?.touched) {
+                <p class="error-texto">El nombre del comercio debe tener al menos 3 caracteres</p>
+            }
+        </div>
+
+        <div class="grupo-form">
+            <label for="address">Direccion</label>
+            <input id="address" formControlName = "address" placeholder="Calle falsa 123" >
+            @if (formStore.get('address')?.invalid && formStore.get('address')?.touched) {
+                <p class="error-texto">La direccion del comercio debe tener al menos 3 caracteres</p>
+            }
+        </div>
+
+        <div class="grupo-form">
+            <label for="latitude">Latitud</label>
+            <input id="latitude" formControlName = "latitude" placeholder="80" >
+            @if (formStore.get('latitude')?.invalid && formStore.get('latitude')?.touched) {
+                <p class="error-texto">El rango valido de latitud es de -90 a 90</p>
+            }
+        </div>
+
+        <div class="grupo-form">
+            <label for="longitude">Longitud</label>
+            <input id="longitude" formControlName = "longitude" placeholder="-45" >
+            @if (formStore.get('longitude')?.invalid && formStore.get('longitude')?.touched) {
+                <p class="error-texto">El rango valido de longitud es de -180 a 180</p>
+            }
+        </div>
+
+        <div class="grupo-form">
+            <label for="owner">Comerciante</label>
+            <input id="owner" formControlName = "owner" placeholder="id del comerciante" >
+            @if (formStore.get('owner')?.invalid && formStore.get('owner')?.touched) {
+                <p class="error-texto">El id no puede estar vacio</p>
+            }
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="formStore.invalid">
+            {{id ? 'Actualizar' : 'Agregar'}}
+        </button>
+    </form>
+
+</div>
