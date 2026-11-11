@@ -1,1 +1,20 @@
-<p>store-list works!</p>
+<div class="contenedor">
+    <div class="encabezado">
+        <h2>Listado de Comercios</h2>
+    </div>
+
+    <div class="lista">
+        <ul>
+            @for (store of stores; track $index) {
+                <li class="elemento-lista">
+                    <div class = "info-solicitud">
+                        {{store.name}} - {{store.address}}
+                    </div>
+                    <button class="btn-detalle" [routerLink]="['/storeDetail', store.id]">Ver comercio</button>
+                </li>
+            }
+        </ul>
+
+    </div>
+
+</div>

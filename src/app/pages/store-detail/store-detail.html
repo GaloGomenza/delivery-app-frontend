@@ -1,1 +1,35 @@
-<p>store-detail works!</p>
+<div class="contenedor">
+    @if (store){
+        <div class="info-store">
+            <div class="grupo-id">
+                <b>Detalle del comercio con ID:</b>
+                <span>{{store.id}}</span>
+            </div>
+
+            <div class="grupo-dato">
+                <b>Nombre del comercio</b>
+                <span>{{store.name}}</span>
+            </div>
+
+            <div class="grupo-dato">
+                <b>Dirección:</b>
+                <span>{{store.address}}</span>
+            </div>
+
+            <div class="grupo-dato">
+                <b>Latitud:</b>
+                <span>{{store.latitude}}</span>
+            </div>
+
+            <div class="grupo-dato">
+                <b>Longitud: </b>
+                <p>{{store.longitude}}</p>
+            </div>
+
+            <div class="grupo-dato">
+                <b>ID del comerciante:</b>
+                <span>{{store.owner.id}}</span>
+            </div>
+        </div>
+        
+    }
