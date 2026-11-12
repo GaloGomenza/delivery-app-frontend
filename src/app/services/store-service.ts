@@ -5,10 +5,10 @@ import { map, Observable, switchMap } from 'rxjs';
 import { PaginationResult } from '../models/Pagination';
 import { User } from '../models/User';
 
-export interface Location {
+export interface Ubicacion {
   latitude : number;
   longitude : number;
-  distance : number; // en km
+  distance : number;
 }
 
 @Injectable({
@@ -21,7 +21,7 @@ export class StoreService {
   constructor(private http : HttpClient){
   }
 
-  getStores(location ?: Location) : Observable<Store[]>{
+  getStores(location ?: Ubicacion) : Observable<Store[]>{
     let params = new HttpParams()
       .set('page', 0)
       .set('size', 100)

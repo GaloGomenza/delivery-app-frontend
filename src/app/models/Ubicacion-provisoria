@@ -1,7 +1,0 @@
-import { Location } from '../services/store-service';
- 
-export const UBICACION_PROVISORIA : Location = {
-  latitude : -37.994,
-  longitude : -57.555,
-  distance : 200
-}

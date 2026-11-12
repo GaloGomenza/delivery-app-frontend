@@ -3,12 +3,13 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PageQuery, PaginationResult } from '../models/Pagination';
 import { Product, ProductRequest, ProductStatus } from '../models/Product';
+import { Ubicacion } from './store-service';
  
 export interface ProductFilter {
   name?: string;
   status?: ProductStatus | '';
   storeId?: number | null;
-  location?: Location;
+  location?: Ubicacion;
 }
  
 @Injectable({
