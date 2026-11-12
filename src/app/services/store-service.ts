@@ -10,7 +10,7 @@ import { User } from '../models/User';
 })
 export class StoreService {
 
-  private readonly apiURL = 'http://localhost:8080/api/v1/stores';
+  private readonly apiURL = 'api/v1/stores';
 
   constructor(private http : HttpClient){
   }
@@ -45,7 +45,7 @@ export class StoreService {
     return this.http.get<User>('api/v1/users/me').pipe(
       switchMap((me) =>
         this.http
-          .get<PaginationResult<Store>>('api/v1/stores', { params })
+          .get<PaginationResult<Store>>(this.apiURL, { params })
           .pipe(map((res) => res.content.filter((s) => s.ownerId === me.id)))
       )
     );
