@@ -4,13 +4,13 @@
     </div>
 
     <div class="lista">
-        @if (cargando) {
+        @if (cargando()) {
         <p>Cargando comercios…</p>
         } @else if (stores.length === 0) {
         <p>{{ esComerciante ? 'Todavía no tenés comercios.' : 'No hay comercios para mostrar.' }}</p>
         } @else {
         <ul>
-            @for (store of stores; track $index) {
+            @for (store of stores(); track store.id) {
             <li class="elemento-lista">
                 <div class="info-solicitud">
                     {{store.name}} - {{store.address}}
