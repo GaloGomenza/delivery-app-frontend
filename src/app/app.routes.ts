@@ -10,6 +10,8 @@ import { authGuardFn } from './auth/guards/auth.guard.fn';
 import { Landing } from './pages/landing/landing';
 import { MyProfile } from './pages/my-profile/my-profile';
 import { OrderStatusPage } from './pages/order-status/order-status';
+import { ProductList } from './pages/product/product-list/product-list';
+import { ProductForm } from './pages/product/product-form/product-form';
 
 export const routes: Routes = [
     {path: '', component : Home},
@@ -53,5 +55,23 @@ export const routes: Routes = [
         component: OrderStatusPage,
         title: 'Estado del pedido',
         canActivate: [authGuardFn]
-    }
+    },
+    {
+        path: 'myProducts',
+        component: ProductList,
+        title: 'Mis Productos',
+        canActivate: [authGuardFn]
+    },
+    {
+        path: 'myProducts/new',
+        component: ProductForm,
+        title: 'Nuevo Producto',
+        canActivate: [authGuardFn]
+    },
+    {
+        path: 'myProducts/edit/:id',
+        component: ProductForm,
+        title: 'Editar Producto',
+        canActivate: [authGuardFn]
+    },
 ];
