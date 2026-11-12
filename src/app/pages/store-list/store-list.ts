@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '../../models/Store';
-import { StoreService } from '../../services/store-service';
+import { StoreService, Ubicacion } from '../../services/store-service';
+import { AuthService } from '../../auth/service/auth-service';
+import { Ubicacion_provisoria } from '../../models/Ubicacion-provisoria';
 
 @Component({
   selector: 'app-store-list',
@@ -10,7 +12,10 @@ import { StoreService } from '../../services/store-service';
   styleUrl: './store-list.css',
 })
 export class StoreList implements OnInit{
-  stores !: Store[]
+  private authService = inject(AuthService)
+  stores = signal<Store[]>([]);
+  cargando = signal(true);
+  esComerciante = this.authService.loggedUser()?.role ==='ROLE_MERCHANT'
 
   constructor(
     private service : StoreService
@@ -22,12 +27,27 @@ export class StoreList implements OnInit{
   }
 
   loadStores() : void {
-    this.service.getStores().subscribe(
-      (data) => {
-        console.log(data),
-        this.stores = data
+    const rol = this.authService.loggedUser()?.role
+ 
+    let request
+    if (rol === 'ROLE_MERCHANT') {
+      request = this.service.getMyStores()
+    } else if (rol === 'ROLE_CONSUMER') {
+      request = this.service.getStores(Ubicacion_provisoria)
+    } else {
+      request = this.service.getStores()
+    }
+ 
+    request.subscribe({
+      next : (data) => {
+        this.stores.set(data)
+        this.cargando.set(false)
+      },
+      error : (e) => {
+        console.log(e)
+        this.cargando.set(false)
       }
-    )
+    })
   }
 
 }

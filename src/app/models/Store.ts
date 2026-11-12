@@ -7,4 +7,5 @@ export interface Store{
     latitude : number;
     longitude : number;
     owner : User;
+    ownerId: number;
 }

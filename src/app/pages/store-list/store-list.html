@@ -1,20 +1,25 @@
 <div class="contenedor">
     <div class="encabezado">
-        <h2>Listado de Comercios</h2>
+        <h2>{{ esComerciante ? 'Mis comercios' : 'Listado de Comercios' }}</h2>
     </div>
 
     <div class="lista">
+        @if (cargando()) {
+        <p>Cargando comercios…</p>
+        } @else if (stores.length === 0) {
+        <p>{{ esComerciante ? 'Todavía no tenés comercios.' : 'No hay comercios para mostrar.' }}</p>
+        } @else {
         <ul>
-            @for (store of stores; track $index) {
-                <li class="elemento-lista">
-                    <div class = "info-solicitud">
-                        {{store.name}} - {{store.address}}
-                    </div>
-                    <button class="btn-detalle" [routerLink]="['/storeDetail', store.id]">Ver comercio</button>
-                </li>
+            @for (store of stores(); track store.id) {
+            <li class="elemento-lista">
+                <div class="info-solicitud">
+                    {{store.name}} - {{store.address}}
+                </div>
+                <button class="btn-detalle" [routerLink]="['/store/detail', store.id]">Ver comercio</button>
+            </li>
             }
         </ul>
-
+        }
     </div>
 
 </div>
