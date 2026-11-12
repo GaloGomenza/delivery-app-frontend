@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '../models/Store';
-import { Observable } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
+import { PaginationResult } from '../models/Pagination';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root',
@@ -33,4 +35,19 @@ export class StoreService {
     return this.http.delete<Store>(`${this.apiURL}/${id}`)
   }
   
+  getMyStores() : Observable<Store[]>{
+    const params = new HttpParams()
+      .set('page', 0)
+      .set('size', 100)
+      .set('sortBy', 'name')
+      .set('direction', 'asc');
+ 
+    return this.http.get<User>('api/v1/users/me').pipe(
+      switchMap((me) =>
+        this.http
+          .get<PaginationResult<Store>>('api/v1/stores', { params })
+          .pipe(map((res) => res.content.filter((s) => s.ownerId === me.id)))
+      )
+    );
+  }
 }
