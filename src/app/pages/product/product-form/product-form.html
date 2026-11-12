@@ -1,1 +1,60 @@
-<p>product-form works!</p>
+<div class="contenedor">
+  <div class="encabezado">
+    <h2>{{ id() ? 'Editar producto' : 'Agregar producto' }}</h2>
+  </div>
+
+  <form [formGroup]="formulario" (ngSubmit)="guardar()" class="formulario">
+
+    <div class="grupo-form">
+      <label for="storeId">Comercio</label>
+      <select id="storeId" formControlName="storeId">
+        @for (s of stores(); track s.id) {
+          <option [ngValue]="s.id">{{ s.name }}</option>
+        }
+      </select>
+      @if (mensaje('storeId'); as m) { <p class="error-texto">{{ m }}</p> }
+    </div>
+
+    <div class="grupo-form">
+      <label for="name">Nombre</label>
+      <input id="name" type="text" formControlName="name" maxlength="40">
+      @if (mensaje('name'); as m) { <p class="error-texto">{{ m }}</p> }
+    </div>
+
+    <div class="grupo-form">
+      <label for="description">Descripción</label>
+      <textarea id="description" formControlName="description" rows="2" maxlength="50"></textarea>
+      <p>{{ formulario.controls.description.value?.length ?? 0 }}/50</p>
+      @if (mensaje('description'); as m) { <p class="error-texto">{{ m }}</p> }
+    </div>
+
+    <div class="grupo-form">
+      <label for="price">Precio</label>
+      <input id="price" type="number" step="0.01" min="0.01" formControlName="price">
+      @if (mensaje('price'); as m) { <p class="error-texto">{{ m }}</p> }
+    </div>
+
+    <div class="grupo-form">
+      <label for="status">Estado</label>
+      <select id="status" formControlName="status">
+        <option value="AVAILABLE">Disponible</option>
+        <option value="UNAVAILABLE">No disponible</option>
+      </select>
+    </div>
+
+    <div class="grupo-form">
+      <label for="imageURL">URL de la imagen (opcional)</label>
+      <input id="imageURL" type="text" formControlName="imageURL" maxlength="250">
+      @if (mensaje('imageURL'); as m) { <p class="error-texto">{{ m }}</p> }
+    </div>
+
+    @if (error()) {
+      <p class="error-texto">{{ error() }}</p>
+    }
+
+    <a routerLink="/myProducts" [queryParams]="{ storeId: formulario.controls.storeId.value }">Cancelar</a>
+    <button type="submit" class="btn-submit" [disabled]="guardando()">
+      {{ guardando() ? 'Guardando…' : 'Guardar' }}
+    </button>
+  </form>
+</div>
