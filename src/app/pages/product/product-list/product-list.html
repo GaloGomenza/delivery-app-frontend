@@ -1,76 +1,62 @@
 <div class="contenedor">
   <div class="encabezado">
-    <h2>Mis productos</h2>
-    @if (storeId() !== null) {
-      <a routerLink="/myProducts/new" [queryParams]="{ storeId: storeId() }">Agregar producto</a>
-    }
+    <h2>Productos de {{ store()?.name }}</h2>
+    <a [routerLink]="['/store/detail', storeId]">Volver al comercio</a>
+    <a [routerLink]="['/store', storeId, 'products', 'new']">Agregar producto</a>
   </div>
 
   @if (error()) {
     <p class="error-texto">{{ error() }}</p>
   }
 
-  @if (!storesLoaded()) {
-    <p>Cargando tus comercios…</p>
-  } @else if (stores().length === 0) {
-    <p>Todavía no tenés comercios. Creá uno para poder cargar productos.</p>
+  <div class="filtros">
+    <label>Buscar por nombre
+      <input type="search" [ngModel]="search()" (ngModelChange)="buscar($event)">
+    </label>
+    <label>Estado
+      <select [ngModel]="status()" (ngModelChange)="cambiarEstado($event)">
+        <option value="">Todos</option>
+        <option value="AVAILABLE">Disponible</option>
+        <option value="UNAVAILABLE">No disponible</option>
+      </select>
+    </label>
+  </div>
+
+  @if (loading()) {
+    <p>Cargando productos…</p>
+  } @else if (products().length === 0) {
+    <p>Este comercio no tiene productos con estos filtros. Agregá uno con “Agregar producto”.</p>
   } @else {
-    <div class="filtros">
-      <label>Comercio
-        <select [ngModel]="storeId()" (ngModelChange)="cambiarComercio($event)">
-          @for (s of stores(); track s.id) {
-            <option [ngValue]="s.id">{{ s.name }}</option>
-          }
-        </select>
-      </label>
-      <label>Buscar por nombre
-        <input type="search" [ngModel]="search()" (ngModelChange)="buscar($event)">
-      </label>
-      <label>Estado
-        <select [ngModel]="status()" (ngModelChange)="cambiarEstado($event)">
-          <option value="">Todos</option>
-          <option value="AVAILABLE">Disponible</option>
-          <option value="UNAVAILABLE">No disponible</option>
-        </select>
-      </label>
-    </div>
-
-    @if (loading()) {
-      <p>Cargando productos…</p>
-    } @else if (products().length === 0) {
-      <p>No hay productos con estos filtros. Agregá uno con “Agregar producto”.</p>
-    } @else {
-      <table>
-        <thead>
+    <table>
+      <thead>
+        <tr>
+          <th><button (click)="ordenar('name')">Nombre{{ flecha('name') }}</button></th>
+          <th>Descripción</th>
+          <th><button (click)="ordenar('price')">Precio{{ flecha('price') }}</button></th>
+          <th><button (click)="ordenar('status')">Estado{{ flecha('status') }}</button></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of products(); track p.id) {
           <tr>
-            <th><button (click)="ordenar('name')">Nombre{{ flecha('name') }}</button></th>
-            <th>Descripción</th>
-            <th><button (click)="ordenar('price')">Precio{{ flecha('price') }}</button></th>
-            <th><button (click)="ordenar('status')">Estado{{ flecha('status') }}</button></th>
-            <th></th>
+            <td>{{ p.name }}</td>
+            <td>{{ p.description }}</td>
+            <td>{{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}</td>
+            <td>{{ p.status === 'AVAILABLE' ? 'Disponible' : 'No disponible' }}</td>
+            <td>
+              <a [routerLink]="['/store', storeId, 'products', 'edit', p.id]">Editar</a>
+              <button (click)="eliminar(p)">Eliminar</button>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          @for (p of products(); track p.id) {
-            <tr>
-              <td>{{ p.name }}</td>
-              <td>{{ p.description }}</td>
-              <td>{{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}</td>
-              <td>{{ p.status === 'AVAILABLE' ? 'Disponible' : 'No disponible' }}</td>
-              <td>
-                <a [routerLink]="['/myProducts/edit', p.id]">Editar</a>
-                <button (click)="eliminar(p)">Eliminar</button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+        }
+      </tbody>
+    </table>
 
-      <div class="paginacion">
-        <button (click)="irAPagina(page() - 1)" [disabled]="page() === 0">Anterior</button>
-        <span>Página {{ page() + 1 }} de {{ totalPages() }} · {{ totalElements() }} productos</span>
-        <button (click)="irAPagina(page() + 1)" [disabled]="page() + 1 >= totalPages()">Siguiente</button>
-      </div>
-    }
+    <div class="paginacion">
+      <button (click)="irAPagina(page() - 1)" [disabled]="page() === 0">Anterior</button>
+      <span>Página {{ page() + 1 }} de {{ totalPages() }} · {{ totalElements() }} productos</span>
+      <button (click)="irAPagina(page() + 1)" [disabled]="page() + 1 >= totalPages()">Siguiente</button>
+    </div>
   }
 </div>
