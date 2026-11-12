@@ -6,16 +6,6 @@
   <form [formGroup]="formulario" (ngSubmit)="guardar()" class="formulario">
 
     <div class="grupo-form">
-      <label for="storeId">Comercio</label>
-      <select id="storeId" formControlName="storeId">
-        @for (s of stores(); track s.id) {
-          <option [ngValue]="s.id">{{ s.name }}</option>
-        }
-      </select>
-      @if (mensaje('storeId'); as m) { <p class="error-texto">{{ m }}</p> }
-    </div>
-
-    <div class="grupo-form">
       <label for="name">Nombre</label>
       <input id="name" type="text" formControlName="name" maxlength="40">
       @if (mensaje('name'); as m) { <p class="error-texto">{{ m }}</p> }
@@ -52,7 +42,7 @@
       <p class="error-texto">{{ error() }}</p>
     }
 
-    <a routerLink="/myProducts" [queryParams]="{ storeId: formulario.controls.storeId.value }">Cancelar</a>
+    <a [routerLink]="['/store', storeId, 'products']">Cancelar</a>
     <button type="submit" class="btn-submit" [disabled]="guardando()">
       {{ guardando() ? 'Guardando…' : 'Guardar' }}
     </button>
