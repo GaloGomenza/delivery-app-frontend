@@ -18,11 +18,10 @@ export class ProductList implements OnInit {
   private productService = inject(ProductService);
   private storeService = inject(StoreService);
   private route = inject(ActivatedRoute);
-
-  stores = signal<Store[]>([]);
-  storesLoaded = signal(false);
-  storeId = signal<number | null>(null);
-
+ 
+  storeId = Number(this.route.snapshot.paramMap.get('storeId'));
+  store = signal<Store | null>(null);
+ 
   products = signal<Product[]>([]);
   page = signal(0);
   size = signal(10);
@@ -32,45 +31,32 @@ export class ProductList implements OnInit {
   status = signal<ProductStatus | ''>('');
   totalPages = signal(0);
   totalElements = signal(0);
-
+ 
   loading = signal(false);
   error = signal<string | null>(null);
   private timer?: ReturnType<typeof setTimeout>;
-
+ 
   ngOnInit(): void {
-    this.storeService.getMyStores().subscribe({
-      next: (stores) => {
-        this.stores.set(stores);
-        this.storesLoaded.set(true);
-        const wanted = Number(this.route.snapshot.queryParamMap.get('storeId'));
-        const initial = stores.find((s) => s.id === wanted) ?? stores[0];
-        if (initial) {
-          this.storeId.set(initial.id);
-          this.cargar();
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.storesLoaded.set(true);
-        this.error.set('No se pudieron cargar tus comercios');
-      },
+    this.storeService.getStoreById(this.storeId).subscribe({
+      next: (store) => this.store.set(store),
+      error: (err) => console.log(err),
     });
+    this.cargar();
   }
-
+ 
   cargar(): void {
-    if (this.storeId() === null) return;
     this.loading.set(true);
     this.error.set(null);
-
+ 
     const query: PageQuery = {
       page: this.page(),
       size: this.size(),
       sortBy: this.sortBy(),
       direction: this.direction(),
     };
-
+ 
     this.productService
-      .getProducts(query, { name: this.search(), status: this.status(), storeId: this.storeId() })
+      .getProducts(query, { name: this.search(), status: this.status(), storeId: this.storeId })
       .subscribe({
         next: (res) => {
           this.products.set(res.content);
@@ -85,19 +71,13 @@ export class ProductList implements OnInit {
         },
       });
   }
-
-  cambiarComercio(id: number): void {
-    this.storeId.set(Number(id));
-    this.page.set(0);
-    this.cargar();
-  }
-
+ 
   cambiarEstado(status: ProductStatus | ''): void {
     this.status.set(status);
     this.page.set(0);
     this.cargar();
   }
-
+ 
   buscar(value: string): void {
     this.search.set(value);
     clearTimeout(this.timer);
@@ -106,7 +86,7 @@ export class ProductList implements OnInit {
       this.cargar();
     }, 300);
   }
-
+ 
   ordenar(col: ProductSortBy): void {
     if (this.sortBy() === col) {
       this.direction.update((d) => (d === 'asc' ? 'desc' : 'asc'));
@@ -117,17 +97,17 @@ export class ProductList implements OnInit {
     this.page.set(0);
     this.cargar();
   }
-
+ 
   flecha(col: ProductSortBy): string {
     if (this.sortBy() !== col) return '';
     return this.direction() === 'asc' ? ' ↑' : ' ↓';
   }
-
+ 
   irAPagina(p: number): void {
     this.page.set(p);
     this.cargar();
   }
-
+ 
   eliminar(p: Product): void {
     if (!confirm(`¿Eliminar "${p.name}"? Esta acción no se puede deshacer.`)) return;
     this.productService.deleteProduct(p.id).subscribe({
