@@ -8,6 +8,7 @@ export interface ProductFilter {
   name?: string;
   status?: ProductStatus | '';
   storeId?: number | null;
+  location?: Location;
 }
  
 @Injectable({
