@@ -5,6 +5,12 @@ import { map, Observable, switchMap } from 'rxjs';
 import { PaginationResult } from '../models/Pagination';
 import { User } from '../models/User';
 
+export interface Location {
+  latitude : number;
+  longitude : number;
+  distance : number; // en km
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,8 +21,23 @@ export class StoreService {
   constructor(private http : HttpClient){
   }
 
-  getStores(){
-    return this.http.get<Store[]>(this.apiURL)
+  getStores(location ?: Location) : Observable<Store[]>{
+    let params = new HttpParams()
+      .set('page', 0)
+      .set('size', 100)
+      .set('sortBy', 'name')
+      .set('direction', 'asc');
+ 
+    if (location) {
+      params = params
+        .set('latitude', location.latitude)
+        .set('longitude', location.longitude)
+        .set('distance', location.distance);
+    }
+
+    return this.http
+      .get<PaginationResult<Store>>(this.apiURL, { params })
+      .pipe(map((res) => res.content));
   }
 
   getStoreById(id : number){
