@@ -29,6 +29,13 @@ export class ProductService {
     if (filter.name?.trim()) params = params.set('name', filter.name.trim());
     if (filter.status) params = params.set('status', filter.status);
     if (filter.storeId != null) params = params.set('storeId', filter.storeId);
+
+    if (filter.location) {
+  params = params
+    .set('latitude', filter.location.latitude)
+    .set('longitude', filter.location.longitude)
+    .set('distance', filter.location.distance);
+}
  
     return this.http.get<PaginationResult<Product>>(this.apiUrl, { params });
   }

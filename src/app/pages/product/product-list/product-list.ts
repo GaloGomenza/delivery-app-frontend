@@ -19,7 +19,7 @@ export class ProductList implements OnInit {
   private storeService = inject(StoreService);
   private route = inject(ActivatedRoute);
  
-  storeId = Number(this.route.snapshot.paramMap.get('storeId'));
+  storeId = Number(this.route.snapshot.paramMap.get('id'));
   store = signal<Store | null>(null);
  
   products = signal<Product[]>([]);

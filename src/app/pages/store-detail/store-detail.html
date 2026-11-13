@@ -33,40 +33,53 @@
     </div>
 
     @if (esComerciante) {
-    <a class="btn-productos" [routerLink]="['/store', store.id, 'products']">Productos</a>
-    } @else {
-    <div class="productos">
-        <h3>Productos</h3>
+  <a class="btn-productos" [routerLink]="['/store', store.id, 'products']">
+    Administrar productos
+  </a>
+} @else {
+  <div class="productos">
+    <h3>Productos disponibles</h3>
 
-        @if (errorProductos()) {
-        <p class="error-texto">{{ errorProductos() }}</p>
-        }
-
-        @if (cargandoProductos()) {
-        <p>Cargando productos…</p>
-        } @else if (products().length === 0) {
-        <p>Este comercio todavía no tiene productos.</p>
-        } @else {
-        <ul>
-            @for (p of products(); track p.id) {
-            <li class="elemento-lista">
-                <b>{{ p.name }}</b> - {{ p.description }} -
-                {{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}
-                @if (p.status === 'UNAVAILABLE') {
-                <span>(No disponible)</span>
-                }
-            </li>
-            }
-        </ul>
-
-        <div class="paginacion">
-            <button (click)="irAPagina(page() - 1)" [disabled]="page() === 0">Anterior</button>
-            <span>Página {{ page() + 1 }} de {{ totalPages() }} · {{ totalElements() }} productos</span>
-            <button (click)="irAPagina(page() + 1)" [disabled]="page() + 1 >= totalPages()">Siguiente</button>
-        </div>
-        }
-    </div>
+    @if (errorProductos()) {
+      <p class="error-texto">{{ errorProductos() }}</p>
     }
+
+    @if (cargandoProductos()) {
+      <p>Cargando productos…</p>
+    } @else if (products().length === 0) {
+      <p>Este comercio no tiene productos disponibles actualmente.</p>
+    } @else {
+      <ul>
+        @for (p of products(); track p.id) {
+          <li class="elemento-lista">
+            <b>{{ p.name }}</b>
+            - {{ p.description }}
+            - {{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}
+          </li>
+        }
+      </ul>
+
+      <div class="paginacion">
+        <button
+          (click)="irAPagina(page() - 1)"
+          [disabled]="page() === 0">
+          Anterior
+        </button>
+
+        <span>
+          Página {{ page() + 1 }} de {{ totalPages() }}
+          · {{ totalElements() }} productos
+        </span>
+
+        <button
+          (click)="irAPagina(page() + 1)"
+          [disabled]="page() + 1 >= totalPages()">
+          Siguiente
+        </button>
+      </div>
+    }
+  </div>
+}
 
     <a routerLink="/store/list">Volver al listado</a>
     }

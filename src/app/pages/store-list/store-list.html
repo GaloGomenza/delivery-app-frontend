@@ -13,9 +13,15 @@
             @for (store of stores(); track store.id) {
             <li class="elemento-lista">
                 <div class="info-solicitud">
-                    {{store.name}} - {{store.address}}
+                    <strong>{{ store.name }}</strong>
+                    <p>{{ store.address }}</p>
                 </div>
-                <button class="btn-detalle" [routerLink]="['/store/detail', store.id]">Ver comercio</button>
+
+                <div class="acciones">
+                    <a class="btn-detalle" [routerLink]="['/store/detail', store.id]">
+                        Ver comercio
+                    </a>
+                </div>
             </li>
             }
         </ul>

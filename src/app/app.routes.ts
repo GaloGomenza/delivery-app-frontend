@@ -63,15 +63,15 @@ export const routes: Routes = [
         canActivate: [authGuardFn]
     },
     {
-        path: 'myProducts/new',
-        component: ProductForm,
-        title: 'Nuevo Producto',
-        canActivate: [authGuardFn]
-    },
-    {
-        path: 'myProducts/edit/:id',
-        component: ProductForm,
-        title: 'Editar Producto',
-        canActivate: [authGuardFn]
-    },
+    path: 'store/:storeId/products/new',
+    component: ProductForm,
+    title: 'Nuevo Producto',
+    canActivate: [authGuardFn]
+},
+{
+    path: 'store/:storeId/products/edit/:productId',
+    component: ProductForm,
+    title: 'Editar Producto',
+    canActivate: [authGuardFn]
+},
 ];

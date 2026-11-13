@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '../models/Store';
-import { map, Observable, switchMap } from 'rxjs';
+import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { PaginationResult } from '../models/Pagination';
 import { User } from '../models/User';
 
@@ -21,26 +21,54 @@ export class StoreService {
   constructor(private http : HttpClient){
   }
 
-  getStores(location ?: Ubicacion) : Observable<Store[]>{
-    let params = new HttpParams();
-    //  .set('page', 0)
-    //  .set('size', 100)
-     // .set('sortBy', 'name')
-     // .set('direction', 'asc');
+  getStores(location?: Ubicacion): Observable<Store[]> {
 
-     /*
+  const crearParams = (page: number): HttpParams => {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', 10)
+      .set('sortBy', 'id')
+      .set('direction', 'asc');
+
     if (location) {
       params = params
         .set('latitude', location.latitude)
         .set('longitude', location.longitude)
         .set('distance', location.distance);
     }
-        */
 
-    return this.http
-      .get<PaginationResult<Store>>(this.apiURL, { params })
-      .pipe(map((res) => res.content));
-  }
+    return params;
+  };
+
+  const obtenerPagina = (page: number) =>
+    this.http.get<PaginationResult<Store>>(
+      this.apiURL,
+      { params: crearParams(page) }
+    );
+
+  return obtenerPagina(0).pipe(
+    switchMap((primeraPagina) => {
+
+      const paginasRestantes = Array.from(
+        { length: Math.max(0, primeraPagina.totalPages - 1) },
+        (_, i) => i + 1
+      );
+
+      if (paginasRestantes.length === 0) {
+        return of(primeraPagina.content);
+      }
+
+      return forkJoin(
+        paginasRestantes.map(page => obtenerPagina(page))
+      ).pipe(
+        map((restantes) => [
+          ...primeraPagina.content,
+          ...restantes.flatMap(pagina => pagina.content)
+        ])
+      );
+    })
+  );
+}
 
   getStoreById(id : number){
     return this.http.get<Store>(`${this.apiURL}/${id}`)
