@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { OrderResponse } from '../models/OrderResponse';
+import { UpdateOrderStatusRequest } from '../models/UpdateOrderStatusRequest';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -10,6 +12,7 @@ export class OrderService {
     http: HttpClient = inject(HttpClient);
 
     url: string = 'api/v1/orders';
+    private router = inject(Router);
 
     order = signal<OrderResponse | null>(null);
     orders = signal<OrderResponse[]>([]);
@@ -67,6 +70,18 @@ export class OrderService {
         });
     }
 
+    updateOrderStatus(orderId: number, body: UpdateOrderStatusRequest ){
+        this.http.patch<OrderResponse>(this.url + '/' + orderId + '/status', body).subscribe({
 
+            next: (data) => {
+                this.router.navigate(['/orders/' + orderId], { replaceUrl: true });
+                
+            },
+            error: () => {
+                this.error.set('Error asignando pedidos');
+            }
+
+        });
+    }
 
 }

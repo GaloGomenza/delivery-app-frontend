@@ -13,6 +13,7 @@ import { OrderStatusPage } from './pages/order-status/order-status';
 import { ProductList } from './pages/product/product-list/product-list';
 import { ProductForm } from './pages/product/product-form/product-form';
 import { OrderUnassignedList } from './pages/order-unassigned-list/order-unassigned-list';
+import { OrderStatusUpdate } from './pages/order-status-update/order-status-update';
 
 export const routes: Routes = [
     {path: '', component : Home},
@@ -55,6 +56,12 @@ export const routes: Routes = [
         path: 'orders/unassigned',
         component: OrderUnassignedList,
         title: 'Ver pedidos sin asignar',
+        canActivate: [authGuardFn]
+    },
+    {
+        path: 'orders/:id/status',
+        component: OrderStatusUpdate,
+        title: 'Actualizando estado del pedido',
         canActivate: [authGuardFn]
     },
     {

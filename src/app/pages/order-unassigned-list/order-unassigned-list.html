@@ -15,6 +15,7 @@
         <p>CustomerLongitude: {{order.customerLongitude}}</p>
         <p>MerchantLatitude: {{order.latitude}}</p>
         <p>MerchantLongitude: {{order.longitude}}</p>
+        <a [routerLink]="['/orders', order.id , 'status']"><p>Tomar este pedido</p></a>
 
     }
 }
