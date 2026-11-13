@@ -18,8 +18,8 @@ export class Login {
   
   formulario = this.fb.nonNullable.group(
     {
-    email: ['', [Validators.required, Validators.email, Validators.maxLength(40)]],
-    password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9@._!+\-]+$')]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
     }
   )
 
