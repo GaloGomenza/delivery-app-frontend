@@ -1,35 +1,41 @@
-<h2>Estado del pedido</h2>
+<div class = "contenedor">
+    <div class="encabezado">
+        <h2>Estado del pedido</h2>
+    </div>
 
-@if (orderService.error() != '') {
-    <p class="error">{{ orderService.error() }}</p>
-}
-
-@if (orderService.order() != null) {
-    <p><strong>Pedido #{{ orderService.order()?.id }}</strong></p>
-    <p>Estado: {{ getStatusLabel() }}</p>
-    <p>{{ getStatusMessage() }}</p>
-
-    @if (orderService.order()?.status == 'CANCELLED') {
-        <p class="cancelled">El pedido fue cancelado y no continúa su curso.</p>
-    } @else {
-        <ol class="steps">
-            @for (step of steps; track step) {
-                <li [class.done]="isStepDone(step)" [class.current]="isStepCurrent(step)">
-                    {{ getStepLabel(step) }}
-                </li>
-            }
-        </ol>
+    @if (orderService.error() != '') {
+        <p class="error">{{ orderService.error() }}</p>
     }
 
-    <p>Dirección de entrega: {{ orderService.order()?.customerAddress }}</p>
-    <p>Total: {{ orderService.order()?.total }}</p>
-    <p>Método de pago: {{ getPaymentLabel() }}</p>
-    <p>Comercio: {{ orderService.order()?.storeId }}</p>
-    <p>Consumidor: {{ orderService.order()?.consumerId }}</p>
-    <p>Repartidor: {{ orderService.order()?.riderId ? orderService.order()?.riderId : 'Sin asignar' }}</p>
-    <p>Productos: {{ orderService.order()?.products.join(', ') }}</p>
-    <p>Ubicación del consumidor: {{ orderService.order()?.customerLatitude }}, {{ orderService.order()?.customerLongitude }}</p>
-    <p>Ubicación del comercio: {{ orderService.order()?.latitude }}, {{ orderService.order()?.longitude }}</p>
+    @if (orderService.order() != null) {
+        <p><strong>Pedido #{{ orderService.order()?.id }}</strong></p>
+        <p>Estado: {{ getStatusLabel() }}</p>
+        <p>{{ getStatusMessage() }}</p>
 
-    <button (click)="actualizar()">Actualizar</button>
-}
+        @if (orderService.order()?.status == 'CANCELLED') {
+            <p class="cancelled">El pedido fue cancelado y no continúa su curso.</p>
+        } @else {
+            <ol class="steps">
+                @for (step of steps; track step) {
+                    <li [class.done]="isStepDone(step)" [class.current]="isStepCurrent(step)">
+                        {{ getStepLabel(step) }}
+                    </li>
+                }
+            </ol>
+        }
+
+        <p>Dirección de entrega: {{ orderService.order()?.customerAddress }}</p>
+        <p>Total: {{ orderService.order()?.total }}</p>
+        <p>Método de pago: {{ getPaymentLabel() }}</p>
+        <p>Comercio: {{ orderService.order()?.storeId }}</p>
+        <p>Consumidor: {{ orderService.order()?.consumerId }}</p>
+        <p>Repartidor: {{ orderService.order()?.riderId ? orderService.order()?.riderId : 'Sin asignar' }}</p>
+        <p>Productos: {{ orderService.order()?.products.join(', ') }}</p>
+        <p>Ubicación del consumidor: {{ orderService.order()?.customerLatitude }}, {{ orderService.order()?.customerLongitude }}</p>
+        <p>Ubicación del comercio: {{ orderService.order()?.latitude }}, {{ orderService.order()?.longitude }}</p>
+
+        <button (click)="actualizar()">Actualizar</button>
+    }
+
+</div>
+

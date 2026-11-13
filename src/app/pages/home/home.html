@@ -1,9 +1,11 @@
-<p>home works!</p>
-@if (authService.loggedUser() != null) {
+<div class = 'contenedor'>
+    @if (authService.loggedUser() != null) {
+    
+    }
+    <p>{{authService.loggedUser()?.email}}</p>
+    <p>{{authService.loggedUser()?.role}}</p>
+    <p>Error Signal: {{authService.error()}}</p>
+    <p>is userLooged: {{authService.isUserLogged()}}</p>
+</div>
 
-}
-<p>{{authService.loggedUser()?.email}}</p>
-<p>{{authService.loggedUser()?.role}}</p>
-<p>Error Signal: {{authService.error()}}</p>
-<p>is userLooged: {{authService.isUserLogged()}}</p>
 
