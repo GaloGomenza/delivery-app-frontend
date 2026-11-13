@@ -55,4 +55,18 @@ export class OrderService {
                 return 'No pudimos obtener el pedido. Intentá nuevamente.';
         }
     }
+
+    getUnassignedOrders(){
+        this.http.get<OrderResponse[]>(this.url + '/unassigned').subscribe({
+            next: (data) => {
+                this.orders.set(data);
+            },
+            error: () => {
+                this.error.set('No se pudieron cargar los pedidos');
+            }
+        });
+    }
+
+
+
 }
