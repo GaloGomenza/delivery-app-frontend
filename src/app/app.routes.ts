@@ -12,9 +12,9 @@ import { MyProfile } from './pages/my-profile/my-profile';
 import { OrderStatusPage } from './pages/order-status/order-status';
 import { ProductList } from './pages/product/product-list/product-list';
 import { ProductForm } from './pages/product/product-form/product-form';
+import { ConsumerProductList } from './pages/product/consumer-product-list/consumer-product-list';
 
 export const routes: Routes = [
-    { path: '', component: Home },
     { path: 'store/list', component: StoreList },
     { path: 'store/form', component: StoreForm },
     { path: 'store/form/:id', component: StoreForm },
@@ -75,4 +75,10 @@ export const routes: Routes = [
         title: 'Editar Producto',
         canActivate: [authGuardFn]
     },
+    {
+        path: 'consumer/products',
+        component: ConsumerProductList,
+        title: 'Productos disponibles',
+        canActivate: [authGuardFn]
+    }
 ];
