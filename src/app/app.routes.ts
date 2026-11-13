@@ -57,7 +57,7 @@ export const routes: Routes = [
         canActivate: [authGuardFn]
     },
     {
-        path: 'myProducts',
+        path: 'store/:id/products',
         component: ProductList,
         title: 'Mis Productos',
         canActivate: [authGuardFn]

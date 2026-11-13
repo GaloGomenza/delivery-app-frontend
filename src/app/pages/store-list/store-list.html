@@ -6,7 +6,7 @@
     <div class="lista">
         @if (cargando()) {
         <p>Cargando comercios…</p>
-        } @else if (stores.length === 0) {
+        } @else if (stores().length === 0) {
         <p>{{ esComerciante ? 'Todavía no tenés comercios.' : 'No hay comercios para mostrar.' }}</p>
         } @else {
         <ul>

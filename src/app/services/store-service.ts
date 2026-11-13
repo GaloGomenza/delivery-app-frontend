@@ -22,18 +22,20 @@ export class StoreService {
   }
 
   getStores(location ?: Ubicacion) : Observable<Store[]>{
-    let params = new HttpParams()
-      .set('page', 0)
-      .set('size', 100)
-      .set('sortBy', 'name')
-      .set('direction', 'asc');
- 
+    let params = new HttpParams();
+    //  .set('page', 0)
+    //  .set('size', 100)
+     // .set('sortBy', 'name')
+     // .set('direction', 'asc');
+
+     /*
     if (location) {
       params = params
         .set('latitude', location.latitude)
         .set('longitude', location.longitude)
         .set('distance', location.distance);
     }
+        */
 
     return this.http
       .get<PaginationResult<Store>>(this.apiURL, { params })
@@ -55,14 +57,16 @@ export class StoreService {
   deleteStore(id : number){
     return this.http.delete<Store>(`${this.apiURL}/${id}`)
   }
-  
+
   getMyStores() : Observable<Store[]>{
-    const params = new HttpParams()
+    const params = new HttpParams();
+    /*
       .set('page', 0)
       .set('size', 100)
       .set('sortBy', 'name')
       .set('direction', 'asc');
- 
+      */
+
     return this.http.get<User>('api/v1/users/me').pipe(
       switchMap((me) =>
         this.http
