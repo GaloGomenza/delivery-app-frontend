@@ -3,8 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
 import { PageQuery, PaginationResult } from '../models/Pagination';
 import { Store } from '../models/Store';
-import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
-import { PaginationResult } from '../models/Pagination';
 import { User } from '../models/User';
 
 export interface Ubicacion {
@@ -36,21 +34,6 @@ export class StoreService {
     if (filter.name?.trim()) params = params.set('name', filter.name.trim());
     if (filter.ownerId != null) params = params.set('ownerId', filter.ownerId);
     if (filter.location) {
-  private readonly apiURL = 'api/v1/stores';
-
-  constructor(private http : HttpClient){
-  }
-
-  getStores(location?: Ubicacion): Observable<Store[]> {
-
-  const crearParams = (page: number): HttpParams => {
-    let params = new HttpParams()
-      .set('page', page)
-      .set('size', 10)
-      .set('sortBy', 'id')
-      .set('direction', 'asc');
-
-    if (location) {
       params = params
         .set('latitude', filter.location.latitude)
         .set('longitude', filter.location.longitude)
@@ -59,38 +42,6 @@ export class StoreService {
 
     return this.http.get<PaginationResult<Store>>(this.apiUrl, { params });
   }
-    return params;
-  };
-
-  const obtenerPagina = (page: number) =>
-    this.http.get<PaginationResult<Store>>(
-      this.apiURL,
-      { params: crearParams(page) }
-    );
-
-  return obtenerPagina(0).pipe(
-    switchMap((primeraPagina) => {
-
-      const paginasRestantes = Array.from(
-        { length: Math.max(0, primeraPagina.totalPages - 1) },
-        (_, i) => i + 1
-      );
-
-      if (paginasRestantes.length === 0) {
-        return of(primeraPagina.content);
-      }
-
-      return forkJoin(
-        paginasRestantes.map(page => obtenerPagina(page))
-      ).pipe(
-        map((restantes) => [
-          ...primeraPagina.content,
-          ...restantes.flatMap(pagina => pagina.content)
-        ])
-      );
-    })
-  );
-}
 
   getMyStores(
     query: PageQuery,
@@ -115,21 +66,5 @@ export class StoreService {
 
   deleteStore(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  getMyStores() : Observable<Store[]>{
-    const params = new HttpParams();
-    /*
-      .set('page', 0)
-      .set('size', 100)
-      .set('sortBy', 'name')
-      .set('direction', 'asc');
-      */
-
-    return this.http.get<User>('api/v1/users/me').pipe(
-      switchMap((me) =>
-        this.http
-          .get<PaginationResult<Store>>(this.apiURL, { params })
-          .pipe(map((res) => res.content.filter((s) => s.ownerId === me.id)))
-      )
-    );
   }
 }

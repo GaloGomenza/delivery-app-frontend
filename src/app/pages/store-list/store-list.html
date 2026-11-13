@@ -1,16 +1,17 @@
+
 <section class="store-list-container">
   <header class="header">
-    <h2>{{ esComerciante() ? 'Mis Tiendas' : 'Tiendas' }}</h2>
+    <h2>{{ esComerciante() ? 'Mis comercios' : 'Comercios' }}</h2>
 
     @if (esComerciante()) {
-      <a routerLink="/stores/new" class="btn-primary">+ Nueva tienda</a>
+      <a routerLink="/store/new" class="btn-primary">+ Nuevo comercio</a>
     }
   </header>
 
   <div class="filters">
     <input
       type="text"
-      placeholder="Buscar tienda por nombre..."
+      placeholder="Buscar comercio por nombre..."
       [ngModel]="search()"
       (ngModelChange)="buscar($event)"
     />
@@ -21,9 +22,13 @@
   }
 
   @if (loading()) {
-    <p>Cargando tiendas...</p>
+    <p>Cargando comercios...</p>
   } @else if (stores().length === 0) {
-    <p>No se encontraron tiendas.</p>
+    <p>
+      {{ esComerciante()
+        ? 'Todavía no tenés comercios.'
+        : 'No hay comercios para mostrar.' }}
+    </p>
   } @else {
     <table>
       <thead>
@@ -34,6 +39,7 @@
           <th>Acciones</th>
         </tr>
       </thead>
+
       <tbody>
         @for (store of stores(); track store.id) {
           <tr>
@@ -41,35 +47,17 @@
             <td>{{ store.name }}</td>
             <td>{{ store.address }}</td>
             <td class="actions">
-              <a [routerLink]="['/stores', store.id, 'products']">Ver productos</a>
+              <a [routerLink]="['/store/detail', store.id]">
+                Ver comercio
+              </a>
 
               @if (esComerciante()) {
-                <a [routerLink]="['/stores', store.id, 'edit']">Editar</a>
+                <a [routerLink]="['/store', store.id, 'edit']">
+                  Editar
+                </a>
               }
             </td>
           </tr>
-    <div class="lista">
-        @if (cargando()) {
-        <p>Cargando comercios…</p>
-        } @else if (stores().length === 0) {
-        <p>{{ esComerciante ? 'Todavía no tenés comercios.' : 'No hay comercios para mostrar.' }}</p>
-        } @else {
-        <ul>
-            @for (store of stores(); track store.id) {
-            <li class="elemento-lista">
-                <div class="info-solicitud">
-                    <strong>{{ store.name }}</strong>
-                    <p>{{ store.address }}</p>
-                </div>
-
-                <div class="acciones">
-                    <a class="btn-detalle" [routerLink]="['/store/detail', store.id]">
-                        Ver comercio
-                    </a>
-                </div>
-            </li>
-            }
-        </ul>
         }
       </tbody>
     </table>
@@ -84,7 +72,8 @@
       </button>
 
       <span>
-        Página {{ page() + 1 }} de {{ totalPages() || 1 }} ({{ totalElements() }} tiendas)
+        Página {{ page() + 1 }} de {{ totalPages() || 1 }}
+        ({{ totalElements() }} comercios)
       </span>
 
       <button
