@@ -45,7 +45,7 @@ export class AuthService {
             },
             error: (err) => {
                 console.log(err);
-                this.error.set("No se pudo autenticar usuario");
+                this.error.set("No se pudo autenticar al usuario");
             }
         })
     }
@@ -65,7 +65,7 @@ export class AuthService {
             },
             error: (err) => {
                 console.log(err);
-                this.error.set("No se pudo registrar usuario");
+                this.error.set("No se pudo registrar al usuario");
             }
         })
 

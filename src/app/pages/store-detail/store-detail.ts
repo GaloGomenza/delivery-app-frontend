@@ -45,31 +45,37 @@ export class StoreDetail implements OnInit {
   }
 
   cargarProductos(): void {
-    this.cargandoProductos.set(true);
-    this.errorProductos.set(null);
+  this.cargandoProductos.set(true);
+  this.errorProductos.set(null);
 
-    this.productService
-      .getProducts(
-        { page: this.page(), size: 10, sortBy: 'name', direction: 'asc' },
-        {
-          storeId: this.storeId,
-          location: this.esConsumidor ? Ubicacion_provisoria : undefined,
-        }
-      )
-      .subscribe({
-        next: (res) => {
-          this.products.set(res.content);
-          this.totalPages.set(res.totalPages);
-          this.totalElements.set(res.totalElements);
-          this.cargandoProductos.set(false);
-        },
-        error: (e) => {
-          console.log(e);
-          this.errorProductos.set('No se pudieron cargar los productos');
-          this.cargandoProductos.set(false);
-        }
-      });
-  }
+  this.productService
+    .getProducts(
+      {
+        page: this.page(),
+        size: 10,
+        sortBy: 'name',
+        direction: 'asc'
+      },
+      {
+        storeId: this.storeId,
+        status: this.esConsumidor ? 'AVAILABLE' : '',
+        location: this.esConsumidor ? Ubicacion_provisoria : undefined,
+      }
+    )
+    .subscribe({
+      next: (res) => {
+        this.products.set(res.content);
+        this.totalPages.set(res.totalPages);
+        this.totalElements.set(res.totalElements);
+        this.cargandoProductos.set(false);
+      },
+      error: (e) => {
+        console.log(e);
+        this.errorProductos.set('No se pudieron cargar los productos');
+        this.cargandoProductos.set(false);
+      }
+    });
+}
 
   irAPagina(p: number): void {
     this.page.set(p);

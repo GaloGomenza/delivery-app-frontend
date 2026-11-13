@@ -1,6 +1,6 @@
 <main>
     <div class="container">
-        <h2>Iniciar Sesion</h2>
+        <h2>Iniciar Sesión</h2>
 
         <div>
             <form [formGroup]="formulario">
@@ -9,13 +9,7 @@
                     <input type="email" formControlName="email" id="email">
                     @if (formulario.controls['email'].errors  && formulario.controls['email'].touched) {
                         @if(formulario.controls['email'].hasError('required')){
-                            <p>El campo es requerido</p>
-                        }
-                        @if(formulario.controls['email'].hasError('maxlength')){
-                            <p>El nombre debe tener menos de 40 caracteres </p>
-                        }
-                        @if(formulario.controls['email'].hasError('email')){
-                            <p>El campo no contiene un email valido</p>
+                            <p>Campo requerido</p>
                         }
                     }
                 </div>
@@ -24,27 +18,14 @@
                     <input type="password" formControlName="password" id="password">
                     @if (formulario.controls['password'].errors  && formulario.controls['password'].touched) {
                         @if(formulario.controls['password'].hasError('required')){
-                            <p>El campo es requerido</p>
-                        }
-                        @if(formulario.controls['password'].hasError('minlength')){
-                            <p>La contraseña debe tener al menos 6 caracteres </p>
-                        }
-                        @if(formulario.controls['password'].hasError('maxlength')){
-                            <p>La contraseña debe tener menos de 20 caracteres </p>
-                        }
-                        @if(formulario.controls['password'].hasError('pattern')){
-                            <p>La contraseña debe tener:</p>
-                            <p>- al menos una letra minuscula</p>
-                            <p>- al menos una letra mayuscula</p>
-                            <p>- al menos un numero</p>
-                            <p>- caracteres especiales validos: @ . _ - ! +</p>
+                            <p>Campo requerido</p>
                         }
                     }
 
                 </div>
                 
 
-                <button (click)="iniciarSesion()" [disabled]="formulario.invalid">Iniciar Sesion</button>
+                <button (click)="iniciarSesion()" [disabled]="formulario.invalid">Iniciar Sesión</button>
 
             </form>
 
