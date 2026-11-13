@@ -52,6 +52,21 @@ export const routes: Routes = [
         canActivate: [authGuardFn]
     },
     {
+        path: 'store/new', 
+        component : StoreForm,
+        canActivate : [authGuardFn]
+    },
+    {
+        path: 'store/edit/:id', 
+        component : StoreForm,
+        canActivate : [authGuardFn]
+    },
+    {
+        path: 'store/detail/:id', 
+        component : StoreDetail,
+        canActivate : [authGuardFn]
+    },
+    {
         path: 'orders/:id',
         component: OrderStatusPage,
         title: 'Estado del pedido',

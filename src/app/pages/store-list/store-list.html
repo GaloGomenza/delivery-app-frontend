@@ -1,8 +1,53 @@
-<div class="contenedor">
-    <div class="encabezado">
-        <h2>{{ esComerciante ? 'Mis comercios' : 'Listado de Comercios' }}</h2>
-    </div>
+<section class="store-list-container">
+  <header class="header">
+    <h2>{{ esComerciante() ? 'Mis Tiendas' : 'Tiendas' }}</h2>
 
+    @if (esComerciante()) {
+      <a routerLink="/stores/new" class="btn-primary">+ Nueva tienda</a>
+    }
+  </header>
+
+  <div class="filters">
+    <input
+      type="text"
+      placeholder="Buscar tienda por nombre..."
+      [ngModel]="search()"
+      (ngModelChange)="buscar($event)"
+    />
+  </div>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  @if (loading()) {
+    <p>Cargando tiendas...</p>
+  } @else if (stores().length === 0) {
+    <p>No se encontraron tiendas.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th (click)="ordenar('id')">ID{{ flecha('id') }}</th>
+          <th (click)="ordenar('name')">Nombre{{ flecha('name') }}</th>
+          <th (click)="ordenar('address')">Dirección{{ flecha('address') }}</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (store of stores(); track store.id) {
+          <tr>
+            <td>{{ store.id }}</td>
+            <td>{{ store.name }}</td>
+            <td>{{ store.address }}</td>
+            <td class="actions">
+              <a [routerLink]="['/stores', store.id, 'products']">Ver productos</a>
+
+              @if (esComerciante()) {
+                <a [routerLink]="['/stores', store.id, 'edit']">Editar</a>
+              }
+            </td>
+          </tr>
     <div class="lista">
         @if (cargando()) {
         <p>Cargando comercios…</p>
@@ -26,6 +71,29 @@
             }
         </ul>
         }
-    </div>
+      </tbody>
+    </table>
 
-</div>
+    <div class="pagination">
+      <button
+        type="button"
+        [disabled]="page() === 0"
+        (click)="irAPagina(page() - 1)"
+      >
+        Anterior
+      </button>
+
+      <span>
+        Página {{ page() + 1 }} de {{ totalPages() || 1 }} ({{ totalElements() }} tiendas)
+      </span>
+
+      <button
+        type="button"
+        [disabled]="page() + 1 >= totalPages()"
+        (click)="irAPagina(page() + 1)"
+      >
+        Siguiente
+      </button>
+    </div>
+  }
+</section>
