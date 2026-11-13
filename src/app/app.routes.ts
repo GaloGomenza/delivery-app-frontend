@@ -14,12 +14,13 @@ import { ProductList } from './pages/product/product-list/product-list';
 import { ProductForm } from './pages/product/product-form/product-form';
 
 export const routes: Routes = [
-    {path: '', component : Home},
-    {path: 'store/list', component : StoreList},
-    {path: 'store/form', component : StoreForm},
-    {path: 'store/form/:id', component : StoreForm},
-    {path: 'store/detail/:id', component : StoreDetail},
-    {   path: '',
+    { path: '', component: Home },
+    { path: 'store/list', component: StoreList },
+    { path: 'store/form', component: StoreForm },
+    { path: 'store/form/:id', component: StoreForm },
+    { path: 'store/detail/:id', component: StoreDetail },
+    {
+        path: '',
         component: Landing
     },
     {
@@ -47,7 +48,7 @@ export const routes: Routes = [
     },
     {
         path: 'storeList',
-        component : StoreList,
+        component: StoreList,
         canActivate: [authGuardFn]
     },
     {
@@ -63,15 +64,15 @@ export const routes: Routes = [
         canActivate: [authGuardFn]
     },
     {
-    path: 'store/:storeId/products/new',
-    component: ProductForm,
-    title: 'Nuevo Producto',
-    canActivate: [authGuardFn]
-},
-{
-    path: 'store/:storeId/products/edit/:productId',
-    component: ProductForm,
-    title: 'Editar Producto',
-    canActivate: [authGuardFn]
-},
+        path: 'store/:storeId/products/new',
+        component: ProductForm,
+        title: 'Nuevo Producto',
+        canActivate: [authGuardFn]
+    },
+    {
+        path: 'store/:storeId/products/edit/:productId',
+        component: ProductForm,
+        title: 'Editar Producto',
+        canActivate: [authGuardFn]
+    },
 ];
