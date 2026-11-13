@@ -6,6 +6,7 @@ import { PageQuery, StoreSortBy } from '../../models/Pagination';
 import { Store } from '../../models/Store';
 import { Ubicacion_provisoria } from '../../models/Ubicacion-provisoria';
 import { StoreService } from '../../services/store-service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-store-list',
@@ -90,6 +91,45 @@ export class StoreList implements OnInit {
     }
     this.page.set(0);
     this.cargar();
+  private authService = inject(AuthService)
+  stores = signal<Store[]>([]);
+  cargando = signal(true);
+  esComerciante = this.authService.loggedUser()?.role === 'ROLE_MERCHANT'
+
+  constructor(
+    private service: StoreService
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.loadStores()
+  }
+
+  loadStores(): void {
+    const rol = this.authService.loggedUser()?.role;
+
+    let request;
+
+    if (rol === 'ROLE_MERCHANT') {
+      request = this.service.getMyStores();
+    } else if (rol === 'ROLE_CONSUMER') {
+      request = this.service.getStores(Ubicacion_provisoria);
+    } else {
+      request = this.service.getStores();
+    }
+
+    this.cargando.set(true);
+
+    request.pipe(
+      finalize(() => this.cargando.set(false))
+    ).subscribe({
+      next: (data) => {
+        this.stores.set(data);
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
   }
 
   flecha(col: StoreSortBy): string {

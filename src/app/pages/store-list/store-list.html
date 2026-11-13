@@ -48,6 +48,28 @@
               }
             </td>
           </tr>
+    <div class="lista">
+        @if (cargando()) {
+        <p>Cargando comercios…</p>
+        } @else if (stores().length === 0) {
+        <p>{{ esComerciante ? 'Todavía no tenés comercios.' : 'No hay comercios para mostrar.' }}</p>
+        } @else {
+        <ul>
+            @for (store of stores(); track store.id) {
+            <li class="elemento-lista">
+                <div class="info-solicitud">
+                    <strong>{{ store.name }}</strong>
+                    <p>{{ store.address }}</p>
+                </div>
+
+                <div class="acciones">
+                    <a class="btn-detalle" [routerLink]="['/store/detail', store.id]">
+                        Ver comercio
+                    </a>
+                </div>
+            </li>
+            }
+        </ul>
         }
       </tbody>
     </table>

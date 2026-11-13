@@ -40,19 +40,28 @@ export class ProductForm implements OnInit {
   });
  
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
- 
-    if (idParam) {
-      this.id.set(Number(idParam));
-      this.productService.getProduct(this.id()!).subscribe({
-        next: (p) => this.formulario.patchValue({ ...p, imageURL: p.imageURL ?? '' }),
-        error: (err) => {
-          console.log(err);
-          this.error.set('No se pudo cargar el producto');
-        },
-      });
-    }
+  const productId = this.route.snapshot.paramMap.get('productId');
+
+  if (productId) {
+    this.id.set(Number(productId));
+
+    this.productService.getProduct(this.id()!).subscribe({
+      next: (p) => {
+        this.formulario.patchValue({
+          name: p.name,
+          price: p.price,
+          description: p.description,
+          imageURL: p.imageURL ?? '',
+          status: p.status,
+        });
+      },
+      error: (err) => {
+        console.log(err);
+        this.error.set('No se pudo cargar el producto');
+      },
+    });
   }
+}
  
   mensaje(campo: string): string | null {
     const c = this.formulario.get(campo);
