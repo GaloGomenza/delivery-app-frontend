@@ -14,11 +14,6 @@ import { ProductList } from './pages/product/product-list/product-list';
 import { ProductForm } from './pages/product/product-form/product-form';
 
 export const routes: Routes = [
-    {path: '', component : Home},
-    {path: 'store/list', component : StoreList},
-    {path: 'store/form', component : StoreForm},
-    {path: 'store/form/:id', component : StoreForm},
-    {path: 'store/detail/:id', component : StoreDetail},
     {   path: '',
         component: Landing
     },
@@ -46,9 +41,24 @@ export const routes: Routes = [
         canActivate: [authGuardFn]
     },
     {
-        path: 'storeList',
+        path: 'store/list',
         component : StoreList,
         canActivate: [authGuardFn]
+    },
+    {
+        path: 'store/new', 
+        component : StoreForm,
+        canActivate : [authGuardFn]
+    },
+    {
+        path: 'store/edit/:id', 
+        component : StoreForm,
+        canActivate : [authGuardFn]
+    },
+    {
+        path: 'store/detail/:id', 
+        component : StoreDetail,
+        canActivate : [authGuardFn]
     },
     {
         path: 'orders/:id',
