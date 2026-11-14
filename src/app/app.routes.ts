@@ -12,13 +12,17 @@ import { MyProfile } from './pages/my-profile/my-profile';
 import { OrderStatusPage } from './pages/order-status/order-status';
 import { ProductList } from './pages/product/product-list/product-list';
 import { ProductForm } from './pages/product/product-form/product-form';
+import { ConsumerProductList } from './pages/product/consumer-product-list/consumer-product-list';
 import { OrderUnassignedList } from './pages/order-unassigned-list/order-unassigned-list';
 import { OrderStatusUpdate } from './pages/order-status-update/order-status-update';
 import { OrderList } from './pages/order-list/order-list';
 import { OrderStoreList } from './pages/order-store-list/order-store-list';
 
 export const routes: Routes = [
-
+    { path: 'store/list', component: StoreList },
+    { path: 'store/form', component: StoreForm },
+    { path: 'store/form/:id', component: StoreForm },
+    { path: 'store/detail/:id', component: StoreDetail },
     {
         path: '',
         component: Landing
@@ -68,8 +72,9 @@ export const routes: Routes = [
         path: 'orders/:id/status',
         component: OrderStatusUpdate,
         title: 'Actualizando estado del pedido',
-        canActivate: [authGuardFn]},
-            {
+        canActivate: [authGuardFn]
+    },
+    {
         path: 'orders/:id',
         component: OrderStatusPage,
         title: 'Estado del pedido',
@@ -110,6 +115,12 @@ export const routes: Routes = [
         path: 'store/:storeId/products/edit/:productId',
         component: ProductForm,
         title: 'Editar Producto',
+        canActivate: [authGuardFn]
+    },
+    {
+        path: 'consumer/products',
+        component: ConsumerProductList,
+        title: 'Productos disponibles',
         canActivate: [authGuardFn]
     }
 

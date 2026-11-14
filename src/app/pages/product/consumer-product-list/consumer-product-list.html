@@ -1,0 +1,81 @@
+
+<section class="product-list-container">
+  <header class="header">
+    <h2>Productos disponibles</h2>
+    <p>Explorá productos de los comercios cercanos.</p>
+  </header>
+
+  <div class="filters">
+    <input
+      type="text"
+      placeholder="Buscar producto por nombre..."
+      [ngModel]="search()"
+      (ngModelChange)="buscar($event)"
+    />
+  </div>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  @if (loading()) {
+    <p>Cargando productos...</p>
+  } @else if (products().length === 0) {
+    <p>No se encontraron productos disponibles.</p>
+  } @else {
+    <div class="products-grid">
+      @for (product of products(); track product.id) {
+        <article class="product-card">
+          @if (product.imageURL) {
+            <img
+              [src]="product.imageURL"
+              [alt]="product.name"
+            />
+          }
+
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+
+            <p>{{ product.description }}</p>
+
+            <strong>{{ product.price | currency:'ARS':'symbol':'1.2-2' }}</strong>
+
+            <p class="store-name">
+              Comercio: {{ product.storeName }}
+            </p>
+
+            <a
+              [routerLink]="['/store/detail', product.storeId]"
+              class="btn-detail"
+            >
+              Ver comercio
+            </a>
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="pagination">
+      <button
+        type="button"
+        [disabled]="page() === 0"
+        (click)="irAPagina(page() - 1)"
+      >
+        Anterior
+      </button>
+
+      <span>
+        Página {{ page() + 1 }} de {{ totalPages() || 1 }}
+        ({{ totalElements() }} productos)
+      </span>
+
+      <button
+        type="button"
+        [disabled]="page() + 1 >= totalPages()"
+        (click)="irAPagina(page() + 1)"
+      >
+        Siguiente
+      </button>
+    </div>
+  }
+</section>
