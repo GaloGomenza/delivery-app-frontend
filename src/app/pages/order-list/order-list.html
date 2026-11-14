@@ -1,0 +1,18 @@
+<h2>Mis pedidos</h2>
+
+@if (orderService.error() != '') {
+    <p class="error">{{ orderService.error() }}</p>
+}
+
+@if (orderService.orders().length == 0){
+    <p>No tienes pedidos</p>
+}@else {
+
+    @for (order of orderService.orders(); track $index) {
+        <p><strong>Pedido #{{ order?.id }}</strong></p>
+        <p>StoreId: {{order.storeId}} //otra llamada para sacar nombre</p>
+        <p>Estado: {{order.status}}</p>
+        <a [routerLink]="['/orders', order.id]"><p>Ver este pedido</p></a>
+
+    }
+}

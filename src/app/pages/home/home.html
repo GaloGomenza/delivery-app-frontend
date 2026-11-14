@@ -8,6 +8,8 @@
        
         <p><a [routerLink]="['/store/list']">Buscar Comercios</a></p>
 
+        <p><a [routerLink]="['/orders/my-orders']">Ver mis Pedidos</a></p>
+
     } 
     @else if (authService.loggedUser()?.role == 'ROLE_MERCHANT'){
 
@@ -15,12 +17,16 @@
        
         <p><a [routerLink]="['/store/list']">Administrar mis comercios</a></p>
         
+        <p><a [routerLink]="['/orders/store/1']">Ver mis Pedidos Falta Dropdown</a></p>
+
     }
     @else if (authService.loggedUser()?.role == 'ROLE_RIDER'){
 
         <h3>Cuenta Repartidor</h3>
        
         <p><a [routerLink]="['/orders/unassigned']">Ver Pedidos sin Asignar</a></p>
+
+        <p><a [routerLink]="['/orders/my-orders']">Ver mis Pedidos (Hay que modficar el backend)</a></p>
         
     }
 
