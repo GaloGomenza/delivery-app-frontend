@@ -119,7 +119,7 @@ a[routerLink="register"]:hover {
 /* Iniciar sesión (botón principal azul denim) */
 a[routerLink="login"] {
   background-color: var(--azul-denim);
-  color: #FFFFFF;
+  color:#FFFFFF !important;
 }
 
 a[routerLink="login"]:hover {
