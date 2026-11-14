@@ -16,6 +16,7 @@
   --radio-pill: 999px;
 }
 
+/* Corregido: * en lugar de - */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -30,7 +31,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.contenedor {
+/* =========================================================
+   CONTENEDORES Y ENCABEZADOS (ESPAÑOL E INGLÉS)
+   ========================================================= */
+.contenedor,
+.store-list-container {
   max-width: 540px;
   margin: 2.5rem auto;
   padding: 2rem;
@@ -40,13 +45,27 @@ body {
   box-shadow: 4px 4px 0px var(--tinta-oscura);
 }
 
-.encabezado {
+/* Ensanchar automáticamente cuando hay filtros o tabla */
+.contenedor:has(.filtros),
+.contenedor:has(table),
+.store-list-container {
+  max-width: 960px;
+}
+
+.encabezado,
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
   margin-bottom: 1.75rem;
   padding-bottom: 1rem;
   border-bottom: var(--borde-fino);
 }
 
-.encabezado h2 {
+.encabezado h2,
+.header h2 {
+  margin-right: auto;
   font-size: 1.85rem;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -55,7 +74,47 @@ body {
   text-shadow: 2px 2px 0px var(--tinta-oscura);
 }
 
-/*Estructura del formulario */
+/* Enlaces de acción en encabezados */
+.encabezado a,
+.header a {
+  padding: 0.55rem 1.15rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.encabezado a:first-of-type,
+.header a:first-of-type {
+  background-color: var(--bg-crema);
+  color: var(--tinta-oscura);
+}
+
+.encabezado a:first-of-type:hover,
+.header a:first-of-type:hover {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.encabezado a:last-of-type,
+.header a:last-of-type {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.encabezado a:last-of-type:hover,
+.header a:last-of-type:hover {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+/* =========================================================
+   FORMULARIOS
+   ========================================================= */
 .formulario {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -63,7 +122,8 @@ body {
 }
 
 .grupo-form,
-.formulario > .error-texto {
+.formulario > .error-texto,
+.formulario > .error {
   grid-column: 1 / -1;
 }
 
@@ -113,24 +173,21 @@ body {
   background-color: #FFF5F6;
 }
 
-.grupo-form p:not(.error-texto) {
+.grupo-form p:not(.error-texto):not(.error) {
   align-self: flex-end;
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--texto-secundario);
 }
 
-/*Mensajes de validación */
-.error-texto {
-  font-size: 0.82rem;
+.error-texto,
+.error {
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--terracota-error);
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
+  margin-bottom: 0.75rem;
 }
 
-/*Botones de acción*/
 .formulario > a,
 .btn-submit {
   margin-top: 0.5rem;
@@ -146,7 +203,6 @@ body {
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
 }
 
-/* Enlace Cancelar*/
 .formulario > a {
   background-color: var(--bg-crema);
   color: var(--tinta-oscura);
@@ -158,7 +214,6 @@ body {
   box-shadow: 2px 2px 0px var(--tinta-oscura);
 }
 
-/* Botón Guardar*/
 .btn-submit {
   background-color: var(--azul-denim);
   color: #FFFFFF;
@@ -181,65 +236,11 @@ body {
   cursor: not-allowed;
 }
 
-/* Ensanchar el contenedor automáticamente cuando tiene tabla o filtros */
-.contenedor:has(.filtros),
-.contenedor:has(table) {
-  max-width: 960px;
-}
-
-/* Encabezado flexible para título a la izquierda y botones a la derecha */
-.encabezado {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.encabezado h2 {
-  margin-right: auto;
-}
-
-/* Enlaces de acción en el encabezado (Volver / Agregar) */
-.encabezado a {
-  padding: 0.55rem 1.1rem;
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-decoration: none;
-  border: var(--borde-fino);
-  border-radius: var(--radio-pill);
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
-}
-
-/* Primer enlace*/
-.encabezado a:first-of-type {
-  background-color: var(--bg-crema);
-  color: var(--tinta-oscura);
-}
-
-.encabezado a:first-of-type:hover {
-  background-color: #F4DFCE;
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0px var(--tinta-oscura);
-}
-
-/* Último enlace*/
-.encabezado a:last-of-type {
-  background-color: var(--azul-denim);
-  color: #FFFFFF;
-}
-
-.encabezado a:last-of-type:hover {
-  background-color: var(--azul-denim-hover);
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0px var(--tinta-oscura);
-}
-
-.contenedor > .error-texto {
-  margin-bottom: 1rem;
-}
-
-/*Barra de filtros */
-.filtros {
+/* =========================================================
+   FILTROS, TABLAS Y PAGINACIÓN (ESPAÑOL E INGLÉS)
+   ========================================================= */
+.filtros,
+.filters {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -250,7 +251,8 @@ body {
   border-radius: var(--radio-input);
 }
 
-.filtros label {
+.filtros label,
+.filters label {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -261,9 +263,11 @@ body {
 }
 
 .filtros input,
-.filtros select {
+.filtros select,
+.filters input,
+.filters select {
   width: 100%;
-  padding: 0.6rem 0.85rem;
+  padding: 0.65rem 0.9rem;
   font-family: inherit;
   font-size: 0.92rem;
   color: var(--tinta-oscura);
@@ -274,14 +278,17 @@ body {
 }
 
 .filtros input:focus,
-.filtros select:focus {
+.filtros select:focus,
+.filters input:focus,
+.filters select:focus {
   outline: none;
   border-color: var(--azul-denim);
   box-shadow: 3px 3px 0px var(--teal-acento);
 }
 
 /* Mensajes de estado vacío o "Cargando..." */
-.contenedor > p:not(.error-texto) {
+.contenedor > p:not(.error-texto):not(.error),
+.store-list-container > p:not(.error-texto):not(.error) {
   padding: 2rem 1.25rem;
   text-align: center;
   font-weight: 600;
@@ -291,7 +298,6 @@ body {
   border-radius: var(--radio-input);
 }
 
-/*Tabla de datos */
 table {
   width: 100%;
   border-collapse: separate;
@@ -316,7 +322,6 @@ th {
   border-bottom: var(--borde-fino);
 }
 
-/* Botones de ordenamiento dentro del encabezado de tabla */
 th button {
   background: none;
   border: none;
@@ -349,7 +354,6 @@ tbody tr:hover {
   background-color: #FDF5EE;
 }
 
-/* Columna de acciones (Editar / Eliminar) */
 td:last-child {
   white-space: nowrap;
   text-align: right;
@@ -358,7 +362,7 @@ td:last-child {
 td a,
 td button {
   display: inline-block;
-  padding: 0.38rem 0.85rem;
+  padding: 0.4rem 0.9rem;
   font-family: inherit;
   font-size: 0.82rem;
   font-weight: 700;
@@ -369,11 +373,13 @@ td button {
   transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
 }
 
-/* Botón Editar  */
+td a:not(:last-child) {
+  margin-right: 0.45rem;
+}
+
 td a {
   background-color: var(--teal-acento);
   color: #FFFFFF;
-  margin-right: 0.45rem;
 }
 
 td a:hover {
@@ -382,7 +388,6 @@ td a:hover {
   box-shadow: 2px 2px 0px var(--tinta-oscura);
 }
 
-/* Botón Eliminar */
 td button {
   background-color: #FFF5F6;
   color: var(--terracota-error);
@@ -395,7 +400,8 @@ td button:hover {
   box-shadow: 2px 2px 0px var(--tinta-oscura);
 }
 
-.paginacion {
+.paginacion,
+.pagination {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -405,13 +411,15 @@ td button:hover {
   padding-top: 1rem;
 }
 
-.paginacion span {
+.paginacion span,
+.pagination span {
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--texto-secundario);
 }
 
-.paginacion button {
+.paginacion button,
+.pagination button {
   padding: 0.5rem 1.1rem;
   font-family: inherit;
   font-size: 0.88rem;
@@ -424,13 +432,15 @@ td button:hover {
   transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
 }
 
-.paginacion button:hover:not(:disabled) {
+.paginacion button:hover:not(:disabled),
+.pagination button:hover:not(:disabled) {
   background-color: #F4DFCE;
   transform: translate(-1px, -1px);
   box-shadow: 2px 2px 0px var(--tinta-oscura);
 }
 
-.paginacion button:disabled {
+.paginacion button:disabled,
+.pagination button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
@@ -442,9 +452,9 @@ td button:hover {
   }
 }
 
-/* Adaptación a pantallas chicas */
 @media (max-width: 480px) {
-  .contenedor {
+  .contenedor,
+  .store-list-container {
     margin: 1rem;
     padding: 1.5rem;
   }
@@ -452,5 +462,196 @@ td button:hover {
   .formulario > a,
   .btn-submit {
     grid-column: 1 / -1;
+  }
+}
+
+/* =========================================================
+   VISTAS DE DETALLE (STORE, ORDER, USER DETAIL)
+   ========================================================= */
+
+/* 1. Ancho equilibrado para fichas de detalle */
+.contenedor:has(.grupo-id),
+.contenedor:has(.grupo-dato) {
+  max-width: 720px;
+}
+
+/* 2. Grilla de datos generales (funciona con .info-store o cualquier div contenedor) */
+.contenedor > div:has(> .grupo-dato),
+.contenedor > div:has(> .grupo-id) {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+}
+
+/* 3. Encabezado con ID del registro */
+.grupo-id {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: var(--borde-fino);
+}
+
+.grupo-id b {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--rosa-principal);
+  -webkit-text-stroke: 0.9px var(--tinta-oscura);
+  text-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.grupo-id span {
+  padding: 0.25rem 0.85rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  background-color: var(--azul-denim);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+}
+
+/* 4. Tarjetas individuales para cada atributo (.grupo-dato) */
+.grupo-dato {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 1rem;
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+}
+
+.grupo-dato b {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--texto-secundario);
+}
+
+.grupo-dato span,
+.grupo-dato p {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--tinta-oscura);
+  word-break: break-word;
+}
+
+/* 5. Subsección de listado interno (ej. Productos disponibles o Ítems del pedido) */
+.productos {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: var(--borde-fino);
+}
+
+.productos h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--tinta-oscura);
+}
+
+.productos > p:not(.error-texto):not(.error) {
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  background-color: var(--bg-crema);
+  border: 1.5px dashed var(--tinta-oscura);
+  border-radius: var(--radio-input);
+}
+
+.productos ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.elemento-lista {
+  padding: 0.85rem 1.1rem;
+  font-size: 0.92rem;
+  color: var(--texto-secundario);
+  background-color: #FFFFFF;
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.elemento-lista:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.elemento-lista b {
+  font-weight: 700;
+  color: var(--tinta-oscura);
+}
+
+/* 6. Botones inferiores de navegación y acción */
+.contenedor > a {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.65rem 1.3rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+/* Acción principal (ej. Administrar productos) */
+.contenedor > a.btn-productos {
+  margin-right: 0.75rem;
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.contenedor > a.btn-productos:hover {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+/* Enlace secundario (ej. Volver al listado) */
+.contenedor > a:not(.btn-productos) {
+  background-color: var(--bg-crema);
+  color: var(--tinta-oscura);
+}
+
+.contenedor > a:not(.btn-productos):hover {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.contenedor > a:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* 7. Adaptación móvil */
+@media (max-width: 560px) {
+  .contenedor > div:has(> .grupo-dato),
+  .contenedor > div:has(> .grupo-id) {
+    grid-template-columns: 1fr;
+  }
+
+  .contenedor > a {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .contenedor > a.btn-productos {
+    margin-right: 0;
+    margin-bottom: 0.65rem;
   }
 }
