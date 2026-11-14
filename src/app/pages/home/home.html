@@ -2,10 +2,33 @@
     @if (authService.loggedUser() != null) {
     
     }
-    <p>{{authService.loggedUser()?.email}}</p>
-    <p>{{authService.loggedUser()?.role}}</p>
-    <p>Error Signal: {{authService.error()}}</p>
-    <p>is userLooged: {{authService.isUserLogged()}}</p>
+    @if ((authService.loggedUser()?.role == 'ROLE_CONSUMER')){
+
+        <h3>Cuenta Consumidor</h3>
+       
+        <p><a [routerLink]="['/store/list']">Buscar Comercios</a></p>
+
+    } 
+    @else if (authService.loggedUser()?.role == 'ROLE_MERCHANT'){
+
+        <h3>Cuenta Comerciante</h3>
+       
+        <p><a [routerLink]="['/store/list']">Administrar mis comercios</a></p>
+        
+    }
+    @else if (authService.loggedUser()?.role == 'ROLE_RIDER'){
+
+        <h3>Cuenta Repartidor</h3>
+       
+        <p><a [routerLink]="['/orders/unassigned']">Ver Pedidos sin Asignar</a></p>
+        
+    }
+
+
+    
+    
+   
+  
 </div>
 
 
