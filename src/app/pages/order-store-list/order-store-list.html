@@ -23,10 +23,10 @@
       <thead>
         <tr>
           <th (click)="ordenar('id')">ID{{ flecha('id') }}</th>
+          <th (click)="ordenar('paymentType')">Tipo de Pago{{ flecha('paymentType') }}</th>
           <th (click)="ordenar('total')">Total{{ flecha('total') }}</th>
-          <th (click)="ordenar('status')">Dirección{{ flecha('status') }}</th>
-          <th (click)="ordenar('status')">Dirección{{ flecha('status') }}</th>
-          <th (click)="ordenar('status')">Dirección{{ flecha('status') }}</th>
+          <th (click)="ordenar('status')">Status{{ flecha('status') }}</th>
+          
           <th>Acciones</th>
         </tr>
       </thead>
@@ -35,11 +35,13 @@
         @for (order of orders(); track order.id) {
           <tr>
             <td>{{ order.id }}</td>
-            <td>{{ order.total }}</td>
-            <td>{{ order.total }}</td>
+            <td>{{ order.paymentType}}</td>
+            <td>${{ order.total }}</td>
+            <td>{{ order.status }}</td>
+            
             <td class="actions">
               <a [routerLink]="['/orders/', order.id]">
-                Ver order
+                Ver pedido
               </a>
 
             </td>
@@ -59,7 +61,7 @@
 
       <span>
         Página {{ page() + 1 }} de {{ totalPages() || 1 }}
-        ({{ totalElements() }} comercios)
+        ({{ totalElements() }} pedidos)
       </span>
 
       <button
