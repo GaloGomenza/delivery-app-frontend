@@ -17,7 +17,7 @@
        
         <p><a [routerLink]="['/store/list']">Administrar mis comercios</a></p>
         
-        <p><a [routerLink]="['/orders/my-orders']">Ver mis Pedidos</a></p>
+        <p><a [routerLink]="['/orders/store/1']">Ver mis Pedidos Falta Dropdown</a></p>
 
     }
     @else if (authService.loggedUser()?.role == 'ROLE_RIDER'){

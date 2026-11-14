@@ -1,0 +1,74 @@
+<section class="store-list-container">
+  <header class="header">
+    <h2>Listado de pedidos del comercio</h2>
+
+
+  </header>
+
+  
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  @if (loading()) {
+    <p>Cargando comercios...</p>
+  } @else if (orders().length === 0) {
+    <p>
+      {{ esComerciante()
+        ? 'Todavía no tenés comercios.'
+        : 'No hay comercios para mostrar.' }}
+    </p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th (click)="ordenar('id')">ID{{ flecha('id') }}</th>
+          <th (click)="ordenar('total')">Total{{ flecha('total') }}</th>
+          <th (click)="ordenar('status')">Dirección{{ flecha('status') }}</th>
+          <th (click)="ordenar('status')">Dirección{{ flecha('status') }}</th>
+          <th (click)="ordenar('status')">Dirección{{ flecha('status') }}</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (order of orders(); track order.id) {
+          <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.total }}</td>
+            <td>{{ order.total }}</td>
+            <td class="actions">
+              <a [routerLink]="['/orders/', order.id]">
+                Ver order
+              </a>
+
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <button
+        type="button"
+        [disabled]="page() === 0"
+        (click)="irAPagina(page() - 1)"
+      >
+        Anterior
+      </button>
+
+      <span>
+        Página {{ page() + 1 }} de {{ totalPages() || 1 }}
+        ({{ totalElements() }} comercios)
+      </span>
+
+      <button
+        type="button"
+        [disabled]="page() + 1 >= totalPages()"
+        (click)="irAPagina(page() + 1)"
+      >
+        Siguiente
+      </button>
+    </div>
+  }
+</section>

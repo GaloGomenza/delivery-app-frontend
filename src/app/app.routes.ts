@@ -15,6 +15,7 @@ import { ProductForm } from './pages/product/product-form/product-form';
 import { OrderUnassignedList } from './pages/order-unassigned-list/order-unassigned-list';
 import { OrderStatusUpdate } from './pages/order-status-update/order-status-update';
 import { OrderList } from './pages/order-list/order-list';
+import { OrderStoreList } from './pages/order-store-list/order-store-list';
 
 export const routes: Routes = [
 
@@ -57,7 +58,12 @@ export const routes: Routes = [
         title: 'Ver mis pedidos',
         canActivate: [authGuardFn]
     },
-
+    {
+        path: 'orders/store/:storeId',
+        component: OrderStoreList,
+        title: 'Ver pedidos del comercio',
+        canActivate: [authGuardFn]
+    },
     {
         path: 'orders/:id/status',
         component: OrderStatusUpdate,
