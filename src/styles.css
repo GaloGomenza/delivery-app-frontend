@@ -1,1 +1,456 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg-crema: #FBECE0;
+  --bg-superficie: #FFF8F3;
+  --rosa-principal: #E86F9C;
+  --azul-denim: #3D6899;
+  --azul-denim-hover: #31557E;
+  --teal-acento: #589EA6;
+  --terracota-error: #C93B4B;
+  --tinta-oscura: #1E1E1E;
+  --texto-secundario: #574F4A;
+  --borde-fino: 1.5px solid var(--tinta-oscura);
+  --radio-card: 16px;
+  --radio-input: 10px;
+  --radio-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-crema);
+  color: var(--tinta-oscura);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.contenedor {
+  max-width: 540px;
+  margin: 2.5rem auto;
+  padding: 2rem;
+  background-color: var(--bg-superficie);
+  border: var(--borde-fino);
+  border-radius: var(--radio-card);
+  box-shadow: 4px 4px 0px var(--tinta-oscura);
+}
+
+.encabezado {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1rem;
+  border-bottom: var(--borde-fino);
+}
+
+.encabezado h2 {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--rosa-principal);
+  -webkit-text-stroke: 1px var(--tinta-oscura);
+  text-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+/*Estructura del formulario */
+.formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem 1rem;
+}
+
+.grupo-form,
+.formulario > .error-texto {
+  grid-column: 1 / -1;
+}
+
+.grupo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.grupo-form label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tinta-oscura);
+}
+
+.grupo-form input,
+.grupo-form textarea,
+.grupo-form select {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--tinta-oscura);
+  background-color: #FFFFFF;
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.grupo-form textarea {
+  resize: vertical;
+  min-height: 76px;
+}
+
+.grupo-form input:focus,
+.grupo-form textarea:focus,
+.grupo-form select:focus {
+  outline: none;
+  border-color: var(--azul-denim);
+  box-shadow: 3px 3px 0px var(--teal-acento);
+}
+
+.grupo-form input.ng-invalid.ng-touched,
+.grupo-form textarea.ng-invalid.ng-touched,
+.grupo-form select.ng-invalid.ng-touched {
+  border-color: var(--terracota-error);
+  background-color: #FFF5F6;
+}
+
+.grupo-form p:not(.error-texto) {
+  align-self: flex-end;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+}
+
+/*Mensajes de validación */
+.error-texto {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--terracota-error);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/*Botones de acción*/
+.formulario > a,
+.btn-submit {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+/* Enlace Cancelar*/
+.formulario > a {
+  background-color: var(--bg-crema);
+  color: var(--tinta-oscura);
+}
+
+.formulario > a:hover {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+/* Botón Guardar*/
+.btn-submit {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+.btn-submit:active:not(:disabled),
+.formulario > a:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Ensanchar el contenedor automáticamente cuando tiene tabla o filtros */
+.contenedor:has(.filtros),
+.contenedor:has(table) {
+  max-width: 960px;
+}
+
+/* Encabezado flexible para título a la izquierda y botones a la derecha */
+.encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.encabezado h2 {
+  margin-right: auto;
+}
+
+/* Enlaces de acción en el encabezado (Volver / Agregar) */
+.encabezado a {
+  padding: 0.55rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+/* Primer enlace*/
+.encabezado a:first-of-type {
+  background-color: var(--bg-crema);
+  color: var(--tinta-oscura);
+}
+
+.encabezado a:first-of-type:hover {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+/* Último enlace*/
+.encabezado a:last-of-type {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.encabezado a:last-of-type:hover {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+.contenedor > .error-texto {
+  margin-bottom: 1rem;
+}
+
+/*Barra de filtros */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+}
+
+.filtros label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1 1 220px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--tinta-oscura);
+}
+
+.filtros input,
+.filtros select {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--tinta-oscura);
+  background-color: #FFFFFF;
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+  outline: none;
+  border-color: var(--azul-denim);
+  box-shadow: 3px 3px 0px var(--teal-acento);
+}
+
+/* Mensajes de estado vacío o "Cargando..." */
+.contenedor > p:not(.error-texto) {
+  padding: 2rem 1.25rem;
+  text-align: center;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  background-color: var(--bg-crema);
+  border: 1.5px dashed var(--tinta-oscura);
+  border-radius: var(--radio-input);
+}
+
+/*Tabla de datos */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #FFFFFF;
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+  overflow: hidden;
+}
+
+thead {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+th {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-bottom: var(--borde-fino);
+}
+
+/* Botones de ordenamiento dentro del encabezado de tabla */
+th button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+th button:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+td {
+  padding: 0.85rem 1rem;
+  font-size: 0.92rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #EADAD0;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background-color: #FDF5EE;
+}
+
+/* Columna de acciones (Editar / Eliminar) */
+td:last-child {
+  white-space: nowrap;
+  text-align: right;
+}
+
+td a,
+td button {
+  display: inline-block;
+  padding: 0.38rem 0.85rem;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+}
+
+/* Botón Editar  */
+td a {
+  background-color: var(--teal-acento);
+  color: #FFFFFF;
+  margin-right: 0.45rem;
+}
+
+td a:hover {
+  background-color: #498991;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+/* Botón Eliminar */
+td button {
+  background-color: #FFF5F6;
+  color: var(--terracota-error);
+}
+
+td button:hover {
+  background-color: var(--terracota-error);
+  color: #FFFFFF;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.paginacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+}
+
+.paginacion span {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+}
+
+.paginacion button {
+  padding: 0.5rem 1.1rem;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--tinta-oscura);
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+}
+
+.paginacion button:hover:not(:disabled) {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.paginacion button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 720px) {
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Adaptación a pantallas chicas */
+@media (max-width: 480px) {
+  .contenedor {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .formulario > a,
+  .btn-submit {
+    grid-column: 1 / -1;
+  }
+}
