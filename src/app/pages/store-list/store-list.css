@@ -1,0 +1,30 @@
+/* Columnas ordenables al hacer clic */
+th:not(:last-child) {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease;
+}
+
+th:not(:last-child):hover {
+  background-color: var(--azul-denim-hover);
+}
+
+th:last-child {
+  text-align: right;
+}
+
+/* Destacar el ID con peso semibold y tono secundario */
+td:first-child {
+  font-weight: 700;
+  color: var(--texto-secundario);
+}
+
+/* Diferenciar "Ver comercio" (azul denim) de "Editar" (teal) */
+.actions a:first-child {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.actions a:first-child:hover {
+  background-color: var(--azul-denim-hover);
+}

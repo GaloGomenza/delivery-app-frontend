@@ -1,28 +1,147 @@
-nav{
-    display: flex;
-    height: 50px;
-    justify-content: space-between;
-    background-color:khaki;
-    align-items: center;
-    padding: 5px;
-}
-
-nav div{
-    display: flex;
-    gap: 1rem;
-}
-
-nav a {
-    text-decoration: none;
-    color: var(--rosa-principal);
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-
 nav div a {
     text-decoration: none;
     color: var(--tinta-oscura);
     font-size: 1rem;
     font-weight: 700;
+}
+
+/* 1. Barra de navegación superior */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.9rem 2rem;
+  background-color: var(--bg-superficie);
+  border-bottom: var(--borde-fino);
+}
+
+/* 2. Marca / Logo ("Delivery App" con estilo del título de portada) */
+nav > a {
+  text-decoration: none;
+  transition: transform 0.12s ease;
+}
+
+nav > a:hover {
+  transform: translate(-1px, -1px);
+}
+
+nav > a p {
+  margin: 0;
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--rosa-principal);
+  -webkit-text-stroke: 0.8px var(--tinta-oscura);
+  text-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+/* 3. Grupo derecho de links y acciones */
+nav div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+/* 4. Email del usuario logueado (enlace limpio al perfil, sin aspecto de botón) */
+a[routerLink="myProfile"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--tinta-oscura);
+  background-color: transparent;
+  border-radius: var(--radio-input);
+  transition: background-color 0.15s ease;
+}
+
+/* Punto verde azulado que indica sesión activa */
+a[routerLink="myProfile"]::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--teal-acento);
+  border: 1.2px solid var(--tinta-oscura);
+  flex-shrink: 0;
+}
+
+a[routerLink="myProfile"]:hover {
+  background-color: var(--bg-crema);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 5. Botones tipo píldora (Cerrar Sesión, Registrarme, Iniciar Sesión) */
+a[href="#"],
+a[routerLink="register"],
+a[routerLink="login"] {
+  display: inline-block;
+  padding: 0.5rem 1.15rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Cerrar sesión (estilo de salida en tono terracota) */
+a[href="#"] {
+  background-color: #FFF5F6;
+  color: var(--terracota-error);
+}
+
+a[href="#"]:hover {
+  background-color: var(--terracota-error);
+  color: #FFFFFF;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+/* Registrarme (botón secundario crema) */
+a[routerLink="register"] {
+  background-color: var(--bg-crema);
+  color: var(--tinta-oscura);
+}
+
+a[routerLink="register"]:hover {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+/* Iniciar sesión (botón principal azul denim) */
+a[routerLink="login"] {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+a[routerLink="login"]:hover {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+nav div a:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* 6. Adaptación a pantallas chicas */
+@media (max-width: 600px) {
+  nav {
+    padding: 0.9rem 1rem;
+    justify-content: center;
+  }
+
+  nav div {
+    width: 100%;
+    justify-content: center;
+  }
 }

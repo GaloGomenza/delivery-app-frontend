@@ -1,8 +1,94 @@
-footer{
-    background-color: ghostwhite;
-    height: 2rem;
-    display: flex;
+footer {
+  margin-top: 0;
+  background-color: var(--bg-superficie);
+  border-top: var(--borde-fino);
+  color: var(--tinta-oscura);
+}
+
+.footer-contenido {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* Marca con el estilo de título de portada */
+.footer-marca .titulo {
+  margin: 0 0 0.35rem 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--rosa-principal);
+  -webkit-text-stroke: 0.8px var(--tinta-oscura);
+  text-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.footer-marca .subtitulo {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--texto-secundario);
+}
+
+/* Bloque institucional alineado a la derecha */
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  text-align: right;
+}
+
+/* Píldora azul denim igual a la etiqueta de la diapositiva */
+.badge-materia {
+  display: inline-block;
+  margin-bottom: 0.3rem;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background-color: var(--azul-denim);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+}
+
+.footer-info p {
+  margin: 0;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--tinta-oscura);
+}
+
+/* Franja inferior de créditos */
+.footer-bottom {
+  padding: 0.85rem 2rem;
+  text-align: center;
+  background-color: var(--bg-crema);
+  border-top: 1px solid #E5D4C8;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+}
+
+/* Adaptación a pantallas chicas */
+@media (max-width: 640px) {
+  .footer-contenido {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .footer-info {
     align-items: center;
-    justify-content: center;
+    text-align: center;
+  }
 }
 
