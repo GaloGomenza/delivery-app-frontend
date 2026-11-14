@@ -3,19 +3,19 @@
   <h2>{{userService.user()?.name}} {{userService.user()?.lastName}}</h2>
   <p>{{userService.user()?.email}}</p>
   <p>{{this.getRole()}} - ID: {{userService.user()?.id}}</p>
-  <button (click)="this.changeMode()">Editar</button>
+  <button (click)="this.changeMode()" [disabled]="userService.user() == null">Editar</button>
 }
 @else
 {
   <form [formGroup]="formulario">
       <div>
           <label for="name">Nombre:</label>
-          <input type="name" formControlName="name" id="name">
+          <input type="text" formControlName="name" id="name">
       </div>
 
       <div>
           <label for="lastName">Apellido:</label>
-          <input type="lastName" formControlName="lastName" id="lastName">
+          <input type="text" formControlName="lastName" id="lastName">
       </div>
 
       <p>{{userService.user()?.email}}</p>

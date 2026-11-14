@@ -52,8 +52,8 @@ export class MyProfile implements OnInit{
 
     if (this.editing)
     {
-        this.formulario.controls.name.setValue(this.userService.user()?.name + '');
-        this.formulario.controls.lastName.setValue(this.userService.user()?.lastName + '');
+        this.formulario.controls.name.setValue(this.userService.user()?.name ?? '');
+        this.formulario.controls.lastName.setValue(this.userService.user()?.lastName ?? '');
     }
 
     if (save)
