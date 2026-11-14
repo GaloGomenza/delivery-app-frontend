@@ -1,6 +1,8 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../../services/order-service';
+import { UpdateOrderStatusRequest } from '../../models/UpdateOrderStatusRequest';
+import { AuthService } from '../../auth/service/auth-service';
 
 @Component({
     selector: 'app-order-status',
@@ -12,14 +14,14 @@ export class OrderStatusPage implements OnInit, OnDestroy {
 
     route = inject(ActivatedRoute);
     orderService = inject(OrderService);
+    authService = inject(AuthService);
 
     orderId: number = 0;
     refreshId: number | null = null;
 
     steps: string[] = ['PENDING', 'CONFIRMED', 'CONFIRMED_ASSIGNED', 'DISPATCHED', 'COMPLETED'];
 
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.orderService.order.set(null);
 
         this.orderId = Number(this.route.snapshot.params['id']);
@@ -36,18 +38,16 @@ export class OrderStatusPage implements OnInit, OnDestroy {
         }, 10000);
     }
 
-    ngOnDestroy():void
-    {
+    ngOnDestroy(): void {
         if (this.refreshId != null)
             window.clearInterval(this.refreshId);
     }
 
-    actualizar():void {
+    actualizar(): void {
         this.orderService.getOrderById(this.orderId);
     }
 
-    isStepDone(step: string):boolean
-    {
+    isStepDone(step: string): boolean {
         let order = this.orderService.order();
 
         if (order == null)
@@ -59,11 +59,11 @@ export class OrderStatusPage implements OnInit, OnDestroy {
         return this.steps.indexOf(step) <= this.steps.indexOf(order.status);
     }
 
-    isStepCurrent(step: string):boolean {
+    isStepCurrent(step: string): boolean {
         return this.orderService.order()?.status == step;
     }
 
-    getStatusLabel():string {
+    getStatusLabel(): string {
         let order = this.orderService.order();
 
         if (order == null)
@@ -72,14 +72,13 @@ export class OrderStatusPage implements OnInit, OnDestroy {
         return this.getStepLabel(order.status);
     }
 
-    getStatusMessage():string {
+    getStatusMessage(): string {
         let order = this.orderService.order();
 
         if (order == null)
             return '';
 
-        switch (order.status)
-        {
+        switch (order.status) {
             case 'PENDING':
                 return 'Tu pedido está pendiente de confirmación por el comercio.';
             case 'CONFIRMED':
@@ -97,15 +96,13 @@ export class OrderStatusPage implements OnInit, OnDestroy {
         }
     }
 
-    getPaymentLabel():string
-    {
+    getPaymentLabel(): string {
         let order = this.orderService.order();
 
         if (order == null)
             return '';
 
-        switch (order.paymentType)
-        {
+        switch (order.paymentType) {
             case 'EFECTIVO':
                 return 'Efectivo';
             case 'TRANSFERENCIA':
@@ -117,10 +114,8 @@ export class OrderStatusPage implements OnInit, OnDestroy {
         }
     }
 
-    getStepLabel(step:string):string
-    {
-        switch (step)
-        {
+    getStepLabel(step: string): string {
+        switch (step) {
             case 'PENDING':
                 return 'Pendiente';
             case 'CONFIRMED':
@@ -137,4 +132,33 @@ export class OrderStatusPage implements OnInit, OnDestroy {
                 return step;
         }
     }
+
+    confirmOrder(orderId: number | undefined) {
+        const updateOrderStatusRequest: UpdateOrderStatusRequest = { status: 'CONFIRMED' };
+        if (orderId) {
+            this.orderService.updateOrderStatus(orderId, updateOrderStatusRequest);
+        }
+    }
+
+    cancelOrder(orderId: number | undefined) {
+        const updateOrderStatusRequest: UpdateOrderStatusRequest = { status: 'CANCELLED' };
+        if (orderId) {
+            this.orderService.updateOrderStatus(orderId, updateOrderStatusRequest);
+        }
+    }
+
+    dispatchOrder(orderId: number | undefined) {
+        const updateOrderStatusRequest: UpdateOrderStatusRequest = { status: 'DISPATCHED' };
+        if (orderId) {
+            this.orderService.updateOrderStatus(orderId, updateOrderStatusRequest);
+        }
+    }
+
+    completeOrder(orderId: number | undefined) {
+        const updateOrderStatusRequest: UpdateOrderStatusRequest = { status: 'COMPLETED' };
+        if (orderId) {
+            this.orderService.updateOrderStatus(orderId, updateOrderStatusRequest);
+        }
+    }
+
 }

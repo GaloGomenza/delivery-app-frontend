@@ -91,23 +91,6 @@ export class OrderService {
         });
     }
 
-    /*   getOrdersByStore(storeId: number){
-           this.http.get<OrderResponse[]>(this.url + '/store/' + storeId).subscribe({
-               next: (data) => {
-                    this.orders.set(data);
-                   
-               },
-               error: () => {
-                   this.error.set('Error asignando pedidos');
-               }
-   
-   
-   
-           })
-       }
-   
-   */
-
 
     getOrdersByStore(query: PageQuery, filter: OrderFilter, storeId: number): Observable<PaginationResult<Order>> {
 
