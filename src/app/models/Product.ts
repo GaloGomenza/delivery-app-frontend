@@ -8,6 +8,7 @@ export interface Product {
   imageURL: string | null;
   status: ProductStatus;
   storeId: number;
+  storeName: string;
 }
 
 export type ProductRequest = Omit<Product, 'id'>;

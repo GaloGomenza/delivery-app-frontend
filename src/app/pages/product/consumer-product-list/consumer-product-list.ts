@@ -7,12 +7,13 @@ import { PageQuery } from '../../../models/Pagination';
 import { Product } from '../../../models/Product';
 import { Ubicacion_provisoria } from '../../../models/Ubicacion-provisoria';
 import { ProductService } from '../../../services/product-service';
+import { CurrencyPipe } from '@angular/common';
 
 type ProductSortBy = 'id' | 'name' | 'price';
 
 @Component({
   selector: 'app-consumer-product-list',
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, CurrencyPipe],
   templateUrl: './consumer-product-list.html',
   styleUrl: './consumer-product-list.css',
 })
