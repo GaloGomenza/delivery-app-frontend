@@ -7,10 +7,12 @@ export interface PaginationResult<T> {
 }
  
 export type ProductSortBy = 'id' | 'name' | 'price' | 'status';
- 
-export interface PageQuery {
+export type StoreSortBy = 'id' | 'name' | 'address';
+export type OrderSortBy = 'id' | 'total' | 'status' | 'paymentType' | 'lastUpdate' ;
+
+export interface PageQuery<T extends string = string> {
   page: number;
   size: number;
-  sortBy: ProductSortBy;
+  sortBy: T;
   direction: 'asc' | 'desc';
 }

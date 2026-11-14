@@ -1,0 +1,24 @@
+<h2>Listado de pedidos sin asignar</h2>
+
+@if (orderService.error() != '') {
+    <p class="error">{{ orderService.error() }}</p>
+}
+
+@if (orderService.orders().length == 0){
+    <p>No hay pedidos sin asignar</p>
+}@else {
+
+    @for (order of orderService.orders(); track $index) {
+        <p><strong>Pedido #{{ order?.id }}</strong></p>
+        <p>StoreId: {{order.storeId}} //otra llamada para sacar direccion</p>
+        <p>CustomerLatitude: {{order.customerLatitude}}</p>
+        <p>CustomerLongitude: {{order.customerLongitude}}</p>
+        <p>MerchantLatitude: {{order.latitude}}</p>
+        <p>MerchantLongitude: {{order.longitude}}</p>
+        <a [routerLink]="['/orders', order.id , 'status']"><p>Tomar este pedido</p></a>
+
+    }
+}
+
+
+
