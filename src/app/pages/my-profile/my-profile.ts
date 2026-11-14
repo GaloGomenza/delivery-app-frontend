@@ -70,7 +70,9 @@ export class MyProfile implements OnInit{
 
   deleteAccount():void
   {
-    // WIP
+    this.deleting = false;
+
+    this.authService.deleteMyAccount();
   }
 
   cancelDeleteAccount():void

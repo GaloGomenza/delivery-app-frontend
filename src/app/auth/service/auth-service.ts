@@ -73,6 +73,19 @@ export class AuthService {
 
     }
 
+    deleteMyAccount() {
+      this.http.delete<void>('api/v1/users/me').subscribe({
+          next: () => {
+              this.userService.user.set(null);
+              this.error.set(null);
+              this.logout();
+          },
+          error: () => {
+              this.error.set('No se pudo eliminar la cuenta');
+          }
+      });
+    }
+
     logout(){
         this.removeUserFromStorage();
         this.tokenService.removeToken();
