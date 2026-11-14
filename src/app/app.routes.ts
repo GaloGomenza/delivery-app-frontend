@@ -14,6 +14,7 @@ import { ProductList } from './pages/product/product-list/product-list';
 import { ProductForm } from './pages/product/product-form/product-form';
 import { OrderUnassignedList } from './pages/order-unassigned-list/order-unassigned-list';
 import { OrderStatusUpdate } from './pages/order-status-update/order-status-update';
+import { OrderList } from './pages/order-list/order-list';
 
 export const routes: Routes = [
 
@@ -51,10 +52,23 @@ export const routes: Routes = [
         canActivate: [authGuardFn]
     },
     {
+        path: 'orders/my-orders',
+        component: OrderList,
+        title: 'Ver mis pedidos',
+        canActivate: [authGuardFn]
+    },
+
+    {
         path: 'orders/:id/status',
         component: OrderStatusUpdate,
         title: 'Actualizando estado del pedido',
         canActivate: [authGuardFn]},
+            {
+        path: 'orders/:id',
+        component: OrderStatusPage,
+        title: 'Estado del pedido',
+        canActivate: [authGuardFn]
+    },
     {    
         path: 'store/new', 
         component : StoreForm,
@@ -73,12 +87,7 @@ export const routes: Routes = [
     { path: 'store/list', component: StoreList },
     { path: 'store/form', component: StoreForm },
     { path: 'store/form/:id', component: StoreForm },
-    {
-        path: 'orders/:id',
-        component: OrderStatusPage,
-        title: 'Estado del pedido',
-        canActivate: [authGuardFn]
-    },
+
     {
         path: 'store/:id/products',
         component: ProductList,
