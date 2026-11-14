@@ -16,7 +16,6 @@ import { OrderUnassignedList } from './pages/order-unassigned-list/order-unassig
 import { OrderStatusUpdate } from './pages/order-status-update/order-status-update';
 
 export const routes: Routes = [
-    { path: '', component: Home },
     { path: 'store/list', component: StoreList },
     { path: 'store/form', component: StoreForm },
     { path: 'store/form/:id', component: StoreForm },
@@ -63,7 +62,8 @@ export const routes: Routes = [
         path: 'orders/:id/status',
         component: OrderStatusUpdate,
         title: 'Actualizando estado del pedido',
-        canActivate: [authGuardFn]
+        canActivate: [authGuardFn]},
+    {    
         path: 'store/new', 
         component : StoreForm,
         canActivate : [authGuardFn]
