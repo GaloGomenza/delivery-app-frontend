@@ -11,4 +11,4 @@ export interface Product {
   storeName: string;
 }
 
-export type ProductRequest = Omit<Product, 'id'>;
+export type ProductRequest = Omit<Product, 'id' | 'storeName'>;
