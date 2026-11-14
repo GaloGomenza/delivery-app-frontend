@@ -22,6 +22,7 @@ export class MyProfile implements OnInit{
   )
 
   editing = false;
+  deleting = false;
 
   ngOnInit(): void {
     this.userService.getMyProfile();
@@ -60,5 +61,20 @@ export class MyProfile implements OnInit{
     {
       // WIP
     }
+  }
+
+  alertDelete():void
+  {
+    this.deleting = true;
+  }
+
+  deleteAccount():void
+  {
+    // WIP
+  }
+
+  cancelDeleteAccount():void
+  {
+    this.deleting = false;
   }
 }

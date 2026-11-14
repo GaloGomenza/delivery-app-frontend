@@ -1,27 +1,41 @@
-@if (!this.editing)
+@if (!this.deleting)
 {
-  <h2>{{userService.user()?.name}} {{userService.user()?.lastName}}</h2>
-  <p>{{userService.user()?.email}}</p>
-  <p>{{this.getRole()}} - ID: {{userService.user()?.id}}</p>
-  <button (click)="this.changeMode()" [disabled]="userService.user() == null">Editar</button>
+  @if (!this.editing)
+  {
+    <h2>{{userService.user()?.name}} {{userService.user()?.lastName}}</h2>
+    <p>{{userService.user()?.email}}</p>
+    <p>{{this.getRole()}} - ID: {{userService.user()?.id}}</p>
+    <button (click)="this.changeMode()" [disabled]="userService.user() == null">Editar</button>
+  }
+  @else
+  {
+    <form [formGroup]="formulario">
+        <div>
+            <label for="name">Nombre:</label>
+            <input type="text" formControlName="name" id="name">
+        </div>
+
+        <div>
+            <label for="lastName">Apellido:</label>
+            <input type="text" formControlName="lastName" id="lastName">
+        </div>
+
+        <p>{{userService.user()?.email}}</p>
+        <p>{{this.getRole()}} - ID: {{userService.user()?.id}}</p>
+
+        <button (click)="this.changeMode(true)" [disabled]="formulario.invalid">Guardar</button>
+        <button (click)="this.changeMode()" >Cancelar</button>
+    </form>
+  }
+
+  <div>
+    <button class="borrar" (click)="this.alertDelete()" [disabled]="userService.user() == null || this.editing" >Eliminar mi cuenta</button>
+  </div>
 }
+
 @else
 {
-  <form [formGroup]="formulario">
-      <div>
-          <label for="name">Nombre:</label>
-          <input type="text" formControlName="name" id="name">
-      </div>
-
-      <div>
-          <label for="lastName">Apellido:</label>
-          <input type="text" formControlName="lastName" id="lastName">
-      </div>
-
-      <p>{{userService.user()?.email}}</p>
-      <p>{{this.getRole()}} - ID: {{userService.user()?.id}}</p>
-
-      <button (click)="this.changeMode(true)" [disabled]="formulario.invalid">Guardar</button>
-      <button (click)="this.changeMode()" >Cancelar</button>
-  </form>
+    <h3>¿Esta seguro de que desea eliminar su cuenta?</h3>
+    <button class="borrar" (click)="this.deleteAccount()" [disabled]="userService.user() == null" >Eliminar mi cuenta</button>
+    <button (click)="this.cancelDeleteAccount()" [disabled]="userService.user() == null" >Cancelar</button>
 }
