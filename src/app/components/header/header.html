@@ -4,7 +4,7 @@
     <a routerLink="home"><p>Delivery App</p></a>
 
     <div>
-        <a routerLink="myProfile">{{authService.loggedUser()?.email}}</a>
+        <a routerLink="myProfile">{{(userService.user()?.name + " " + userService.user()?.lastName) || authService.loggedUser()?.email}}</a>
         <a href=# (click)="authService.logout()">Cerrar Sesion</a>
     </div>
     }@else {

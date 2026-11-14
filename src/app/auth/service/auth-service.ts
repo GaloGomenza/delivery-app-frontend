@@ -6,6 +6,7 @@ import { AuthSuccessResponse } from "../dtos/authSuccessResponse";
 import { LoginRequest } from "../dtos/loginRequest";
 import { RegisterRequest } from "../dtos/registerRequest";
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user-service';
 
 @Injectable({
     providedIn: 'root',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 export class AuthService {
 
     private tokenService = inject(TokenService);
+    private userService = inject(UserService);
     private http = inject(HttpClient);
     private apiRegisterUrl = "api/v1/auth/register";
     private apiLoginUrl = "api/v1/auth/login"
@@ -26,7 +28,7 @@ export class AuthService {
         const token = this.tokenService.getToken();
         if (token != null) {
             this.logUser(token);
-        } 
+        }
     }
 
 
@@ -41,7 +43,7 @@ export class AuthService {
                 } else {
                     this.error.set("Error leyendo token");
                 }
-                
+
             },
             error: (err) => {
                 console.log(err);
@@ -109,6 +111,7 @@ export class AuthService {
             this.setUserIntoStorage(loggedUser);
             this.loggedUser.set(this.getUserFromStorage());
             this.isUserLogged.set(true);
+            this.userService.getMyProfile();
         }
     }
 
