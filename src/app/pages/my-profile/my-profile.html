@@ -30,7 +30,6 @@
             <p class="error-texto">{{ mensaje('name') }}</p>
           }
         </div>
-      </div>
 
         <div class="grupo-form">
           <label for="lastName">Apellido</label>
@@ -101,7 +100,9 @@
       <div class="zona-borrar">
         <button type="button" class="borrar" (click)="alertDelete()">Eliminar mi cuenta</button>
       </div>
-
-    }
-  }
+          
+      }
+        } @else {
+          <p>Cargando perfil...</p>
+        }
 </div>
