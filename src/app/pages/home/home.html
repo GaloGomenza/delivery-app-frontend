@@ -1,49 +1,61 @@
-<div class = 'contenedor'>
+<div class='contenedor'>
     @if (authService.loggedUser() != null) {
-    
+
     }
     @if ((authService.loggedUser()?.role == 'ROLE_CONSUMER')){
 
-        <h3>Cuenta Consumidor</h3>
-       
-        <p><a [routerLink]="['/store/list']">Buscar Comercios</a></p>
+    <h3>Cuenta Consumidor</h3>
 
-        <p><a [routerLink]="['/orders/my-orders']">Ver mis Pedidos</a></p>
+    <p>
+        <a [routerLink]="['/store/list']">
+            Buscar Comercios
+        </a>
+    </p>
 
-    } 
+    <p>
+        <a [routerLink]="['/consumer/products']">
+            Ver todos los productos
+        </a>
+    </p>
+
+    <p>
+        <a [routerLink]="['/orders/my-orders']">
+            Ver mis Pedidos
+        </a>
+    </p>
+
+    }
     @else if (authService.loggedUser()?.role == 'ROLE_MERCHANT'){
 
-        <h3>Cuenta Comerciante</h3>
-       
-        <p><a [routerLink]="['/store/list']">Administrar mis comercios</a></p>
-        
-        <p>Ver mis Pedidos del comercio:
+    <h3>Cuenta Comerciante</h3>
+
+    <p><a [routerLink]="['/store/list']">Administrar mis comercios</a></p>
+
+    <p>Ver mis Pedidos del comercio:
         <select #navSelect (change)="onNavigate(navSelect.value)">
             @for (store of stores(); track $index) {
 
-                <option value="{{store.id}}">{{store.name}}</option>
+            <option value="{{store.id}}">{{store.name}}</option>
             }
-            
+
         </select>
-        </p>
-        
+    </p>
+
 
     }
     @else if (authService.loggedUser()?.role == 'ROLE_RIDER'){
 
-        <h3>Cuenta Repartidor</h3>
-       
-        <p><a [routerLink]="['/orders/unassigned']">Ver Pedidos sin Asignar</a></p>
+    <h3>Cuenta Repartidor</h3>
 
-        <p><a [routerLink]="['/orders/my-orders']">Ver mis Pedidos (Hay que modficar el backend)</a></p>
-        
+    <p><a [routerLink]="['/orders/unassigned']">Ver Pedidos sin Asignar</a></p>
+
+    <p><a [routerLink]="['/orders/my-orders']">Ver mis Pedidos (Hay que modficar el backend)</a></p>
+
     }
 
 
-    
-    
-   
-  
+
+
+
+
 </div>
-
-

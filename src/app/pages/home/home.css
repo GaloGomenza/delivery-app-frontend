@@ -69,31 +69,40 @@ h3 {
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease, color 0.15s ease;
 }
 
-/* Primer acceso: Azul denim */
-.contenedor > p:nth-of-type(odd) a {
+/* Primer y segundo botón: azul denim */
+.contenedor > p:nth-of-type(1) a,
+.contenedor > p:nth-of-type(2) a {
   background-color: var(--azul-denim);
   color: #FFFFFF;
 }
 
-.contenedor > p:nth-of-type(odd) a:hover {
+.contenedor > p:nth-of-type(1) a:hover,
+.contenedor > p:nth-of-type(2) a:hover {
   background-color: var(--azul-denim-hover);
   transform: translate(-2px, -2px);
   box-shadow: 5px 5px 0px var(--tinta-oscura);
 }
 
-/* Segundo acceso: Crema cálido con hover en verde azulado (teal) */
-.contenedor > p:nth-of-type(even) a {
+/* Tercer botón: crema cálido, centrado */
+.contenedor > p:nth-of-type(3) {
+  grid-column: 1 / -1;
+  justify-content: center;
+}
+
+.contenedor > p:nth-of-type(3) a {
+  flex: 0 1 50%;
   background-color: var(--bg-crema);
   color: var(--tinta-oscura);
 }
 
-.contenedor > p:nth-of-type(even) a:hover {
+.contenedor > p:nth-of-type(3) a:hover {
   background-color: var(--teal-acento);
   color: #FFFFFF;
   transform: translate(-2px, -2px);
   box-shadow: 5px 5px 0px var(--tinta-oscura);
 }
 
+/* Efecto al presionar */
 .contenedor > p a:active {
   transform: translate(1px, 1px);
   box-shadow: 1px 1px 0px var(--tinta-oscura);
@@ -109,4 +118,8 @@ h3 {
   .contenedor > p a {
     min-height: 64px;
   }
+
+  .contenedor > p:nth-of-type(3) a {
+  flex-basis: 100%;
+}
 }
