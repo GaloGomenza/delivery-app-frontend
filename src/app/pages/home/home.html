@@ -25,25 +25,26 @@
     </p>
 
     }
-    @else if (authService.loggedUser()?.role == 'ROLE_MERCHANT'){
+    @else if (authService.loggedUser()?.role == 'ROLE_MERCHANT') {
 
     <h3>Cuenta Comerciante</h3>
 
-    <p><a [routerLink]="['/store/list']">Administrar mis comercios</a></p>
-
-    <p>Ver mis Pedidos del comercio:
-        <select #navSelect (change)="onNavigate(navSelect.value)">
-            @for (store of stores(); track $index) {
-
-            <option value="{{store.id}}">{{store.name}}</option>
-            }
-
-        </select>
+    <p class="administrar-comercios">
+        <a [routerLink]="['/store/list']">Administrar mis comercios</a>
     </p>
 
+    <div class="pedidos-comercio">
+        <button type="button" (click)="onNavigate(navSelect.value)" [disabled]="stores().length === 0">
+            Ver pedidos
+        </button>
 
-    }
-    @else if (authService.loggedUser()?.role == 'ROLE_RIDER'){
+        <select #navSelect [disabled]="stores().length === 0">
+            @for (store of stores(); track store.id) {
+            <option [value]="store.id">{{ store.name }}</option>
+            }
+        </select>
+    </div>
+    } @else if (authService.loggedUser()?.role == 'ROLE_RIDER'){
 
     <h3>Cuenta Repartidor</h3>
 

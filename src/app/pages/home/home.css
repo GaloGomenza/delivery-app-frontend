@@ -1,4 +1,3 @@
-/* 1. Estira el componente dentro de <main> para poder centrar la tarjeta */
 :host {
   flex: 1;
   display: flex;
@@ -6,7 +5,6 @@
   padding: 1.5rem 1rem;
 }
 
-/* 2. Contenedor principal centrado vertical y horizontalmente */
 .contenedor {
   width: 100%;
   max-width: 680px;
@@ -21,12 +19,10 @@
   box-shadow: 4px 4px 0px var(--tinta-oscura);
 }
 
-/* Oculta la tarjeta si no hay usuario logueado */
 .contenedor:not(:has(h3, a)) {
   display: none;
 }
 
-/* 3. Insignia del rol (Cuenta Consumidor / Comerciante / Repartidor) */
 h3 {
   grid-column: 1 / -1;
   justify-self: start;
@@ -42,7 +38,6 @@ h3 {
   box-shadow: 2px 2px 0px var(--tinta-oscura);
 }
 
-/* 4. Reseteo de los <p> para neutralizar el estilo de mensajes vacíos del styles.css */
 .contenedor > p {
   margin: 0;
   padding: 0;
@@ -51,7 +46,6 @@ h3 {
   border: none;
 }
 
-/* 5. Tarjetas de acceso rápido */
 .contenedor > p a {
   flex: 1;
   display: flex;
@@ -69,7 +63,6 @@ h3 {
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease, color 0.15s ease;
 }
 
-/* Primer y segundo botón: azul denim */
 .contenedor > p:nth-of-type(1) a,
 .contenedor > p:nth-of-type(2) a {
   background-color: var(--azul-denim);
@@ -83,7 +76,6 @@ h3 {
   box-shadow: 5px 5px 0px var(--tinta-oscura);
 }
 
-/* Tercer botón: crema cálido, centrado */
 .contenedor > p:nth-of-type(3) {
   grid-column: 1 / -1;
   justify-content: center;
@@ -102,13 +94,83 @@ h3 {
   box-shadow: 5px 5px 0px var(--tinta-oscura);
 }
 
-/* Efecto al presionar */
 .contenedor > p a:active {
   transform: translate(1px, 1px);
   box-shadow: 1px 1px 0px var(--tinta-oscura);
 }
 
-/* 6. Adaptación a pantallas chicas */
+.administrar-comercios {
+  grid-column: 1 / -1;
+}
+
+.administrar-comercios a {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.administrar-comercios a:hover {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px var(--tinta-oscura);
+}
+
+/* 8. Comerciante: botón y dropdown debajo */
+.pedidos-comercio {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Botón Ver pedidos a la izquierda */
+.pedidos-comercio button {
+  width: 100%;
+  min-height: 55px;
+  padding: 0.8rem 1.2rem;
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+  cursor: pointer;
+  font-size: 0.98rem;
+  font-weight: 700;
+  transition: transform 0.12s ease, box-shadow 0.12s ease,
+    background-color 0.15s ease;
+}
+
+.pedidos-comercio button:hover:not(:disabled) {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px var(--tinta-oscura);
+}
+
+.pedidos-comercio select {
+  width: 100%;
+  min-width: 0;
+  min-height: 55px;
+  padding: 0.8rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background-color: var(--bg-crema);
+  color: var(--tinta-oscura);
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+}
+
+.pedidos-comercio button:disabled,
+.pedidos-comercio select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.contenedor > p a:active,
+.pedidos-comercio button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--tinta-oscura);
+}
+
 @media (max-width: 560px) {
   .contenedor {
     padding: 1.5rem;
