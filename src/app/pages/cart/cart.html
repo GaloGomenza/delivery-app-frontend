@@ -83,7 +83,7 @@
         <h3>Datos del pedido</h3>
 
         <label for="direccion">
-          Dirección de entrega (opcional):
+          Dirección de entrega:
         </label>
 
         <input
@@ -93,10 +93,6 @@
           maxlength="50"
           [(ngModel)]="direccion"
           placeholder="Ingresá una dirección">
-
-        <p>
-          Por el momento, la dirección es solamente informativa.
-        </p>
 
         <label for="paymentType">
           Método de pago:
@@ -110,6 +106,7 @@
           <option value="">Seleccioná un método de pago</option>
           <option value="EFECTIVO">Efectivo</option>
           <option value="TRANSFERENCIA">Transferencia</option>
+          <option value="PAGODIGITAL">Pago digital</option>
 
         </select>
 
