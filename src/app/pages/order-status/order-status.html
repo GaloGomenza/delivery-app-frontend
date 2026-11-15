@@ -7,7 +7,13 @@
     <p class="error">{{ orderService.error() }}</p>
     }
 
-    @if (orderService.order() != null && authService.loggedUser()?.role != null) {
+    
+
+    <p><strong>Pedido #{{ orderService.order()?.id }}</strong></p>
+    <p>Estado: {{ getStatusLabel() }}</p>
+    <p>{{ getStatusMessage() }}</p>
+
+@if (orderService.order() != null && authService.loggedUser()?.role != null) {
 
     @if (orderService.order()?.status === 'PENDING' && authService.loggedUser()?.role === 'ROLE_MERCHANT') {
     <button (click)="confirmOrder(orderService.order()?.id)">Confirmar</button>
@@ -21,10 +27,6 @@
     @if (orderService.order()?.status === 'DISPATCHED' && authService.loggedUser()?.role === 'ROLE_RIDER') {
     <button (click)="completeOrder(orderService.order()?.id)">Pedido entregado</button>
     }
-
-    <p><strong>Pedido #{{ orderService.order()?.id }}</strong></p>
-    <p>Estado: {{ getStatusLabel() }}</p>
-    <p>{{ getStatusMessage() }}</p>
 
     @if (orderService.order()?.status == 'CANCELLED') {
     <p class="cancelled">El pedido fue cancelado y no continúa su curso.</p>
