@@ -95,54 +95,53 @@ export class OrderStatusPage implements OnInit, OnDestroy {
         switch (order.status) {
             case 'PENDING':
                 if (this.authService.loggedUser()?.role === 'ROLE_MERCHANT') {
-                    return 'Nuevo pedido. Acepta or Rechaza el pedido?'
+                    return '¡Nuevo pedido! Acéptelo o rechácelo.'
                 } else {
-                    return 'Tu pedido está pendiente de confirmación por el comercio.';
+                    return 'Tu pedido está pendiente de confirmación.';
                 }
+
             case 'CONFIRMED':
                 if (this.authService.loggedUser()?.role === 'ROLE_MERCHANT') {
                     return 'Confirmaste el pedido. Buscando repartidor...'
                 } else if (this.authService.loggedUser()?.role === 'ROLE_RIDER'){
-                    return 'Pedido buscando repartidor. Deseas tomarlo?';
+                    return 'Pedido buscando repartidor. ¿Desea tomarlo?';
                 } else{
-                    return 'El comercio aceptó tu pedido y esta en preparacion. Esperando que un repartidor lo tome.';
+                    return 'El comercio confirmó tu pedido y está en preparación. Esperando que un repartidor lo tome...';
                 }
 
-                
             case 'CONFIRMED_ASSIGNED':
                 if (this.authService.loggedUser()?.role === 'ROLE_MERCHANT') {
-                    return 'Un repartidor ha tomado el pedido. Entregaselo cuando estee listo.';
+                    return 'Un repartidor ha tomado el pedido. Entregáselo cuando esté listo.';
                 } else if (this.authService.loggedUser()?.role === 'ROLE_RIDER'){
-                    return 'Dirigete al comercio. Te entragarán el pedido cuando estee listo';
+                    return 'Dirígete al comercio. Te entragarán el pedido cuando esté listo';
                 } else{
-                    return 'Tu pedido esta en preparacion. El repartidor lo esta esperando.';
+                    return 'Tu pedido está en preparacion. El repartidor lo está esperando.';
                 }
 
             case 'DISPATCHED':
                 if (this.authService.loggedUser()?.role === 'ROLE_MERCHANT') {
-                    return 'El repartidor entregará el pedido al cliente.';
+                    return 'Esperando que el repartidor entregue el pedido...';
                 } else if (this.authService.loggedUser()?.role === 'ROLE_RIDER'){
                     return 'Recibiste el pedido. Entregalo en el domicilio del cliente.';
                 } else{
-                    return 'Tu pedido está en camino. Cuando te lo entreguen avisanos.';
+                    return '¡Tu pedido está en camino! Por favor confirmá cuando llegue.';
                 }
 
             case 'COMPLETED':
                 if (this.authService.loggedUser()?.role === 'ROLE_MERCHANT') {
-                    return 'El cliente recibio su pedido.';
+                    return '¡El cliente ha recibido el pedido!';
                 } else if (this.authService.loggedUser()?.role === 'ROLE_RIDER'){
-                    return 'El cliente informa que le has entregado el pedido.';
+                    return '¡El cliente confirmó que le has entregado el pedido!';
                 } else{
-                    return 'Haz recibido tu pedido. A disfrutar!.';
+                    return 'Has recibido tu pedido. ¡A disfrutar!';
                 }
 
             case 'CANCELLED':
                 if (this.authService.loggedUser()?.role === 'ROLE_MERCHANT') {
-                    return 'Haz cancelado el pedido.';
+                    return 'Has cancelado el pedido.';
                 } else{
-                    return 'El pedido fue cancelado por el comercio.';
+                    return 'El pedido fue rechazado por el comercio.';
                 }
-
 
             default:
                 return '';
