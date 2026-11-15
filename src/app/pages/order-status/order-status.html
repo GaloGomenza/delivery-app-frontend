@@ -1,59 +1,86 @@
-<div class = "contenedor">
+<div class="contenedor">
     <div class="encabezado">
         <h2>Estado del pedido</h2>
     </div>
 
     @if (orderService.error() != '') {
-        <p class="error">{{ orderService.error() }}</p>
+    <p class="error">{{ orderService.error() }}</p>
     }
 
     @if (orderService.order() != null && authService.loggedUser()?.role != null) {
 
-        @if (orderService.order()?.status === 'PENDING' && authService.loggedUser()?.role === 'ROLE_MERCHANT') {
-            <button (click)="confirmOrder(orderService.order()?.id)">CONFIRMAR</button>
-            <button (click)="cancelOrder(orderService.order()?.id)" >CANCELAR</button>
-        }
-        
-        @if (orderService.order()?.status === 'CONFIRMED_ASSIGNED' && authService.loggedUser()?.role === 'ROLE_MERCHANT') {
-            <button (click)="dispatchOrder(orderService.order()?.id)">ENTREGAR PEDIDO AL REPARTIDOR</button>
-        }
 
-        @if (orderService.order()?.status === 'DISPATCHED' && authService.loggedUser()?.role === 'ROLE_CONSUMER') {
-            <button (click)="completeOrder(orderService.order()?.id)">RECIBI MI PEDIDO</button>
-        }
-        
-        
-        
+    <p><strong>Pedido #{{ orderService.order()?.id }}</strong></p>
+    <p>Estado: {{ getStatusMessage() }} </p>
+    
+    @if (orderService.order()?.status === 'PENDING' && authService.loggedUser()?.role === 'ROLE_MERCHANT') {
+        <p>
+        <button (click)="confirmOrder(orderService.order()?.id)">CONFIRMAR</button>
+        <button (click)="cancelOrder(orderService.order()?.id)">CANCELAR</button>
+        </p>
+    }
+
+    @if (orderService.order()?.status === 'CONFIRMED_ASSIGNED' && authService.loggedUser()?.role === 'ROLE_MERCHANT') {
+        <p>
+        <button (click)="dispatchOrder(orderService.order()?.id)">ENTREGAR PEDIDO AL REPARTIDOR</button>
+        </p>
+
+    }
+
+    @if (orderService.order()?.status === 'DISPATCHED' && authService.loggedUser()?.role === 'ROLE_CONSUMER') {
+        <p>
+        <button (click)="completeOrder(orderService.order()?.id)">RECIBI MI PEDIDO</button>
+        </p>
+    }
 
 
-        <p><strong>Pedido #{{ orderService.order()?.id }}</strong></p>
-        <p>Estado: {{ getStatusLabel() }}</p>
-        <p>{{ getStatusMessage() }}</p>
-
+    @if (authService.loggedUser()?.role === 'ROLE_CONSUMER'){
         @if (orderService.order()?.status == 'CANCELLED') {
             <p class="cancelled">El pedido fue cancelado y no continúa su curso.</p>
-        } @else {
+        }@else {
+            <div>
             <ol class="steps">
                 @for (step of steps; track step) {
                     <li [class.done]="isStepDone(step)" [class.current]="isStepCurrent(step)">
-                        {{ getStepLabel(step) }}
+                    {{ getStepLabel(step) }}
                     </li>
                 }
             </ol>
-        }
+            </div>
+         }
 
-        <p>Dirección de entrega: {{ orderService.order()?.customerAddress }}</p>
-        <p>Total: {{ orderService.order()?.total }}</p>
-        <p>Método de pago: {{ getPaymentLabel() }}</p>
+    }
+
+    <p>Dirección de entrega: {{ orderService.order()?.customerAddress }}</p>
+    <p>Total: ${{ orderService.order()?.total }}</p>
+    <p>Método de pago: {{ getPaymentLabel() }}</p>
+    @if (authService.loggedUser()?.role != 'ROLE_MERCHANT'){
         <p>Comercio: {{ orderService.order()?.storeId }}</p>
+    }
+    @if (authService.loggedUser()?.role != 'ROLE_CONSUMER'){
         <p>Consumidor: {{ orderService.order()?.consumerId }}</p>
-        <p>Repartidor: {{ orderService.order()?.riderId ? orderService.order()?.riderId : 'Sin asignar' }}</p>
-        <p>Productos: {{ orderService.order()?.products.join(', ') }}</p>
-        <p>Ubicación del consumidor: {{ orderService.order()?.customerLatitude }}, {{ orderService.order()?.customerLongitude }}</p>
-        <p>Ubicación del comercio: {{ orderService.order()?.latitude }}, {{ orderService.order()?.longitude }}</p>
+    }
+    @if (authService.loggedUser()?.role != 'ROLE_RIDER'){
+          <p>Repartidor: {{ orderService.order()?.riderId ? orderService.order()?.riderId : 'Sin asignar' }}</p>
+    }
+  
+    @if (productsInOrder().length == 0) {
+    <p>Productos: loading...</p>
+    }@else {
+    <p>Productos:
+        <br>
+        @for (item of productsInOrder(); track $index) {
+        <br>
+        <span>* {{item.name}}</span>
+        }
+    </p>
+    }
 
-        <button (click)="actualizar()">Actualizar</button>
+    <p>Ubicación del consumidor: {{ orderService.order()?.customerLatitude }}, {{
+        orderService.order()?.customerLongitude }}</p>
+    <p>Ubicación del comercio: {{ orderService.order()?.latitude }}, {{ orderService.order()?.longitude }}</p>
+
+    <button (click)="actualizar()">Actualizar</button>
     }
 
 </div>
-
