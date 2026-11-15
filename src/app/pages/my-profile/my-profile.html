@@ -1,41 +1,106 @@
-@if (!this.deleting)
-{
-  @if (!this.editing)
-  {
-    <h2>{{userService.user()?.name}} {{userService.user()?.lastName}}</h2>
-    <p>{{userService.user()?.email}}</p>
-    <p>{{this.getRole()}} - ID: {{userService.user()?.id}}</p>
-    <button (click)="this.changeMode()" [disabled]="userService.user() == null">Editar</button>
-  }
-  @else
-  {
-    <form [formGroup]="formulario">
-        <div>
-            <label for="name">Nombre:</label>
-            <input type="text" formControlName="name" id="name">
-        </div>
-
-        <div>
-            <label for="lastName">Apellido:</label>
-            <input type="text" formControlName="lastName" id="lastName">
-        </div>
-
-        <p>{{userService.user()?.email}}</p>
-        <p>{{this.getRole()}} - ID: {{userService.user()?.id}}</p>
-
-        <button (click)="this.changeMode(true)" [disabled]="formulario.invalid">Guardar</button>
-        <button (click)="this.changeMode()" >Cancelar</button>
-    </form>
-  }
-
-  <div>
-    <button class="borrar" (click)="this.alertDelete()" [disabled]="userService.user() == null || this.editing" >Eliminar mi cuenta</button>
+<div class="contenedor mi-perfil">
+  <div class="encabezado">
+    <h2>Mi perfil</h2>
   </div>
-}
 
-@else
-{
-    <h3>¿Esta seguro de que desea eliminar su cuenta?</h3>
-    <button class="borrar" (click)="this.deleteAccount()" [disabled]="userService.user() == null" >Eliminar mi cuenta</button>
-    <button (click)="this.cancelDeleteAccount()" [disabled]="userService.user() == null" >Cancelar</button>
-}
+  @if (userService.user() != null)
+  {
+    @if (deleting)
+    {
+
+      <div class="confirmar-borrar">
+        <h3>¿Está seguro de que desea eliminar su cuenta?</h3>
+        <p>Esta acción no se puede deshacer.</p>
+
+        <div class="acciones">
+          <button type="button" class="borrar" (click)="deleteAccount()">Eliminar mi cuenta</button>
+          <button type="button" class="btn-submit btn-secundario" (click)="cancelDeleteAccount()">Cancelar</button>
+        </div>
+      </div>
+
+    }
+    @else if (editing)
+    {
+      <form [formGroup]="formulario" (ngSubmit)="guardar()" class="formulario">
+
+        <div class="grupo-form">
+          <label for="name">Nombre</label>
+          <input id="name" type="text" formControlName="name" maxlength="20">
+          @if (mensaje('name') != null) {
+            <p class="error-texto">{{ mensaje('name') }}</p>
+          }
+        </div>
+
+        <div class="grupo-form">
+          <label for="lastName">Apellido</label>
+          <input id="lastName" type="text" formControlName="lastName" maxlength="30">
+          @if (mensaje('lastName') != null)
+          {
+            <p class="error-texto">{{ mensaje('lastName') }}</p>
+          }
+        </div>
+
+        <div class="grupo-form">
+          <label for="password">Contraseña nueva (opcional)</label>
+          <input id="password" type="password" formControlName="password" maxlength="20" autocomplete="new-password">
+          @if (mensaje('password') != null) {
+            <p class="error-texto">{{ mensaje('password') }}</p>
+          }
+        </div>
+
+        <div class="grupo-form">
+          <label for="confirmPassword">Repetir contraseña</label>
+          <input id="confirmPassword" type="password" formControlName="confirmPassword" maxlength="20" autocomplete="new-password">
+          @if (mensaje('confirmPassword') != null) {
+            <p class="error-texto">{{ mensaje('confirmPassword') }}</p>
+          }
+        </div>
+
+        @if (error() != '') {
+          <p class="error-texto">{{ error() }}</p>
+        }
+
+        <div class="acciones">
+          <button type="submit" class="btn-submit" [disabled]="guardando() || formulario.invalid">
+            {{ guardando() ? 'Guardando…' : 'Guardar' }}
+          </button>
+          <button type="button" class="btn-submit btn-secundario" (click)="cancelar()">Cancelar</button>
+        </div>
+
+      </form>
+
+    } @else {
+
+      <div class="info-store">
+        <div class="grupo-dato">
+          <b>Nombre</b>
+          <span>{{ userService.user()?.name }} {{ userService.user()?.lastName }}</span>
+        </div>
+
+        <div class="grupo-dato">
+          <b>Email</b>
+          <span>{{ userService.user()?.email }}</span>
+        </div>
+
+        <div class="grupo-dato">
+          <b>Rol</b>
+          <span>{{ getRole() }}</span>
+        </div>
+
+        <div class="grupo-dato">
+          <b>ID</b>
+          <span>{{ userService.user()?.id }}</span>
+        </div>
+      </div>
+
+      <div class="acciones">
+        <button type="button" class="btn-submit" (click)="editar()">Editar</button>
+      </div>
+
+      <div class="zona-borrar">
+        <button type="button" class="borrar" (click)="alertDelete()">Eliminar mi cuenta</button>
+      </div>
+
+    }
+  }
+</div>
