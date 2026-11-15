@@ -40,6 +40,7 @@ export class AuthService {
                 if (token != null) {
                     this.logUser(token);
                     this.router.navigateByUrl('home');
+                    this.error.set(null);
                 } else {
                     this.error.set("Error leyendo token");
                 }

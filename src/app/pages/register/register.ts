@@ -46,6 +46,7 @@ export class Register {
     }
 
     this.authService.register(registerRequest);
+    this.authService.error.set(null);
 
     if(this.authService.error() == null){
       //this.router.navigateByUrl('home');
