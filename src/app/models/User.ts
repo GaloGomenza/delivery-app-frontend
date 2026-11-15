@@ -5,3 +5,9 @@ export interface User{
     email : string;
     role : string;
 }
+
+export interface UserUpdateRequest {
+    name : string;
+    lastName : string;
+    password? : string;
+}

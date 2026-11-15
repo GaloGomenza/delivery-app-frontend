@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service, signal } from '@angular/core';
-import { User } from '../models/User';
+import { User, UserUpdateRequest } from '../models/User';
 
 @Service()
 export class UserService {
@@ -19,5 +19,31 @@ export class UserService {
             }
 
         })
+    }
+
+    updateMyProfile(data: UserUpdateRequest, onSaved: () => void, onError: (mensaje: string) => void){
+        this.http.patch<User>(this.apiMyProfileUrl, data).subscribe({
+            next: (user) => {
+                this.user.set(user);
+                onSaved();
+            },
+            error: (err) => {
+                onError(this.getErrorMessage(err.status));
+            }
+        })
+    }
+
+    getErrorMessage(status: number): string {
+        switch (status) {
+            case 400:
+                return 'Revisa los datos ingresados.';
+            case 401:
+            case 403:
+                return 'La sesión expiró, vuelve a iniciar sesión.';
+            case 404:
+                return 'No se encontró el usuario.';
+            default:
+                return 'No se pudo guardar el perfil.';
+        }
     }
 }
