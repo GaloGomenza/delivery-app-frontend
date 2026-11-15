@@ -28,7 +28,7 @@
   box-shadow: none;
 }
 
-/* 2. Mensaje de confirmación al agregar al carrito (cuando la lista tiene productos) */
+/* 2. Mensaje de confirmación al agregar al carrito */
 .productos:has(ul) > p:not(.error-texto) {
   margin-bottom: 1rem;
   padding: 0.75rem 1rem;
@@ -41,7 +41,52 @@
   border-radius: var(--radio-input);
 }
 
-/* 3. Botón "Agregar al carrito" alineado a la derecha dentro de cada producto */
+/* 3. Fila de producto con miniatura, texto y botón */
+.elemento-lista {
+  gap: 0.9rem;
+}
+
+.miniatura-producto {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  object-fit: cover;
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.sin-imagen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  padding: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--texto-secundario);
+  background-color: var(--bg-crema);
+  border: 1.5px dashed var(--tinta-oscura);
+  border-radius: var(--radio-input);
+}
+
+.info-item {
+  flex: 1;
+  min-width: 180px;
+  line-height: 1.45;
+}
+
+.precio-item {
+  font-weight: 800;
+  color: var(--azul-denim);
+}
+
+/* 4. Botón "Agregar al carrito" alineado a la derecha */
 .elemento-lista button {
   margin-left: auto;
   padding: 0.45rem 1rem;
@@ -67,7 +112,7 @@
   box-shadow: none;
 }
 
-/* 4. Adaptación móvil para botones del carrito */
+/* 5. Adaptación móvil */
 @media (max-width: 560px) {
   .contenedor > button {
     width: 100%;
@@ -77,6 +122,6 @@
   .elemento-lista button {
     width: 100%;
     margin-left: 0;
-    margin-top: 0.4rem;
+    margin-top: 0.35rem;
   }
 }
