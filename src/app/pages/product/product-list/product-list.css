@@ -1,0 +1,42 @@
+/* 1. Columna compacta y centrada para la imagen */
+th:first-child,
+.celda-imagen {
+  width: 84px;
+  text-align: center;
+}
+
+/* 2. Miniatura cuadrada con el trazo fino de la app */
+.miniatura-producto {
+  display: inline-block;
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  vertical-align: middle;
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+  transition: transform 0.12s ease;
+}
+
+.miniatura-producto:hover {
+  transform: scale(1.08);
+}
+
+/* 3. Placeholder del mismo tamaño cuando el producto no tiene foto */
+.sin-imagen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--texto-secundario);
+  background-color: var(--bg-crema);
+  border: 1.5px dashed var(--tinta-oscura);
+  border-radius: var(--radio-input);
+}

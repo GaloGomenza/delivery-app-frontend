@@ -33,9 +33,12 @@
   </div>
 
   @if (esComerciante) {
-  <a class="btn-productos" [routerLink]="['/store', store.id, 'products']">
-    Administrar productos
-  </a>
+    <a class="btn-productos" [routerLink]="['/store', store.id, 'products']">
+      Administrar productos
+    </a>
+    <a [routerLink]="['/store', store.id, 'edit']">
+      Editar
+    </a>
   } @else {
   @if (esConsumidor && cartService.cart()?.items?.length) {
   <button (click)="abrirCarrito()">
