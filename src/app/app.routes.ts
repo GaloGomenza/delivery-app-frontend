@@ -23,11 +23,13 @@ import { cartLeaveGuard } from './guards/cart-leave-guard';
 export const routes: Routes = [
     {
         path: '',
-        component: Landing
+        component: Landing,
+        title: 'Inicio'
     },
     {
         path: 'home',
         component: Home,
+        title: 'Inicio',
         canActivate: [authGuardFn]
     },
     {
@@ -81,16 +83,19 @@ export const routes: Routes = [
     {
         path: 'store/new',
         component: StoreForm,
+        title: 'Nuevo comercio',
         canActivate: [authGuardFn]
     },
     {
         path: 'store/:id/edit',
         component: StoreForm,
+        title: 'Editar comercio',
         canActivate: [authGuardFn]
     },
     {
         path: 'store/:id/detail',
         component: StoreDetail,
+        title: 'Detalle del comercio',
         canDeactivate: [cartLeaveGuard]
     },
     {
