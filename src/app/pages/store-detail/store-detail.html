@@ -1,86 +1,116 @@
 <div class="contenedor">
-    @if (store(); as store){
-    <div class="info-store">
-        <div class="grupo-id">
-            <b>Detalle del comercio con ID:</b>
-            <span>{{store.id}}</span>
-        </div>
-
-        <div class="grupo-dato">
-            <b>Nombre del comercio</b>
-            <span>{{store.name}}</span>
-        </div>
-
-        <div class="grupo-dato">
-            <b>Dirección:</b>
-            <span>{{store.address}}</span>
-        </div>
-
-        <div class="grupo-dato">
-            <b>Latitud:</b>
-            <span>{{store.latitude}}</span>
-        </div>
-
-        <div class="grupo-dato">
-            <b>Longitud: </b>
-            <p>{{store.longitude}}</p>
-        </div>
-
-        <div class="grupo-dato">
-            <b>ID del comerciante:</b>
-            <span>{{store.ownerId}}</span>
-        </div>
+  @if (store(); as store){
+  <div class="info-store">
+    <div class="grupo-id">
+      <b>Detalle del comercio con ID:</b>
+      <span>{{store.id}}</span>
     </div>
 
-    @if (esComerciante) {
+    <div class="grupo-dato">
+      <b>Nombre del comercio</b>
+      <span>{{store.name}}</span>
+    </div>
+
+    <div class="grupo-dato">
+      <b>Dirección:</b>
+      <span>{{store.address}}</span>
+    </div>
+
+    <div class="grupo-dato">
+      <b>Latitud:</b>
+      <span>{{store.latitude}}</span>
+    </div>
+
+    <div class="grupo-dato">
+      <b>Longitud: </b>
+      <p>{{store.longitude}}</p>
+    </div>
+
+    <div class="grupo-dato">
+      <b>ID del comerciante:</b>
+      <span>{{store.ownerId}}</span>
+    </div>
+  </div>
+
+  @if (esComerciante) {
   <a class="btn-productos" [routerLink]="['/store', store.id, 'products']">
     Administrar productos
   </a>
-} @else {
+  } @else {
+  @if (esConsumidor && cartService.cart()?.items?.length) {
+  <button (click)="abrirCarrito()">
+    Ver carrito ({{ cartService.getTotalItems() }} productos)
+  </button>
+  }
+
   <div class="productos">
+
     <h3>Productos disponibles</h3>
 
+    @if (mensajeCarrito()) {
+    <p>{{ mensajeCarrito() }}</p>
+    }
+
     @if (errorProductos()) {
-      <p class="error-texto">{{ errorProductos() }}</p>
+    <p class="error-texto">{{ errorProductos() }}</p>
     }
 
     @if (cargandoProductos()) {
-      <p>Cargando productos…</p>
+
+    <p>Cargando productos...</p>
+
     } @else if (products().length === 0) {
-      <p>Este comercio no tiene productos disponibles actualmente.</p>
+
+    <p>Este comercio no tiene productos disponibles actualmente.</p>
+
     } @else {
-      <ul>
-        @for (p of products(); track p.id) {
-          <li class="elemento-lista">
-            <b>{{ p.name }}</b>
-            - {{ p.description }}
-            - {{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}
-          </li>
+
+    <ul>
+
+      @for (p of products(); track p.id) {
+
+      <li class="elemento-lista">
+
+        <b>{{ p.name }}</b>
+        - {{ p.description }}
+        - {{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}
+
+        @if (esConsumidor) {
+        <button (click)="agregarAlCarrito(p)">
+          Agregar al carrito
+        </button>
         }
-      </ul>
 
-      <div class="paginacion">
-        <button
-          (click)="irAPagina(page() - 1)"
-          [disabled]="page() === 0">
-          Anterior
-        </button>
+      </li>
 
-        <span>
-          Página {{ page() + 1 }} de {{ totalPages() }}
-          · {{ totalElements() }} productos
-        </span>
+      }
 
-        <button
-          (click)="irAPagina(page() + 1)"
-          [disabled]="page() + 1 >= totalPages()">
-          Siguiente
-        </button>
-      </div>
+    </ul>
+
+    <div class="paginacion">
+
+      <button (click)="irAPagina(page() - 1)" [disabled]="page() === 0">
+        Anterior
+      </button>
+
+      <span>
+        Página {{ page() + 1 }} de {{ totalPages() }}
+        · {{ totalElements() }} productos
+      </span>
+
+      <button (click)="irAPagina(page() + 1)" [disabled]="page() + 1 >= totalPages()">
+        Siguiente
+      </button>
+
+    </div>
+
     }
+
   </div>
-}
+  }
 
-    <a routerLink="/store/list">Volver al listado</a>
-    }
+  <a routerLink="/store/list">Volver al listado</a>
+
+  }
+
 </div>
