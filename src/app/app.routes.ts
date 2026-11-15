@@ -17,12 +17,10 @@ import { OrderUnassignedList } from './pages/order-unassigned-list/order-unassig
 import { OrderStatusUpdate } from './pages/order-status-update/order-status-update';
 import { OrderList } from './pages/order-list/order-list';
 import { OrderStoreList } from './pages/order-store-list/order-store-list';
+import { Cart } from './pages/cart/cart';
+import { cartLeaveGuard } from './guards/cart-leave-guard';
 
 export const routes: Routes = [
-    { path: 'store/list', component: StoreList },
-    { path: 'store/form', component: StoreForm },
-    { path: 'store/form/:id', component: StoreForm },
-    { path: 'store/detail/:id', component: StoreDetail },
     {
         path: '',
         component: Landing
@@ -80,24 +78,36 @@ export const routes: Routes = [
         title: 'Estado del pedido',
         canActivate: [authGuardFn]
     },
-    {    
-        path: 'store/new', 
-        component : StoreForm,
-        canActivate : [authGuardFn]
+    {
+        path: 'store/new',
+        component: StoreForm,
+        canActivate: [authGuardFn]
     },
     {
-        path: 'store/edit/:id', 
-        component : StoreForm,
-        canActivate : [authGuardFn]
+        path: 'store/edit/:id',
+        component: StoreForm,
+        canActivate: [authGuardFn]
     },
     {
-        path: 'store/detail/:id', 
-        component : StoreDetail,
-        canActivate : [authGuardFn]
+        path: 'store/detail/:id',
+        component: StoreDetail,
+        canDeactivate: [cartLeaveGuard]
     },
-    { path: 'store/list', component: StoreList },
-    { path: 'store/form', component: StoreForm },
-    { path: 'store/form/:id', component: StoreForm },
+    {
+        path: 'store/list',
+        component: StoreList,
+        canActivate: [authGuardFn]
+    },
+    {
+        path: 'store/form',
+        component: StoreForm,
+        canActivate: [authGuardFn]
+    },
+    {
+        path: 'store/form/:id',
+        component: StoreForm,
+        canActivate: [authGuardFn]
+    },
 
     {
         path: 'store/:id/products',
@@ -122,6 +132,13 @@ export const routes: Routes = [
         component: ConsumerProductList,
         title: 'Productos disponibles',
         canActivate: [authGuardFn]
-    }
+    },
+    {
+        path: 'cart',
+        component: Cart,
+        title: 'Mi carrito',
+        canActivate: [authGuardFn],
+        canDeactivate: [cartLeaveGuard]
+    },
 
 ];

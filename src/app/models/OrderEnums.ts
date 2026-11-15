@@ -1,3 +1,12 @@
-export type OrderStatus = 'PENDING' | 'CONFIRMED' | 'CONFIRMED_ASSIGNED' | 'DISPATCHED' | 'COMPLETED' | 'CANCELLED';
+export type OrderStatus = 
+'PENDING' 
+| 'CONFIRMED' 
+| 'CONFIRMED_ASSIGNED' 
+| 'DISPATCHED' 
+| 'COMPLETED' 
+| 'CANCELLED';
 
-export type PaymentType = 'EFECTIVO' | 'TRANSFERENCIA' | 'PAGODIGITAL';
+export type PaymentType = 
+'EFECTIVO' 
+| 'TRANSFERENCIA' 
+| 'PAGODIGITAL';

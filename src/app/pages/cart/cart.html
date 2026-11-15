@@ -1,0 +1,149 @@
+<div class="cart-container">
+
+  <h2>Mi carrito</h2>
+
+  @if (cartService.cart(); as cart) {
+
+    <h3>{{ cart.storeName }}</h3>
+
+    @if (cart.items.length === 0) {
+
+      <p>Tu carrito está vacío.</p>
+
+      <a routerLink="/store/list">Volver a los comercios</a>
+
+    } @else {
+
+      <div class="cart-items">
+
+        @for (item of cart.items; track item.product.id) {
+
+          <div class="cart-item">
+
+            <div class="product-info">
+
+              <h4>{{ item.product.name }}</h4>
+
+              <p>{{ item.product.description }}</p>
+
+              <p>
+                Precio unitario:
+                {{ item.product.price | currency:'ARS':'symbol-narrow':'1.2-2' }}
+              </p>
+
+              <p>
+                Subtotal:
+                {{
+                  item.product.price * item.quantity
+                    | currency:'ARS':'symbol-narrow':'1.2-2'
+                }}
+              </p>
+
+            </div>
+
+            <div class="quantity-controls">
+
+              <button
+                type="button"
+                (click)="decrementar(item.product.id)">
+                -
+              </button>
+
+              <span>{{ item.quantity }}</span>
+
+              <button
+                type="button"
+                (click)="incrementar(item.product.id)">
+                +
+              </button>
+
+            </div>
+
+            <button
+              type="button"
+              (click)="eliminar(item.product.id)">
+              Eliminar
+            </button>
+
+          </div>
+
+        }
+
+      </div>
+
+      <hr>
+
+      <h3>
+        Total:
+        {{ cartService.getTotal() | currency:'ARS':'symbol-narrow':'1.2-2' }}
+      </h3>
+
+      <div class="checkout">
+
+        <h3>Datos del pedido</h3>
+
+        <label for="direccion">
+          Dirección de entrega:
+        </label>
+
+        <input
+          id="direccion"
+          type="text"
+          name="direccion"
+          maxlength="50"
+          [(ngModel)]="direccion"
+          placeholder="Ingresá una dirección">
+
+        <label for="paymentType">
+          Método de pago:
+        </label>
+
+        <select
+          id="paymentType"
+          name="paymentType"
+          [(ngModel)]="paymentType">
+
+          <option value="">Seleccioná un método de pago</option>
+          <option value="EFECTIVO">Efectivo</option>
+          <option value="TRANSFERENCIA">Transferencia</option>
+          <option value="PAGODIGITAL">Pago digital</option>
+
+        </select>
+
+        @if (error) {
+          <p class="error-texto">{{ error }}</p>
+        }
+
+        <button
+          type="button"
+          (click)="confirmarPedido()"
+          [disabled]="
+            cart.items.length === 0 ||
+            !paymentType ||
+            enviando
+          ">
+
+          {{ enviando ? 'Confirmando...' : 'Confirmar pedido' }}
+
+        </button>
+
+        <button
+          type="button"
+          (click)="cancelarCarrito()"
+          [disabled]="enviando">
+          Cancelar carrito
+        </button>
+
+      </div>
+
+    }
+
+  } @else {
+
+    <p>No tenés productos en el carrito.</p>
+
+    <a routerLink="/store/list">Volver a los comercios</a>
+
+  }
+
+</div>
