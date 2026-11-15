@@ -1,7 +1,7 @@
 <main>
     <div class="contenedor">
         <div class = "encabezado">
-            <h2>Registración</h2>
+            <h2>Registrarse</h2>
         </div>
 
         <div>
@@ -71,11 +71,7 @@
                             <p class="error-texto">La contraseña debe tener menos de 20 caracteres </p>
                         }
                         @if(formulario.controls['password'].hasError('pattern')){
-                            <p class="error-texto">La contraseña debe tener:</p>
-                            <p class="error-texto">- al menos una letra minuscula</p>
-                            <p class="error-texto">- al menos una letra mayuscula</p>
-                            <p class="error-texto">- al menos un numero</p>
-                            <p class="error-texto">- caracteres especiales validos: @ . _ - ! +</p>
+                            <p class="error-texto">La contraseña debe tener al menos una letra minúscula, una letra mayúscula y un número. </p>
                         }
                     }
 
