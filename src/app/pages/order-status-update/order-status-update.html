@@ -1,4 +1,19 @@
-<p>Asignando Pedido</p>
-@if(authService.error() != null){
-    <p>Error asignando pedido</p>
-}
+<div class="contenedor">
+  <div class="encabezado">
+    <h2>Asignación de pedido</h2>
+  </div>
+
+  @if (authService.error() != null) {
+    <div class="estado-error">
+      <p class="error-texto">Error asignando pedido</p>
+      <a routerLink="/orders/unassigned" class="btn-volver">
+        Volver a pedidos sin asignar
+      </a>
+    </div>
+  } @else {
+    <div class="estado-cargando">
+      <div class="spinner"></div>
+      <p>Asignando pedido...</p>
+    </div>
+  }
+</div>

@@ -1,18 +1,41 @@
-<h2>Mis pedidos</h2>
+<div class="contenedor">
+  <div class="encabezado">
+    <h2>Mis pedidos</h2>
+  </div>
 
-@if (orderService.error() != '') {
+  @if (orderService.error() != '') {
     <p class="error">{{ orderService.error() }}</p>
-}
+  }
 
-@if (orderService.orders().length == 0){
+  @if (orderService.orders().length == 0) {
     <p>No tienes pedidos</p>
-}@else {
+  } @else {
+    <div class="lista-pedidos">
+      @for (order of orderService.orders(); track order.id ?? $index) {
+        <article class="tarjeta-pedido">
+          <div class="pedido-header">
+            <span class="badge-pedido">Pedido #{{ order?.id }}</span>
 
-    @for (order of orderService.orders(); track $index) {
-        <p><strong>Pedido #{{ order?.id }}</strong></p>
-        <p>StoreId: {{order.storeId}} //otra llamada para sacar nombre</p>
-        <p>Estado: {{order.status}}</p>
-        <a [routerLink]="['/orders', order.id]"><p>Ver este pedido</p></a>
+            <a [routerLink]="['/orders', order.id]" class="btn-ver-pedido">
+              Ver este pedido
+            </a>
+          </div>
 
-    }
-}
+          <div class="datos-pedido">
+            <div class="grupo-dato">
+              <b>ID Comercio</b>
+              <span>{{ order.storeId }}</span>
+            </div>
+
+            <div class="grupo-dato">
+              <b>Estado</b>
+              <span class="badge-estado" [attr.data-status]="order.status">
+                {{ order.status }}
+              </span>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</div>

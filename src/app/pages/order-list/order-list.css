@@ -1,0 +1,126 @@
+/* 1. Ancho equilibrado para el listado */
+.contenedor {
+  max-width: 760px;
+}
+
+/* 2. Listado vertical de tarjetas */
+.lista-pedidos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+/* 3. Tarjeta individual de pedido */
+.tarjeta-pedido {
+  padding: 1.25rem;
+  background-color: #FFFFFF;
+  border: var(--borde-fino);
+  border-radius: var(--radio-card);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.tarjeta-pedido:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px var(--tinta-oscura);
+}
+
+/* 4. Cabecera de cada tarjeta con número de pedido y botón */
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1.5px solid #EADAD0;
+}
+
+.badge-pedido {
+  padding: 0.35rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--tinta-oscura);
+  background-color: var(--rosa-principal);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+}
+
+.btn-ver-pedido {
+  display: inline-block;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #FFFFFF;
+  background-color: var(--azul-denim);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.btn-ver-pedido:hover {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+.btn-ver-pedido:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* 5. Grilla de 2 columnas con los bloques .grupo-dato de styles.css */
+.datos-pedido {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+}
+
+/* 6. Píldora de estado con tinte según la etapa del pedido */
+.grupo-dato .badge-estado {
+  align-self: flex-start;
+  margin-top: 0.15rem;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--tinta-oscura);
+  background-color: #FFFFFF;
+  border: 1.2px solid var(--tinta-oscura);
+  border-radius: var(--radio-pill);
+}
+
+.grupo-dato .badge-estado[data-status="PENDING"] {
+  background-color: #FFF3D6;
+}
+
+.grupo-dato .badge-estado[data-status="CONFIRMED_ASSIGNED"],
+.grupo-dato .badge-estado[data-status="DISPATCHED"] {
+  background-color: #E6F4F5;
+}
+
+.grupo-dato .badge-estado[data-status="DELIVERED"],
+.grupo-dato .badge-estado[data-status="COMPLETED"] {
+  background-color: #E7F6EC;
+  color: #1F6E3D;
+}
+
+.grupo-dato .badge-estado[data-status="CANCELLED"] {
+  background-color: #FFF5F6;
+  color: var(--terracota-error);
+  border-color: var(--terracota-error);
+}
+
+/* 7. Adaptación móvil */
+@media (max-width: 520px) {
+  .btn-ver-pedido {
+    width: 100%;
+    text-align: center;
+  }
+
+  .datos-pedido {
+    grid-template-columns: 1fr;
+  }
+}

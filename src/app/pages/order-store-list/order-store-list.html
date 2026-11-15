@@ -1,22 +1,19 @@
 <section class="store-list-container">
   <header class="header">
     <h2>Listado de pedidos del comercio</h2>
-
-
   </header>
 
-  
   @if (error()) {
     <p class="error">{{ error() }}</p>
   }
 
   @if (loading()) {
-    <p>Cargando comercios...</p>
+    <p>Cargando pedidos...</p>
   } @else if (orders().length === 0) {
     <p>
       {{ esComerciante()
         ? 'Todavía no tenés pedidos.'
-        : 'No hay comercios para mostrar.' }}
+        : 'No hay pedidos para mostrar.' }}
     </p>
   } @else {
     <table>
@@ -26,7 +23,6 @@
           <th (click)="ordenar('paymentType')">Tipo de Pago{{ flecha('paymentType') }}</th>
           <th (click)="ordenar('total')">Total{{ flecha('total') }}</th>
           <th (click)="ordenar('status')">Status{{ flecha('status') }}</th>
-          
           <th>Acciones</th>
         </tr>
       </thead>
@@ -34,16 +30,20 @@
       <tbody>
         @for (order of orders(); track order.id) {
           <tr>
-            <td>{{ order.id }}</td>
-            <td>{{ order.paymentType}}</td>
-            <td>${{ order.total }}</td>
-            <td>{{ order.status }}</td>
-            
+            <td>#{{ order.id }}</td>
+            <td>{{ order.paymentType }}</td>
+            <td>
+              <strong class="precio-total">${{ order.total }}</strong>
+            </td>
+            <td>
+              <span class="badge-estado" [attr.data-status]="order.status">
+                {{ order.status }}
+              </span>
+            </td>
             <td class="actions">
               <a [routerLink]="['/orders/', order.id]">
                 Ver pedido
               </a>
-
             </td>
           </tr>
         }
