@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrderService } from '../../services/order-service';
 import { UpdateOrderStatusRequest } from '../../models/UpdateOrderStatusRequest';
 import { AuthService } from '../../auth/service/auth-service';
@@ -9,7 +9,7 @@ import { UntypedFormBuilder } from '@angular/forms';
 
 @Component({
     selector: 'app-order-status',
-    imports: [],
+    imports: [RouterLink],
     templateUrl: './order-status.html',
     styleUrl: './order-status.css',
 })
@@ -56,9 +56,21 @@ export class OrderStatusPage implements OnInit, OnDestroy {
             window.clearInterval(this.refreshId);
     }
 
-    actualizar(): void {
-        this.orderService.getOrderById(this.orderId);
-        this.getProductsInOrder();
+    getRutaVolver(): (string | number)[] {
+        const role = this.authService.loggedUser()?.role;
+        const order = this.orderService.order();
+
+        if (role === 'ROLE_MERCHANT') {
+          return order?.storeId ? ['/orders/store', order.storeId] : ['/store/list'];
+        }
+    
+        if (role === 'ROLE_RIDER') {
+          return order?.status === 'PENDING'
+            ? ['/orders/unassigned']
+            : ['/orders/my-orders'];
+        }
+    
+        return ['/orders/my-orders'];
     }
 
     isStepDone(step: string): boolean {

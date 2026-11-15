@@ -91,9 +91,9 @@
     </div>
 
     <div class="acciones-footer">
-      <button type="button" class="btn-actualizar" (click)="actualizar()">
-        Actualizar
-      </button>
+      <a [routerLink]="getRutaVolver()" class="btn-volver">
+        Volver
+      </a>
     </div>
   } @else if (orderService.error() == '') {
     <p>Cargando estado del pedido...</p>

@@ -134,34 +134,36 @@
   border-radius: var(--radio-pill);
 }
 
-/* 6. Botón inferior "Actualizar" */
+/* 6. Botón inferior "Volver" */
 .acciones-footer {
   margin-top: 1.5rem;
   display: flex;
   justify-content: flex-end;
 }
 
-.btn-actualizar {
-  padding: 0.62rem 1.3rem;
+.btn-volver {
+  display: inline-block;
+  padding: 0.62rem 1.4rem;
   font-family: inherit;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 700;
+  text-align: center;
+  text-decoration: none;
   color: var(--tinta-oscura);
   background-color: var(--bg-crema);
   border: var(--borde-fino);
   border-radius: var(--radio-pill);
-  cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
 }
 
-.btn-actualizar:hover {
+.btn-volver:hover {
   background-color: #F4DFCE;
   transform: translate(-1px, -1px);
   box-shadow: 2px 2px 0px var(--tinta-oscura);
 }
 
 .btn-accion:active,
-.btn-actualizar:active {
+.btn-volver:active {
   transform: translate(1px, 1px);
   box-shadow: none;
 }
@@ -169,7 +171,7 @@
 /* 7. Adaptación móvil */
 @media (max-width: 560px) {
   .btn-accion,
-  .btn-actualizar {
+  .btn-volver {
     width: 100%;
   }
 }
