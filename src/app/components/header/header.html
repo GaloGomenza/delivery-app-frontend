@@ -1,14 +1,14 @@
 <nav>
 
     @if (authService.isUserLogged()) {
-    <a routerLink="home"><p>Delivery App</p></a>
+    <a routerLink="home"><p>DELIVERY APP</p></a>
 
     <div>
         <a routerLink="myProfile">{{displayName()}}</a>
         <a href=# (click)="authService.logout()">Cerrar Sesión</a>
     </div>
     }@else {
-    <a routerLink=""><p>Delivery App</p></a>
+    <a routerLink=""><p>DELIVERY APP</p></a>
 
     <div>
         <a routerLink="register">Registrarme</a>
