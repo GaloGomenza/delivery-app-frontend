@@ -9,7 +9,7 @@
             <label for="name">Nombre del comercio</label>
             <input id="name" formControlName = "name" placeholder="Nombre del comercio" >
             @if (formStore.get('name')?.invalid && formStore.get('name')?.touched) {
-                <p class="error-texto">El nombre del comercio debe tener al menos 3 caracteres</p>
+                <p class="error-texto">El nombre del comercio debe tener al menos 3 caracteres y un máximo de 25</p>
             }
         </div>
 
@@ -17,7 +17,7 @@
             <label for="address">Direccion</label>
             <input id="address" formControlName = "address" placeholder="Calle falsa 123" >
             @if (formStore.get('address')?.invalid && formStore.get('address')?.touched) {
-                <p class="error-texto">La direccion del comercio debe tener al menos 3 caracteres</p>
+                <p class="error-texto">La direccion del comercio debe tener al menos 3 caracteres y un máximo de 40</p>
             }
         </div>
 
@@ -34,14 +34,6 @@
             <input id="longitude" formControlName = "longitude" placeholder="-45" >
             @if (formStore.get('longitude')?.invalid && formStore.get('longitude')?.touched) {
                 <p class="error-texto">El rango valido de longitud es de -180 a 180</p>
-            }
-        </div>
-
-        <div class="grupo-form">
-            <label for="owner">Comerciante</label>
-            <input id="owner" formControlName = "owner" placeholder="id del comerciante" >
-            @if (formStore.get('owner')?.invalid && formStore.get('owner')?.touched) {
-                <p class="error-texto">El id no puede estar vacio</p>
             }
         </div>
 

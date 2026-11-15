@@ -84,12 +84,12 @@ export const routes: Routes = [
         canActivate: [authGuardFn]
     },
     {
-        path: 'store/edit/:id',
+        path: 'store/:id/edit',
         component: StoreForm,
         canActivate: [authGuardFn]
     },
     {
-        path: 'store/detail/:id',
+        path: 'store/:id/detail',
         component: StoreDetail,
         canDeactivate: [cartLeaveGuard]
     },
@@ -98,17 +98,6 @@ export const routes: Routes = [
         component: StoreList,
         canActivate: [authGuardFn]
     },
-    {
-        path: 'store/form',
-        component: StoreForm,
-        canActivate: [authGuardFn]
-    },
-    {
-        path: 'store/form/:id',
-        component: StoreForm,
-        canActivate: [authGuardFn]
-    },
-
     {
         path: 'store/:id/products',
         component: ProductList,

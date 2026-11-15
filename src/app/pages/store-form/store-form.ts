@@ -27,11 +27,10 @@ export class StoreForm implements OnInit{
 
   ngOnInit(): void {
     this.formStore = this.fb.group({
-      name : ['', [Validators.required, Validators.minLength(3)]],
-      address : ['', [Validators.required, Validators.minLength(3)]],
+      name : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
+      address : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(40)]],
       latitude : ['', [Validators.required, Validators.min(-90), Validators.max(90)]],
       longitude : ['', [Validators.required, Validators.min(-180), Validators.max(180)]],
-      owner : ['', [Validators.required]]
     })  
 
     this.id = this.route.snapshot.params['id'];
