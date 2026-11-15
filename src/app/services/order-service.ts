@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { PageQuery, PaginationResult } from '../models/Pagination';
 import { Observable } from 'rxjs';
 import { Order } from '../models/Order';
-
+import { CreateOrderRequest } from '../models/CreateOrderRequest';
 
 export interface OrderFilter {
   status?: string;
@@ -106,4 +106,7 @@ export class OrderService {
 
     }
 
+    createOrder(body: CreateOrderRequest): Observable<OrderResponse> {
+    return this.http.post<OrderResponse>(this.url, body);
+}
 }
