@@ -575,6 +575,10 @@ td button:hover {
 }
 
 .elemento-lista {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
   padding: 0.85rem 1.1rem;
   font-size: 0.92rem;
   color: var(--texto-secundario);
@@ -598,6 +602,7 @@ td button:hover {
 .contenedor > a {
   display: inline-block;
   margin-top: 1.5rem;
+  margin-right: 0.75rem;
   padding: 0.65rem 1.3rem;
   font-size: 0.9rem;
   font-weight: 700;
@@ -609,7 +614,6 @@ td button:hover {
 
 /* Acción principal (ej. Administrar productos) */
 .contenedor > a.btn-productos {
-  margin-right: 0.75rem;
   background-color: var(--azul-denim);
   color: #FFFFFF;
 }
@@ -620,13 +624,25 @@ td button:hover {
   box-shadow: 3px 3px 0px var(--tinta-oscura);
 }
 
+/* Acción de edición (detecta cualquier enlace que termine en /edit) */
+.contenedor > a[href$="/edit"] {
+  background-color: var(--teal-acento);
+  color: #FFFFFF;
+}
+
+.contenedor > a[href$="/edit"]:hover {
+  background-color: #498991;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
 /* Enlace secundario (ej. Volver al listado) */
-.contenedor > a:not(.btn-productos) {
+.contenedor > a:not(.btn-productos):not([href$="/edit"]) {
   background-color: var(--bg-crema);
   color: var(--tinta-oscura);
 }
 
-.contenedor > a:not(.btn-productos):hover {
+.contenedor > a:not(.btn-productos):not([href$="/edit"]):hover {
   background-color: #F4DFCE;
   transform: translate(-1px, -1px);
   box-shadow: 2px 2px 0px var(--tinta-oscura);
@@ -647,11 +663,8 @@ td button:hover {
   .contenedor > a {
     display: block;
     width: 100%;
-    text-align: center;
-  }
-
-  .contenedor > a.btn-productos {
     margin-right: 0;
     margin-bottom: 0.65rem;
+    text-align: center;
   }
 }

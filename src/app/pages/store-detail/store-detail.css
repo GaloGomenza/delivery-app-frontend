@@ -1,0 +1,127 @@
+/* 1. Botón "Ver carrito" destacado arriba de la lista de productos */
+.contenedor > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.5rem;
+  padding: 0.68rem 1.35rem;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--tinta-oscura);
+  background-color: var(--rosa-principal);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.15s ease;
+}
+
+.contenedor > button:hover {
+  filter: brightness(1.04);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px var(--tinta-oscura);
+}
+
+.contenedor > button:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* 2. Mensaje de confirmación al agregar al carrito */
+.productos:has(ul) > p:not(.error-texto) {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--tinta-oscura);
+  background-color: #E6F4F5;
+  border: 1.5px solid var(--teal-acento);
+  border-radius: var(--radio-input);
+}
+
+/* 3. Fila de producto con miniatura, texto y botón */
+.elemento-lista {
+  gap: 0.9rem;
+}
+
+.miniatura-producto {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  object-fit: cover;
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.sin-imagen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  padding: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  color: var(--texto-secundario);
+  background-color: var(--bg-crema);
+  border: 1.5px dashed var(--tinta-oscura);
+  border-radius: var(--radio-input);
+}
+
+.info-item {
+  flex: 1;
+  min-width: 180px;
+  line-height: 1.45;
+}
+
+.precio-item {
+  font-weight: 800;
+  color: var(--azul-denim);
+}
+
+/* 4. Botón "Agregar al carrito" alineado a la derecha */
+.elemento-lista button {
+  margin-left: auto;
+  padding: 0.45rem 1rem;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background-color: var(--azul-denim);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.elemento-lista button:hover {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.elemento-lista button:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* 5. Adaptación móvil */
+@media (max-width: 560px) {
+  .contenedor > button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .elemento-lista button {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0.35rem;
+  }
+}

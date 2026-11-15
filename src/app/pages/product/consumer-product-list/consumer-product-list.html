@@ -1,11 +1,10 @@
-
-<section class="product-list-container">
-  <header class="header">
+<div class="contenedor">
+  <div class="encabezado">
     <h2>Productos disponibles</h2>
-    <p>Explorá productos de los comercios cercanos.</p>
-  </header>
+    <p class="subtitulo-encabezado">Explorá productos de los comercios cercanos.</p>
+  </div>
 
-  <div class="filters">
+  <div class="filtros">
     <input
       type="text"
       placeholder="Buscar producto por nombre..."
@@ -15,7 +14,7 @@
   </div>
 
   @if (error()) {
-    <p class="error">{{ error() }}</p>
+    <p class="error-texto">{{ error() }}</p>
   }
 
   @if (loading()) {
@@ -23,9 +22,9 @@
   } @else if (products().length === 0) {
     <p>No se encontraron productos disponibles.</p>
   } @else {
-    <div class="products-grid">
+    <div class="grilla-productos">
       @for (product of products(); track product.id) {
-        <article class="product-card">
+        <article class="tarjeta-producto">
           @if (product.imageURL) {
             <img
               [src]="product.imageURL"
@@ -33,20 +32,20 @@
             />
           }
 
-          <div class="product-info">
+          <div class="info-producto">
             <h3>{{ product.name }}</h3>
 
             <p>{{ product.description }}</p>
 
             <strong>{{ product.price | currency:'ARS':'symbol':'1.2-2' }}</strong>
 
-            <p class="store-name">
+            <p class="nombre-comercio">
               Comercio: {{ product.storeName }}
             </p>
 
             <a
-              [routerLink]="['/store/detail', product.storeId]"
-              class="btn-detail"
+              [routerLink]="['/store', product.storeId,'detail']"
+              class="btn-detalle"
             >
               Ver comercio
             </a>
@@ -55,7 +54,7 @@
       }
     </div>
 
-    <div class="pagination">
+    <div class="paginacion">
       <button
         type="button"
         [disabled]="page() === 0"
@@ -78,4 +77,4 @@
       </button>
     </div>
   }
-</section>
+</div>
