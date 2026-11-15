@@ -1,66 +1,245 @@
-.cart-container {
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 20px;
+/* 1. Ancho equilibrado para el carrito */
+.contenedor {
+  max-width: 720px;
 }
 
+/* 2. Píldora con el nombre del comercio en el encabezado */
+.badge-comercio {
+  padding: 0.35rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  background-color: var(--teal-acento);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+}
+
+/* 3. Listado de ítems agregados */
 .cart-items {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
 }
 
 .cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  background-color: #FFFFFF;
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
+.cart-item:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+/* Información del producto */
 .product-info {
-    flex: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.product-info h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--tinta-oscura);
+}
+
+.descripcion-item {
+  font-size: 0.86rem;
+  color: var(--texto-secundario);
+}
+
+.precios-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 0.35rem;
+  font-size: 0.86rem;
+  color: var(--texto-secundario);
+}
+
+.precios-item strong {
+  font-weight: 800;
+  color: var(--azul-denim);
+}
+
+/* 4. Selector de cantidad (+ / -) y botón Eliminar */
+.controles-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.25rem 0.4rem;
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
 }
 
 .quantity-controls button {
-    padding: 5px 12px;
-    cursor: pointer;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--tinta-oscura);
+  background-color: #FFFFFF;
+  border: 1.2px solid var(--tinta-oscura);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
 
+.quantity-controls button:hover {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.quantity-controls button:active {
+  transform: scale(0.94);
+}
+
+.quantity-controls span {
+  min-width: 22px;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--tinta-oscura);
+}
+
+.btn-eliminar {
+  padding: 0.42rem 0.9rem;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--terracota-error);
+  background-color: #FFF5F6;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-eliminar:hover {
+  background-color: var(--terracota-error);
+  color: #FFFFFF;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+/* 5. Recuadro destacado con el total */
+.total-carrito {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+}
+
+.total-carrito span {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--texto-secundario);
+}
+
+.total-carrito h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--azul-denim);
+}
+
+/* 6. Sección de datos de entrega y pago */
 .checkout {
-    display: flex;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: var(--borde-fino);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.checkout > h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--tinta-oscura);
+}
+
+/* Botones inferiores lado a lado */
+.acciones-checkout {
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+.acciones-checkout .btn-submit {
+  margin-top: 0;
+}
+
+.btn-cancelar-carrito {
+  padding: 0.75rem 1.25rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--terracota-error);
+  background-color: #FFF5F6;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-cancelar-carrito:hover:not(:disabled) {
+  background-color: var(--terracota-error);
+  color: #FFFFFF;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.btn-cancelar-carrito:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-eliminar:active,
+.btn-cancelar-carrito:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* 7. Adaptación móvil */
+@media (max-width: 580px) {
+  .cart-item {
     flex-direction: column;
-    gap: 12px;
-    margin-top: 25px;
-}
+    align-items: stretch;
+  }
 
-.checkout input,
-.checkout select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+  .controles-item {
+    justify-content: space-between;
+    padding-top: 0.65rem;
+    border-top: 1px solid #EADAD0;
+  }
 
-.checkout button {
-    padding: 10px;
-    cursor: pointer;
-}
-
-.error-texto {
-    color: red;
-}
-
-@media (max-width: 600px) {
-    .cart-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .acciones-checkout {
+    grid-template-columns: 1fr;
+  }
 }
