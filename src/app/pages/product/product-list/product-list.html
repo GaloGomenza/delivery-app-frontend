@@ -30,6 +30,7 @@
     <table>
       <thead>
         <tr>
+          <th>Imagen</th>
           <th><button (click)="ordenar('name')">Nombre{{ flecha('name') }}</button></th>
           <th>Descripción</th>
           <th><button (click)="ordenar('price')">Precio{{ flecha('price') }}</button></th>
@@ -38,17 +39,29 @@
         </tr>
       </thead>
       <tbody>
-        @for (p of products(); track p.id) {
+        @for (p of products(); track p.id){
           <tr>
-            <td>{{ p.name }}</td>
-            <td>{{ p.description }}</td>
-            <td>{{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}</td>
-            <td>{{ p.status === 'AVAILABLE' ? 'Disponible' : 'No disponible' }}</td>
-            <td>
-              <a [routerLink]="['/store', storeId, 'products', 'edit', p.id]">Editar</a>
-              <button (click)="eliminar(p)">Eliminar</button>
-            </td>
-          </tr>
+        <td class="celda-imagen">
+          @if (p.imageURL) {
+            <img
+              [src]="p.imageURL"
+              [alt]="p.name"
+              class="miniatura-producto"
+              (error)="onImageError($event)"
+            />
+          } @else {
+            <span class="sin-imagen">Sin foto</span>
+          }
+        </td>
+        <td>{{ p.name }}</td>
+        <td>{{ p.description }}</td>
+        <td>{{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}</td>
+        <td>{{ p.status === 'AVAILABLE' ? 'Disponible' : 'No disponible' }}</td>
+        <td>
+          <a [routerLink]="['/store', storeId, 'products', 'edit', p.id]">Editar</a>
+          <button (click)="eliminar(p)">Eliminar</button>
+        </td>
+      </tr>
         }
       </tbody>
     </table>

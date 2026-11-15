@@ -33,9 +33,12 @@
   </div>
 
   @if (esComerciante) {
-  <a class="btn-productos" [routerLink]="['/store', store.id, 'products']">
-    Administrar productos
-  </a>
+    <a class="btn-productos" [routerLink]="['/store', store.id, 'products']">
+      Administrar productos
+    </a>
+    <a [routerLink]="['/store', store.id, 'edit']">
+      Editar
+    </a>
   } @else {
   @if (esConsumidor && cartService.cart()?.items?.length) {
   <button (click)="abrirCarrito()">
@@ -66,27 +69,34 @@
     } @else {
 
     <ul>
-
       @for (p of products(); track p.id) {
+        <li class="elemento-lista">
+          @if (p.imageURL) {
+            <img
+              [src]="p.imageURL"
+              [alt]="p.name"
+              class="miniatura-producto"
+              (error)="onImageError($event)"
+            />
+          } @else {
+            <span class="sin-imagen">Sin foto</span>
+          }
 
-      <li class="elemento-lista">
+          <div class="info-item">
+            <b>{{ p.name }}</b>
+            <span> - {{ p.description }} - </span>
+            <strong class="precio-item">{{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}</strong>
+          </div>
 
-        <b>{{ p.name }}</b>
-        - {{ p.description }}
-        - {{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}
-
-        @if (esConsumidor) {
-        <button (click)="agregarAlCarrito(p)">
-          Agregar al carrito
-        </button>
-        }
-
-      </li>
-
+          @if (esConsumidor) {
+            <button (click)="agregarAlCarrito(p)">
+              Agregar al carrito
+            </button>
+          }
+        </li>
       }
-
     </ul>
-
+    
     <div class="paginacion">
 
       <button (click)="irAPagina(page() - 1)" [disabled]="page() === 0">
