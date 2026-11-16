@@ -143,7 +143,7 @@ export class OrderStatusPage implements OnInit, OnDestroy {
                 if (this.authService.loggedUser()?.role === 'ROLE_MERCHANT') {
                     return '¡El cliente ha recibido el pedido!';
                 } else if (this.authService.loggedUser()?.role === 'ROLE_RIDER'){
-                    return '¡El cliente confirmó que le has entregado el pedido!';
+                    return '¡Pedido finalizado!';
                 } else{
                     return 'Has recibido tu pedido. ¡A disfrutar!';
                 }
