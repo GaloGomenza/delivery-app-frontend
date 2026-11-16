@@ -2,117 +2,98 @@
   <div class="encabezado">
     <h2>Mi carrito</h2>
     @if (cartService.cart(); as cart) {
-      <h3 class="badge-comercio">{{ cart.storeName }}</h3>
+    <h3 class="badge-comercio">{{ cart.storeName }}</h3>
     }
   </div>
 
   @if (cartService.cart(); as cart) {
-    @if (cart.items.length === 0) {
-      <p>Tu carrito está vacío.</p>
-      <a routerLink="/store/list">Volver a los comercios</a>
-    } @else {
-      <div class="cart-items">
-        @for (item of cart.items; track item.product.id) {
-          <div class="cart-item">
-            <div class="product-info">
-              <h4>{{ item.product.name }}</h4>
-              <p class="descripcion-item">{{ item.product.description }}</p>
-
-              <div class="precios-item">
-                <span>
-                  Unitario: {{ item.product.price | currency:'ARS':'symbol-narrow':'1.2-2' }}
-                </span>
-                <strong>
-                  Subtotal: {{ item.product.price * item.quantity | currency:'ARS':'symbol-narrow':'1.2-2' }}
-                </strong>
-              </div>
-            </div>
-
-            <div class="controles-item">
-              <div class="quantity-controls">
-                <button
-                  type="button"
-                  (click)="decrementar(item.product.id)">
-                  -
-                </button>
-
-                <span>{{ item.quantity }}</span>
-
-                <button
-                  type="button"
-                  (click)="incrementar(item.product.id)">
-                  +
-                </button>
-              </div>
-
-              <button
-                type="button"
-                class="btn-eliminar"
-                (click)="eliminar(item.product.id)">
-                Eliminar
-              </button>
-            </div>
-          </div>
-        }
-      </div>
-
-      <div class="total-carrito">
-        <span>Total del pedido</span>
-        <h3>{{ cartService.getTotal() | currency:'ARS':'symbol-narrow':'1.2-2' }}</h3>
-      </div>
-
-      <div class="checkout">
-        <h3>Datos del pedido</h3>
-
-        <div class="grupo-form">
-          <label for="direccion">Dirección de entrega</label>
-          <input
-            id="direccion"
-            type="text"
-            name="direccion"
-            maxlength="50"
-            [(ngModel)]="direccion"
-            placeholder="Ingresá una dirección">
-        </div>
-
-        <div class="grupo-form">
-          <label for="paymentType">Método de pago</label>
-          <select
-            id="paymentType"
-            name="paymentType"
-            [(ngModel)]="paymentType">
-            <option value="">Seleccioná un método de pago</option>
-            <option value="EFECTIVO">Efectivo</option>
-            <option value="TRANSFERENCIA">Transferencia</option>
-            <option value="PAGODIGITAL">Pago digital</option>
-          </select>
-        </div>
-
-        @if (error) {
-          <p class="error-texto">{{ error }}</p>
-        }
-
-        <div class="acciones-checkout">
-          <button
-            type="button"
-            class="btn-cancelar-carrito"
-            (click)="cancelarCarrito()"
-            [disabled]="enviando">
-            Cancelar carrito
-          </button>
-
-          <button
-            type="button"
-            class="btn-submit"
-            (click)="confirmarPedido()"
-            [disabled]="cart.items.length === 0 || !paymentType || enviando">
-            {{ enviando ? 'Confirmando...' : 'Confirmar pedido' }}
-          </button>
-        </div>
-      </div>
-    }
+  <button type="button" class="btn-volver-comercio" [routerLink]="['/store', cart.storeId, 'detail']">
+    ← Volver a {{ cart.storeName }}
+  </button>
+  @if (cart.items.length === 0) {
+  <p>Tu carrito está vacío.</p>
+  <a routerLink="/store/list">Volver a los comercios</a>
   } @else {
-    <p>No tenés productos en el carrito.</p>
-    <a routerLink="/store/list">Volver a los comercios</a>
+  <div class="cart-items">
+    @for (item of cart.items; track item.product.id) {
+    <div class="cart-item">
+      <div class="product-info">
+        <h4>{{ item.product.name }}</h4>
+        <p class="descripcion-item">{{ item.product.description }}</p>
+
+        <div class="precios-item">
+          <span>
+            Unitario: {{ item.product.price | currency:'ARS':'symbol-narrow':'1.2-2' }}
+          </span>
+          <strong>
+            Subtotal: {{ item.product.price * item.quantity | currency:'ARS':'symbol-narrow':'1.2-2' }}
+          </strong>
+        </div>
+      </div>
+
+      <div class="controles-item">
+        <div class="quantity-controls">
+          <button type="button" (click)="decrementar(item.product.id)">
+            -
+          </button>
+
+          <span>{{ item.quantity }}</span>
+
+          <button type="button" (click)="incrementar(item.product.id)">
+            +
+          </button>
+        </div>
+
+        <button type="button" class="btn-eliminar" (click)="eliminar(item.product.id)">
+          Eliminar
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="total-carrito">
+    <span>Total del pedido</span>
+    <h3>{{ cartService.getTotal() | currency:'ARS':'symbol-narrow':'1.2-2' }}</h3>
+  </div>
+
+  <div class="checkout">
+    <h3>Datos del pedido</h3>
+
+    <div class="grupo-form">
+      <label for="direccion">Dirección de entrega</label>
+      <input id="direccion" type="text" name="direccion" maxlength="50" [(ngModel)]="direccion"
+        placeholder="Ingresá una dirección">
+    </div>
+
+    <div class="grupo-form">
+      <label for="paymentType">Método de pago</label>
+      <select id="paymentType" name="paymentType" [(ngModel)]="paymentType">
+        <option value="">Seleccioná un método de pago</option>
+        <option value="EFECTIVO">Efectivo</option>
+        <option value="TRANSFERENCIA">Transferencia</option>
+        <option value="PAGODIGITAL">Pago digital</option>
+      </select>
+    </div>
+
+    @if (error) {
+    <p class="error-texto">{{ error }}</p>
+    }
+
+    <div class="acciones-checkout">
+      <button type="button" class="btn-cancelar-carrito" (click)="cancelarCarrito()" [disabled]="enviando">
+        Cancelar carrito
+      </button>
+
+      <button type="button" class="btn-submit" (click)="confirmarPedido()"
+        [disabled]="cart.items.length === 0 || !paymentType || enviando">
+        {{ enviando ? 'Confirmando...' : 'Confirmar pedido' }}
+      </button>
+    </div>
+  </div>
+  }
+  } @else {
+  <p>No tenés productos en el carrito.</p>
+  <a routerLink="/store/list">Volver a los comercios</a>
   }
 </div>
