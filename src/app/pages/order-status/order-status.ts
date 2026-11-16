@@ -127,7 +127,7 @@ export class OrderStatusPage implements OnInit, OnDestroy {
                 } else if (this.authService.loggedUser()?.role === 'ROLE_RIDER'){
                     return 'Dirígete al comercio. Te entragarán el pedido cuando esté listo';
                 } else{
-                    return 'Tu pedido está en preparacion. El repartidor lo está esperando.';
+                    return 'Tu pedido está en preparación. El repartidor lo está esperando.';
                 }
 
             case 'DISPATCHED':
