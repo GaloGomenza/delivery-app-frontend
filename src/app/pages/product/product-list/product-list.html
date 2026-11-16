@@ -1,12 +1,16 @@
 <div class="contenedor">
   <div class="encabezado">
     <h2>Productos de {{ store()?.name }}</h2>
-    <a [routerLink]="['/store/detail', storeId]">Volver al comercio</a>
-    <a [routerLink]="['/store', storeId, 'products', 'new']">Agregar producto</a>
+    <a [routerLink]="['/store', storeId, 'detail']">
+      Volver al comercio
+    </a>
+    <a [routerLink]="['/store', storeId, 'products', 'new']">
+      Agregar producto
+    </a>
   </div>
 
   @if (error()) {
-    <p class="error-texto">{{ error() }}</p>
+  <p class="error-texto">{{ error() }}</p>
   }
 
   <div class="filtros">
@@ -23,34 +27,29 @@
   </div>
 
   @if (loading()) {
-    <p>Cargando productos…</p>
+  <p>Cargando productos…</p>
   } @else if (products().length === 0) {
-    <p>Este comercio no tiene productos con estos filtros. Agregá uno con “Agregar producto”.</p>
+  <p>Este comercio no tiene productos con estos filtros. Agregá uno con “Agregar producto”.</p>
   } @else {
-    <table>
-      <thead>
-        <tr>
-          <th>Imagen</th>
-          <th><button (click)="ordenar('name')">Nombre{{ flecha('name') }}</button></th>
-          <th>Descripción</th>
-          <th><button (click)="ordenar('price')">Precio{{ flecha('price') }}</button></th>
-          <th><button (click)="ordenar('status')">Estado{{ flecha('status') }}</button></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (p of products(); track p.id){
-          <tr>
+  <table>
+    <thead>
+      <tr>
+        <th>Imagen</th>
+        <th><button (click)="ordenar('name')">Nombre{{ flecha('name') }}</button></th>
+        <th>Descripción</th>
+        <th><button (click)="ordenar('price')">Precio{{ flecha('price') }}</button></th>
+        <th><button (click)="ordenar('status')">Estado{{ flecha('status') }}</button></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of products(); track p.id){
+      <tr>
         <td class="celda-imagen">
           @if (p.imageURL) {
-            <img
-              [src]="p.imageURL"
-              [alt]="p.name"
-              class="miniatura-producto"
-              (error)="onImageError($event)"
-            />
+          <img [src]="p.imageURL" [alt]="p.name" class="miniatura-producto" (error)="onImageError($event)" />
           } @else {
-            <span class="sin-imagen">Sin foto</span>
+          <span class="sin-imagen">Sin foto</span>
           }
         </td>
         <td>{{ p.name }}</td>
@@ -62,14 +61,14 @@
           <button (click)="eliminar(p)">Eliminar</button>
         </td>
       </tr>
-        }
-      </tbody>
-    </table>
+      }
+    </tbody>
+  </table>
 
-    <div class="paginacion">
-      <button (click)="irAPagina(page() - 1)" [disabled]="page() === 0">Anterior</button>
-      <span>Página {{ page() + 1 }} de {{ totalPages() }} · {{ totalElements() }} productos</span>
-      <button (click)="irAPagina(page() + 1)" [disabled]="page() + 1 >= totalPages()">Siguiente</button>
-    </div>
+  <div class="paginacion">
+    <button (click)="irAPagina(page() - 1)" [disabled]="page() === 0">Anterior</button>
+    <span>Página {{ page() + 1 }} de {{ totalPages() }} · {{ totalElements() }} productos</span>
+    <button (click)="irAPagina(page() + 1)" [disabled]="page() + 1 >= totalPages()">Siguiente</button>
+  </div>
   }
 </div>
