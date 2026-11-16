@@ -13,8 +13,8 @@
 
     <div class="grupo-form">
       <label for="description">Descripción</label>
-      <textarea id="description" formControlName="description" rows="2" maxlength="50"></textarea>
-      <p>{{ formulario.controls.description.value?.length ?? 0 }}/50</p>
+      <textarea id="description" formControlName="description" rows="2" maxlength="200"></textarea>
+      <p>{{ formulario.controls.description.value?.length ?? 0 }}/200</p>
       @if (mensaje('description'); as m) { <p class="error-texto">{{ m }}</p> }
     </div>
 
