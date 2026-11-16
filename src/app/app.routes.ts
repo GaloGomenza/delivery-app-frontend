@@ -19,6 +19,7 @@ import { OrderList } from './pages/order-list/order-list';
 import { OrderStoreList } from './pages/order-store-list/order-store-list';
 import { Cart } from './pages/cart/cart';
 import { cartLeaveGuard } from './guards/cart-leave-guard';
+import { roleMerchantGuardFn } from './guards/role-merchant.guard.fn';
 
 export const routes: Routes = [
     {
@@ -84,13 +85,13 @@ export const routes: Routes = [
         path: 'store/new',
         component: StoreForm,
         title: 'Nuevo comercio',
-        canActivate: [authGuardFn]
+        canActivate: [authGuardFn, roleMerchantGuardFn]
     },
     {
         path: 'store/:id/edit',
         component: StoreForm,
         title: 'Editar comercio',
-        canActivate: [authGuardFn]
+        canActivate: [authGuardFn, roleMerchantGuardFn]
     },
     {
         path: 'store/:id/detail',
@@ -113,13 +114,13 @@ export const routes: Routes = [
         path: 'store/:storeId/products/new',
         component: ProductForm,
         title: 'Nuevo Producto',
-        canActivate: [authGuardFn]
+        canActivate: [authGuardFn, roleMerchantGuardFn]
     },
     {
         path: 'store/:storeId/products/edit/:productId',
         component: ProductForm,
         title: 'Editar Producto',
-        canActivate: [authGuardFn]
+        canActivate: [authGuardFn, roleMerchantGuardFn]
     },
     {
         path: 'consumer/products',
