@@ -1,11 +1,177 @@
-.steps li {
-    opacity: 0.4;
+/* 1. Píldora con el número de pedido en el encabezado */
+.badge-pedido {
+  padding: 0.35rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  background-color: var(--azul-denim);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
 }
 
-.steps li.done, .steps li.current {
-    opacity: 1;
+/* 2. Tarjeta destacada con el estado actual y su mensaje */
+.estado-banner {
+  margin-bottom: 1.25rem;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background-color: #FFFFFF;
+  border: var(--borde-fino);
+  border-radius: var(--radio-input);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
 }
 
-.error, .cancelled {
-    color: #b00020;
+.estado-banner.cancelado {
+  background-color: #FFF5F6;
+  border-color: var(--terracota-error);
+  box-shadow: 3px 3px 0px var(--terracota-error);
+}
+
+.estado-pill {
+  padding: 0.3rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  background-color: var(--teal-acento);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+}
+
+.estado-banner.cancelado .estado-pill {
+  background-color: var(--terracota-error);
+}
+
+.estado-mensaje {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--tinta-oscura);
+}
+
+.cancelled {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--terracota-error);
+}
+
+/* 3. Botones de cambio de estado según rol (Merchant / Rider) */
+.acciones-estado {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.35rem;
+}
+
+.acciones-estado:empty {
+  display: none;
+}
+
+.btn-accion {
+  padding: 0.65rem 1.35rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-confirmar {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.btn-confirmar:hover {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+.btn-avanzar {
+  background-color: var(--teal-acento);
+  color: #FFFFFF;
+}
+
+.btn-avanzar:hover {
+  background-color: #498991;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+.btn-rechazar {
+  background-color: #FFF5F6;
+  color: var(--terracota-error);
+}
+
+.btn-rechazar:hover {
+  background-color: var(--terracota-error);
+  color: #FFFFFF;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+/* 4. Destaque del importe total dentro de la grilla de datos */
+.grupo-dato.total-dato span {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: var(--azul-denim);
+}
+
+/* 5. Etiqueta de cantidad en cada producto del pedido */
+.cantidad-item {
+  display: inline-block;
+  margin-right: 0.45rem;
+  padding: 0.18rem 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--tinta-oscura);
+  background-color: var(--bg-crema);
+  border: 1.2px solid var(--tinta-oscura);
+  border-radius: var(--radio-pill);
+}
+
+/* 6. Botón inferior "Volver" */
+.acciones-footer {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-volver {
+  display: inline-block;
+  padding: 0.62rem 1.4rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  color: var(--tinta-oscura);
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.btn-volver:hover {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.btn-accion:active,
+.btn-volver:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* 7. Adaptación móvil */
+@media (max-width: 560px) {
+  .btn-accion,
+  .btn-volver {
+    width: 100%;
+  }
 }

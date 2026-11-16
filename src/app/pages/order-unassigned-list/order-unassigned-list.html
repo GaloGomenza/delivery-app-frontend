@@ -1,24 +1,54 @@
-<h2>Listado de pedidos sin asignar</h2>
+<div class="contenedor">
+  <div class="encabezado">
+    <h2>Listado de pedidos sin asignar</h2>
+  </div>
 
-@if (orderService.error() != '') {
+  @if (orderService.error() != '') {
     <p class="error">{{ orderService.error() }}</p>
-}
+  }
 
-@if (orderService.orders().length == 0){
+  @if (orderService.orders().length == 0) {
     <p>No hay pedidos sin asignar</p>
-}@else {
+  } @else {
+    <div class="lista-pedidos">
+      @for (order of orderService.orders(); track order.id ?? $index) {
+        <article class="tarjeta-pedido">
+          <div class="pedido-header">
+            <span class="badge-pedido">Pedido #{{ order?.id }}</span>
 
-    @for (order of orderService.orders(); track $index) {
-        <p><strong>Pedido #{{ order?.id }}</strong></p>
-        <p>StoreId: {{order.storeId}} //otra llamada para sacar direccion</p>
-        <p>CustomerLatitude: {{order.customerLatitude}}</p>
-        <p>CustomerLongitude: {{order.customerLongitude}}</p>
-        <p>MerchantLatitude: {{order.latitude}}</p>
-        <p>MerchantLongitude: {{order.longitude}}</p>
-        <a [routerLink]="['/orders', order.id , 'status']"><p>Tomar este pedido</p></a>
+            <a [routerLink]="['/orders', order.id, 'status']" class="btn-tomar">
+              Tomar este pedido
+            </a>
+          </div>
 
-    }
-}
+          <div class="datos-pedido">
+            <div class="grupo-dato">
+              <b>ID Comercio</b>
+              <span>{{ order.storeId }}</span>
+            </div>
 
+            <div class="grupo-dato">
+              <b>Latitud comercio</b>
+              <span>{{ order.latitude }}</span>
+            </div>
 
+            <div class="grupo-dato">
+              <b>Longitud comercio</b>
+              <span>{{ order.longitude }}</span>
+            </div>
 
+            <div class="grupo-dato">
+              <b>Latitud entrega</b>
+              <span>{{ order.customerLatitude }}</span>
+            </div>
+
+            <div class="grupo-dato">
+              <b>Longitud entrega</b>
+              <span>{{ order.customerLongitude }}</span>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</div>

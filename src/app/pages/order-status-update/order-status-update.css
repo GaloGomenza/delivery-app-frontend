@@ -1,0 +1,99 @@
+/* 1. Centrado vertical y horizontal dentro de <main> */
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+  text-align: center;
+}
+
+/* Centra el título dentro de la tarjeta compacta */
+.encabezado {
+  justify-content: center;
+}
+
+.encabezado h2 {
+  margin-right: 0;
+}
+
+/* 2. Recuadro de carga con spinner animado */
+.estado-cargando {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--bg-crema);
+  border: 1.5px dashed var(--tinta-oscura);
+  border-radius: var(--radio-input);
+}
+
+.estado-cargando p {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--tinta-oscura);
+}
+
+.spinner {
+  width: 38px;
+  height: 38px;
+  border: 3.5px solid #E5D4C8;
+  border-top-color: var(--azul-denim);
+  border-right-color: var(--rosa-principal);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 3. Recuadro de error y botón de regreso */
+.estado-error {
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.15rem;
+  background-color: #FFF5F6;
+  border: 1.5px solid var(--terracota-error);
+  border-radius: var(--radio-input);
+}
+
+.estado-error .error-texto {
+  margin-bottom: 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.btn-volver {
+  display: inline-block;
+  padding: 0.65rem 1.35rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--tinta-oscura);
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.btn-volver:hover {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.btn-volver:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}

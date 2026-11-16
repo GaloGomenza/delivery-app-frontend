@@ -1,0 +1,70 @@
+/* 1. Columnas ordenables al hacer clic */
+th:not(:last-child) {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease;
+}
+
+th:not(:last-child):hover {
+  background-color: var(--azul-denim-hover);
+}
+
+th:last-child {
+  text-align: right;
+}
+
+/* 2. ID del pedido */
+td:first-child {
+  font-weight: 700;
+  color: var(--texto-secundario);
+}
+
+/* 3. Importe total destacado */
+.precio-total {
+  font-weight: 800;
+  color: var(--azul-denim);
+}
+
+/* 4. Píldora de estado del pedido */
+.badge-estado {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--tinta-oscura);
+  background-color: var(--bg-crema);
+  border: 1.2px solid var(--tinta-oscura);
+  border-radius: var(--radio-pill);
+}
+
+.badge-estado[data-status="PENDING"] {
+  background-color: #FFF3D6;
+}
+
+.badge-estado[data-status="CONFIRMED_ASSIGNED"],
+.badge-estado[data-status="DISPATCHED"] {
+  background-color: #E6F4F5;
+}
+
+.badge-estado[data-status="DELIVERED"],
+.badge-estado[data-status="COMPLETED"] {
+  background-color: #E7F6EC;
+  color: #1F6E3D;
+}
+
+.badge-estado[data-status="CANCELLED"] {
+  background-color: #FFF5F6;
+  color: var(--terracota-error);
+  border-color: var(--terracota-error);
+}
+
+/* 5. Botón "Ver pedido" en azul denim (igual que "Ver comercio") */
+.actions a {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.actions a:hover {
+  background-color: var(--azul-denim-hover);
+}

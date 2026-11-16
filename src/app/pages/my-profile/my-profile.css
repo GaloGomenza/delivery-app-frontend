@@ -1,53 +1,42 @@
-/* 1. Botón Editar en vista de lectura (tono teal igual que en tablas y detalles) */
-.acciones-perfil {
+/* 1. Mantiene el mismo ancho en modo lectura y en modo edición */
+.contenedor.mi-perfil {
+  max-width: 720px;
+}
+
+/* 2. Contenedor de botones de acción (Editar / Guardar y Cancelar) */
+.acciones {
   margin-top: 1.5rem;
   display: flex;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.btn-editar {
-  padding: 0.65rem 1.45rem;
-  font-family: inherit;
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  background-color: var(--teal-acento);
-  border: var(--borde-fino);
-  border-radius: var(--radio-pill);
-  cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
-}
-
-.btn-editar:hover:not(:disabled) {
-  background-color: #498991;
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0px var(--tinta-oscura);
-}
-
-/* 2. Botón Cancelar (tanto en modo edición como en confirmación de borrado) */
-.btn-cancelar {
+/* Dentro del grid de .formulario, .acciones ocupa todo el ancho */
+.formulario .acciones {
+  grid-column: 1 / -1;
   margin-top: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 700;
-  text-align: center;
-  color: var(--tinta-oscura);
-  background-color: var(--bg-crema);
-  border: var(--borde-fino);
-  border-radius: var(--radio-pill);
-  cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
 }
 
-.btn-cancelar:hover:not(:disabled) {
+/* Quita el margin-top extra de .btn-submit para que alinee con los demás botones */
+.acciones .btn-submit {
+  margin-top: 0;
+}
+
+/* 3. Variante secundaria para los botones "Cancelar" */
+.btn-submit.btn-secundario {
+  background-color: var(--bg-crema);
+  color: var(--tinta-oscura);
+}
+
+.btn-submit.btn-secundario:hover:not(:disabled) {
   background-color: #F4DFCE;
   transform: translate(-1px, -1px);
   box-shadow: 2px 2px 0px var(--tinta-oscura);
 }
 
-/* 3. Separador y botón Eliminar mi cuenta */
-.zona-peligro {
+/* 4. Separador y botón "Eliminar mi cuenta" en modo lectura */
+.zona-borrar {
   margin-top: 1.75rem;
   padding-top: 1.25rem;
   border-top: 1.5px dashed #D8C7BC;
@@ -56,9 +45,9 @@
 }
 
 button.borrar {
-  padding: 0.55rem 1.2rem;
+  padding: 0.6rem 1.25rem;
   font-family: inherit;
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--terracota-error);
   background-color: #FFF5F6;
@@ -75,22 +64,13 @@ button.borrar:hover:not(:disabled) {
   box-shadow: 3px 3px 0px var(--tinta-oscura);
 }
 
-.btn-editar:active:not(:disabled),
-.btn-cancelar:active:not(:disabled),
 button.borrar:active:not(:disabled) {
   transform: translate(1px, 1px);
   box-shadow: none;
 }
 
-.btn-editar:disabled,
-.btn-cancelar:disabled,
-button.borrar:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* 4. Pantalla de confirmación para eliminar cuenta */
-.confirmacion-eliminar {
+/* 5. Recuadro de confirmación cuando deleting === true */
+.confirmar-borrar {
   padding: 1.5rem;
   text-align: center;
   background-color: #FFF5F6;
@@ -98,50 +78,41 @@ button.borrar:disabled {
   border-radius: var(--radio-input);
 }
 
-.confirmacion-eliminar h3 {
+.confirmar-borrar h3 {
   margin-bottom: 0.5rem;
-  font-size: 1.25rem;
+  font-size: 1.22rem;
   font-weight: 800;
   color: var(--terracota-error);
 }
 
-.confirmacion-eliminar p {
-  margin-bottom: 1.5rem;
+.confirmar-borrar p {
+  margin-bottom: 1.35rem;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--texto-secundario);
 }
 
-.acciones-confirmacion {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.85rem;
-}
-
-.acciones-confirmacion .btn-cancelar,
-.acciones-confirmacion button.borrar {
+.confirmar-borrar .acciones {
   margin-top: 0;
-  padding: 0.7rem 1.35rem;
-  font-size: 0.92rem;
+  justify-content: center;
 }
 
-/* En confirmación, el botón de eliminar ya aparece destacado en rojo sólido */
-.acciones-confirmacion button.borrar {
+/* En la pantalla de confirmación, el botón rojo va sólido para destacarlo */
+.confirmar-borrar button.borrar {
+  padding: 0.75rem 1.35rem;
+  font-size: 0.95rem;
   background-color: var(--terracota-error);
   color: #FFFFFF;
 }
 
-.acciones-confirmacion button.borrar:hover:not(:disabled) {
+.confirmar-borrar button.borrar:hover:not(:disabled) {
   background-color: #B02E3D;
 }
 
-/* 5. Adaptación a pantallas chicas */
+/* 6. Adaptación a pantallas chicas */
 @media (max-width: 560px) {
-  .btn-editar,
-  .zona-peligro button.borrar,
-  .btn-cancelar,
-  .acciones-confirmacion button.borrar {
+  .acciones button,
+  .zona-borrar button.borrar {
     width: 100%;
   }
 }
