@@ -22,7 +22,7 @@ export const cartLeaveGuard: CanDeactivateFn<unknown> = (
     return true;
   }
 
-  if (nextUrl.startsWith(`/store/detail/${cart.storeId}`)) {
+  if (nextUrl.startsWith(`/store/${cart.storeId}/detail`)) {
     return true;
   }
 
