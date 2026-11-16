@@ -23,7 +23,7 @@ export class ConsumerProductList implements OnInit {
   products = signal<Product[]>([]);
 
   page = signal(0);
-  size = signal(10);
+  size = signal(12);
   sortBy = signal<ProductSortBy>('name');
   direction = signal<'asc' | 'desc'>('asc');
 
