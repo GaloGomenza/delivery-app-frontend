@@ -125,7 +125,7 @@ export class OrderStatusPage implements OnInit, OnDestroy {
                 if (this.authService.loggedUser()?.role === 'ROLE_MERCHANT') {
                     return 'Un repartidor ha tomado el pedido. Entregáselo cuando esté listo.';
                 } else if (this.authService.loggedUser()?.role === 'ROLE_RIDER'){
-                    return 'Dirígete al comercio. Te entragarán el pedido cuando esté listo';
+                    return 'Dirígete al comercio. Te entregarán el pedido cuando esté listo';
                 } else{
                     return 'Tu pedido está en preparación. El repartidor lo está esperando.';
                 }
