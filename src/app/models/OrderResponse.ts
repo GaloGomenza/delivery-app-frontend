@@ -26,4 +26,5 @@ export interface OrderResponse {
   storeName: string;
   consumerName: string;
   riderName: string | null;
+  storeAddress: string;
 }
