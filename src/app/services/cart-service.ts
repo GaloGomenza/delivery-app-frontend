@@ -18,6 +18,7 @@ export interface CartState {
 export class CartService {
 
   private storageKey = 'deliveryCart';
+  readonly MAX_UNIDADES = 5;
 
   cart = signal<CartState | null>(this.loadCart());
 
@@ -73,6 +74,9 @@ export class CartService {
     );
 
     if (existingItem) {
+      if (existingItem.quantity >= this.MAX_UNIDADES) {
+        return false;
+      }
       existingItem.quantity++;
     } else {
       currentCart.items.push({
@@ -118,6 +122,10 @@ export class CartService {
 
     if (quantity <= 0) {
       this.removeProduct(productId);
+      return;
+    }
+
+    if (quantity > this.MAX_UNIDADES) {
       return;
     }
 

@@ -73,54 +73,31 @@
         <p class="error-texto">{{ errorProductos() }}</p>
       }
 
-      @if (cargandoProductos()) {
-        <p>Cargando productos...</p>
-      } @else if (products().length === 0) {
-        <p>Este comercio no tiene productos disponibles actualmente.</p>
-      } @else {
-        <ul>
-          @for (p of products(); track p.id) {
-            <li class="elemento-lista">
-              @if (p.imageURL) {
-                <img
-                  [src]="p.imageURL"
-                  [alt]="p.name"
-                  class="miniatura-producto"
-                  (error)="onImageError($event)"
-                />
-              } @else {
-                <span class="sin-imagen">Sin foto</span>
-              }
+          @if (esConsumidor) {
+                  @if (cantidadEnCarrito(p.id) > 0) {
+                    <div class="contenedor-cantidad">
+                      <div class="quantity-controls">
+                        <button type="button" (click)="decrementarProducto(p)">-</button>
+                        <span>{{ cantidadEnCarrito(p.id) }}</span>
+                        <button
+                          type="button"
+                          (click)="agregarAlCarrito(p)"
+                          [disabled]="cantidadEnCarrito(p.id) >= cartService.MAX_UNIDADES">
+                          +
+                        </button>
+                      </div>
 
-              <div class="info-item">
-                <b>{{ p.name }}</b>
-                <span> - {{ p.description }} - </span>
-                <strong class="precio-item">{{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}</strong>
-              </div>
-
-              @if (esConsumidor) {
-                <button (click)="agregarAlCarrito(p)">
-                  Agregar al carrito
-                </button>
-              }
-            </li>
-          }
-        </ul>
-
-        <div class="paginacion">
-          <button (click)="irAPagina(page() - 1)" [disabled]="page() === 0">
-            Anterior
-          </button>
-
-          <span>
-            Página {{ page() + 1 }} de {{ totalPages() }}
-            · {{ totalElements() }} productos
-          </span>
-
-          <button (click)="irAPagina(page() + 1)" [disabled]="page() + 1 >= totalPages()">
-            Siguiente
-          </button>
-        </div>
+                      @if (cantidadEnCarrito(p.id) >= cartService.MAX_UNIDADES) {
+                        <span class="aviso-maximo">Máximo {{ cartService.MAX_UNIDADES }} iguales</span>
+                      }
+                    </div>
+                  } @else {
+                    <button type="button" (click)="agregarAlCarrito(p)">
+                      Agregar al carrito
+                    </button>
+                  }
+                }
+        </li>
       }
     </div>
 

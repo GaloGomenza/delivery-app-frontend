@@ -14,6 +14,35 @@
   border-radius: var(--radio-pill);
 }
 
+/* Botón volver al comercio */
+.btn-volver-comercio {
+  align-self: flex-start;
+  margin-bottom: 1rem;
+  padding: 0.65rem 1.1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--tinta-oscura);
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  box-shadow: 2px 2px 0 var(--tinta-oscura);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.btn-volver-comercio:hover {
+  background-color: var(--teal-acento);
+  color: #FFFFFF;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--tinta-oscura);
+}
+
+.btn-volver-comercio:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
 /* 3. Listado de ítems agregados */
 .cart-items {
   display: flex;
@@ -72,11 +101,18 @@
   color: var(--azul-denim);
 }
 
-/* 4. Selector de cantidad (+ / -) y botón Eliminar */
+/* 4. Selector de cantidad (+ / -), aviso de máximo y botón Eliminar */
 .controles-item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+.bloque-cantidad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .quantity-controls {
@@ -106,13 +142,19 @@
   transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
 }
 
-.quantity-controls button:hover {
+.quantity-controls button:hover:not(:disabled) {
   background-color: var(--azul-denim);
   color: #FFFFFF;
 }
 
-.quantity-controls button:active {
+.quantity-controls button:active:not(:disabled) {
   transform: scale(0.94);
+}
+
+.quantity-controls button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  background-color: #EFE6DF;
 }
 
 .quantity-controls span {
@@ -121,6 +163,18 @@
   font-size: 0.92rem;
   font-weight: 800;
   color: var(--tinta-oscura);
+}
+
+.aviso-maximo {
+  padding: 0.12rem 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1.1;
+  white-space: nowrap;
+  color: var(--terracota-error);
+  background-color: #FFF5F6;
+  border: 1.2px solid var(--terracota-error);
+  border-radius: var(--radio-pill);
 }
 
 .btn-eliminar {
@@ -242,41 +296,4 @@
   .acciones-checkout {
     grid-template-columns: 1fr;
   }
-}
-
-.btn-volver-comercio {
-  align-self: flex-start;
-  margin-bottom: 1rem;
-  padding: 0.65rem 1.1rem;
-
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 700;
-
-  color: var(--tinta-oscura);
-  background-color: var(--bg-crema);
-
-  border: var(--borde-fino);
-  border-radius: var(--radio-pill);
-  box-shadow: 2px 2px 0 var(--tinta-oscura);
-
-  cursor: pointer;
-
-  transition:
-    transform 0.12s ease,
-    box-shadow 0.12s ease,
-    background-color 0.15s ease;
-}
-
-.btn-volver-comercio:hover {
-  background-color: var(--teal-acento);
-  color: #FFFFFF;
-
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--tinta-oscura);
-}
-
-.btn-volver-comercio:active {
-  transform: translate(1px, 1px);
-  box-shadow: none;
 }
