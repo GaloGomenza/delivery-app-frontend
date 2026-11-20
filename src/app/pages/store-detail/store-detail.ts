@@ -35,6 +35,8 @@ export class StoreDetail implements OnInit {
   cargandoProductos = signal(false);
   errorProductos = signal<string | null>(null);
   mensajeCarrito = signal<string | null>(null);
+  confirmandoBorrado = signal(false);
+  eliminando = signal(false);
 
   ngOnInit(): void {
     this.service.getStoreById(this.storeId).subscribe({
@@ -129,12 +131,28 @@ agregarAlCarrito(product: Product): void {
     this.cargarProductos();
   }
 
-  borrarStore() {
+  pedirConfirmacionBorrado(): void {
+    this.confirmandoBorrado.set(true);
+  }
+
+  cancelarBorrado(): void {
+    this.confirmandoBorrado.set(false);
+  }
+
+  borrarStore(): void {
+    this.eliminando.set(true);
+
     this.service.deleteStore(this.storeId).subscribe({
-      next: () => this.router.navigate(['store/list']),
-      error: (e) => { console.log(e) }
-    })
-    alert("Comercio eliminado")
+      next: () => {
+        alert('Comercio eliminado');
+        this.router.navigate(['/store/list']);
+      },
+      error: (e) => {
+        console.log(e);
+        this.eliminando.set(false);
+        this.confirmandoBorrado.set(false);
+      }
+    });
   }
 
   @HostListener('window:beforeunload', ['$event'])
