@@ -41,7 +41,7 @@
   border-radius: var(--radio-input);
 }
 
-/* 3. Fila de producto con miniatura, texto y botón */
+/* 3. Fila de producto con miniatura, texto y controles */
 .elemento-lista {
   gap: 0.9rem;
 }
@@ -86,8 +86,8 @@
   color: var(--azul-denim);
 }
 
-/* 4. Botón "Agregar al carrito" alineado a la derecha */
-.elemento-lista button {
+/* 4. Botón "Agregar al carrito" (solo hijo directo de .elemento-lista) */
+.elemento-lista > button {
   margin-left: auto;
   padding: 0.45rem 1rem;
   font-family: inherit;
@@ -101,27 +101,102 @@
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
 }
 
-.elemento-lista button:hover {
+.elemento-lista > button:hover {
   background-color: var(--azul-denim-hover);
   transform: translate(-1px, -1px);
   box-shadow: 2px 2px 0px var(--tinta-oscura);
 }
 
-.elemento-lista button:active {
+.elemento-lista > button:active {
   transform: translate(1px, 1px);
   box-shadow: none;
 }
 
-/* 5. Adaptación móvil */
+/* 5. Pastillita de cantidad (- N +) y aviso de máximo */
+.contenedor-cantidad {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
+
+.quantity-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.25rem 0.4rem;
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+}
+
+.quantity-controls button {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--tinta-oscura);
+  background-color: #FFFFFF;
+  border: 1.2px solid var(--tinta-oscura);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.quantity-controls button:hover:not(:disabled) {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.quantity-controls button:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.quantity-controls button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  background-color: #EFE6DF;
+}
+
+.quantity-controls span {
+  min-width: 22px;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--tinta-oscura);
+}
+
+.aviso-maximo {
+  padding: 0.15rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--terracota-error);
+  background-color: #FFF5F6;
+  border: 1.2px solid var(--terracota-error);
+  border-radius: var(--radio-pill);
+}
+
+/* 6. Adaptación móvil */
 @media (max-width: 560px) {
   .contenedor > button {
     width: 100%;
     justify-content: center;
   }
 
-  .elemento-lista button {
+  .elemento-lista > button {
     width: 100%;
     margin-left: 0;
     margin-top: 0.35rem;
+  }
+
+  .contenedor-cantidad {
+    margin-left: 0;
+    margin-top: 0.35rem;
+    align-items: center;
   }
 }

@@ -32,16 +32,25 @@
       </div>
 
       <div class="controles-item">
-        <div class="quantity-controls">
-          <button type="button" (click)="decrementar(item.product.id)">
-            -
-          </button>
+        <div class="bloque-cantidad">
+          <div class="quantity-controls">
+            <button type="button" (click)="decrementar(item.product.id)">
+              -
+            </button>
 
-          <span>{{ item.quantity }}</span>
+            <span>{{ item.quantity }}</span>
 
-          <button type="button" (click)="incrementar(item.product.id)">
-            +
-          </button>
+            <button
+              type="button"
+              (click)="incrementar(item.product.id)"
+              [disabled]="item.quantity >= cartService.MAX_UNIDADES">
+              +
+            </button>
+          </div>
+
+          @if (item.quantity >= cartService.MAX_UNIDADES) {
+            <span class="aviso-maximo">Máximo {{ cartService.MAX_UNIDADES }} iguales</span>
+          }
         </div>
 
         <button type="button" class="btn-eliminar" (click)="eliminar(item.product.id)">

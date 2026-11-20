@@ -74,10 +74,29 @@
           </div>
 
           @if (esConsumidor) {
-            <button (click)="agregarAlCarrito(p)">
-              Agregar al carrito
-            </button>
-          }
+                  @if (cantidadEnCarrito(p.id) > 0) {
+                    <div class="contenedor-cantidad">
+                      <div class="quantity-controls">
+                        <button type="button" (click)="decrementarProducto(p)">-</button>
+                        <span>{{ cantidadEnCarrito(p.id) }}</span>
+                        <button
+                          type="button"
+                          (click)="agregarAlCarrito(p)"
+                          [disabled]="cantidadEnCarrito(p.id) >= cartService.MAX_UNIDADES">
+                          +
+                        </button>
+                      </div>
+
+                      @if (cantidadEnCarrito(p.id) >= cartService.MAX_UNIDADES) {
+                        <span class="aviso-maximo">Máximo {{ cartService.MAX_UNIDADES }} iguales</span>
+                      }
+                    </div>
+                  } @else {
+                    <button type="button" (click)="agregarAlCarrito(p)">
+                      Agregar al carrito
+                    </button>
+                  }
+                }
         </li>
       }
     </ul>
