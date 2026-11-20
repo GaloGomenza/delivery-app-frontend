@@ -112,8 +112,164 @@
   box-shadow: none;
 }
 
-/* 5. Adaptación móvil */
-@media (max-width: 560px) {
+/* 5. Barra inferior de acciones y navegación (con separación limpia) */
+.acciones-detalle {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1.5px solid #EADAD0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.acciones-detalle a,
+.btn-eliminar {
+  display: inline-block;
+  padding: 0.65rem 1.3rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.acciones-detalle .btn-productos {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.acciones-detalle .btn-productos:hover {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+.acciones-detalle .btn-editar {
+  background-color: var(--teal-acento);
+  color: #FFFFFF;
+}
+
+.acciones-detalle .btn-editar:hover {
+  background-color: #498991;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+.btn-eliminar {
+  color: var(--terracota-error);
+  background-color: #FFF5F6;
+}
+
+.btn-eliminar:hover {
+  background-color: var(--terracota-error);
+  color: #FFFFFF;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+/* Empuja "Volver al listado" hacia el margen derecho, lejos de Eliminar */
+.acciones-detalle .btn-volver {
+  margin-left: auto;
+  background-color: var(--bg-crema);
+  color: var(--tinta-oscura);
+}
+
+.acciones-detalle .btn-volver:hover {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.acciones-detalle a:active,
+.btn-eliminar:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* 6. Recuadro de confirmación de eliminación */
+.confirmar-borrar {
+  flex-basis: 100%;
+  padding: 1.35rem;
+  text-align: center;
+  background-color: #FFF5F6;
+  border: 1.5px solid var(--terracota-error);
+  border-radius: var(--radio-input);
+}
+
+.confirmar-borrar h3 {
+  margin-bottom: 0.4rem;
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: var(--terracota-error);
+}
+
+.confirmar-borrar p {
+  margin-bottom: 1.15rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+}
+
+.acciones-confirmacion {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.btn-cancelar,
+.btn-confirmar-eliminar {
+  padding: 0.65rem 1.35rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.btn-cancelar {
+  color: var(--tinta-oscura);
+  background-color: var(--bg-crema);
+}
+
+.btn-cancelar:hover:not(:disabled) {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.btn-confirmar-eliminar {
+  color: #FFFFFF;
+  background-color: var(--terracota-error);
+}
+
+.btn-confirmar-eliminar:hover:not(:disabled) {
+  background-color: #B02E3D;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+.btn-cancelar:active:not(:disabled),
+.btn-confirmar-eliminar:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+.btn-cancelar:disabled,
+.btn-confirmar-eliminar:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* 7. Adaptación móvil única */
+@media (max-width: 640px) {
   .contenedor > button {
     width: 100%;
     justify-content: center;
@@ -123,5 +279,18 @@
     width: 100%;
     margin-left: 0;
     margin-top: 0.35rem;
+  }
+
+  .acciones-detalle {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .acciones-detalle a,
+  .btn-eliminar,
+  .btn-cancelar,
+  .btn-confirmar-eliminar {
+    width: 100%;
+    margin-left: 0;
   }
 }
