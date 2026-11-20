@@ -136,6 +136,7 @@ export class StoreDetail implements OnInit {
         console.log(e);
         this.eliminando.set(false);
         this.confirmandoBorrado.set(false);
+        alert("El comercio no se puede eliminar")
       }
     });
   }
