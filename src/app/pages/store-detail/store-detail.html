@@ -17,95 +17,116 @@
     </div>
   </div>
 
-  @if (esComerciante) {
-    <a class="btn-productos" [routerLink]="['/store', store.id, 'products']">
-      Administrar productos
-    </a>
-    <a [routerLink]="['/store', store.id, 'edit']">
-      Editar
-    </a>
-  } @else {
-  @if (esConsumidor && cartService.cart()?.items?.length) {
-  <button (click)="abrirCarrito()">
-    Ver carrito ({{ cartService.getTotalItems() }} productos)
-  </button>
-  }
+@if (esComerciante) {
+    <div class="acciones-detalle">
+      @if (!confirmandoBorrado()) {
+        <a class="btn-productos" [routerLink]="['/store', store.id, 'products']">
+          Administrar productos
+        </a>
+        <a class="btn-editar" [routerLink]="['/store', store.id, 'edit']">
+          Editar
+        </a>
+        <button type="button" class="btn-eliminar" (click)="pedirConfirmacionBorrado()">
+          Eliminar
+        </button>
+      } @else {
+        <div class="confirmar-borrar">
+          <h3>¿Estás seguro de que querés eliminar "{{ store.name }}"?</h3>
+          <p>Esta acción no se puede deshacer.</p>
 
-  <div class="productos">
-
-    <h3>Productos disponibles</h3>
-
-    @if (mensajeCarrito()) {
-    <p>{{ mensajeCarrito() }}</p>
-    }
-
-    @if (errorProductos()) {
-    <p class="error-texto">{{ errorProductos() }}</p>
-    }
-
-    @if (cargandoProductos()) {
-
-    <p>Cargando productos...</p>
-
-    } @else if (products().length === 0) {
-
-    <p>Este comercio no tiene productos disponibles actualmente.</p>
-
-    } @else {
-
-    <ul>
-      @for (p of products(); track p.id) {
-        <li class="elemento-lista">
-          @if (p.imageURL) {
-            <img
-              [src]="p.imageURL"
-              [alt]="p.name"
-              class="miniatura-producto"
-              (error)="onImageError($event)"
-            />
-          } @else {
-            <span class="sin-imagen">Sin foto</span>
-          }
-
-          <div class="info-item">
-            <b>{{ p.name }}</b>
-            <span> - {{ p.description }} - </span>
-            <strong class="precio-item">{{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}</strong>
-          </div>
-
-          @if (esConsumidor) {
-            <button (click)="agregarAlCarrito(p)">
-              Agregar al carrito
+          <div class="acciones-confirmacion">
+            <button
+              type="button"
+              class="btn-cancelar"
+              (click)="cancelarBorrado()"
+              [disabled]="eliminando()">
+              Cancelar
             </button>
-          }
-        </li>
+            <button
+              type="button"
+              class="btn-confirmar-eliminar"
+              (click)="borrarStore()"
+              [disabled]="eliminando()">
+              {{ eliminando() ? 'Eliminando...' : 'Confirmar' }}
+            </button>
+          </div>
+        </div>
       }
-    </ul>
-    
-    <div class="paginacion">
 
-      <button (click)="irAPagina(page() - 1)" [disabled]="page() === 0">
-        Anterior
+      <a routerLink="/store/list" class="btn-volver">Volver al listado</a>
+    </div>
+  } @else {
+    @if (esConsumidor && cartService.cart()?.items?.length) {
+      <button (click)="abrirCarrito()">
+        Ver carrito ({{ cartService.getTotalItems() }} productos)
       </button>
+    }
 
-      <span>
-        Página {{ page() + 1 }} de {{ totalPages() }}
-        · {{ totalElements() }} productos
-      </span>
+    <div class="productos">
+      <h3>Productos disponibles</h3>
 
-      <button (click)="irAPagina(page() + 1)" [disabled]="page() + 1 >= totalPages()">
-        Siguiente
-      </button>
+      @if (mensajeCarrito()) {
+        <p>{{ mensajeCarrito() }}</p>
+      }
 
+      @if (errorProductos()) {
+        <p class="error-texto">{{ errorProductos() }}</p>
+      }
+
+      @if (cargandoProductos()) {
+        <p>Cargando productos...</p>
+      } @else if (products().length === 0) {
+        <p>Este comercio no tiene productos disponibles actualmente.</p>
+      } @else {
+        <ul>
+          @for (p of products(); track p.id) {
+            <li class="elemento-lista">
+              @if (p.imageURL) {
+                <img
+                  [src]="p.imageURL"
+                  [alt]="p.name"
+                  class="miniatura-producto"
+                  (error)="onImageError($event)"
+                />
+              } @else {
+                <span class="sin-imagen">Sin foto</span>
+              }
+
+              <div class="info-item">
+                <b>{{ p.name }}</b>
+                <span> - {{ p.description }} - </span>
+                <strong class="precio-item">{{ p.price | currency:'ARS':'symbol-narrow':'1.2-2' }}</strong>
+              </div>
+
+              @if (esConsumidor) {
+                <button (click)="agregarAlCarrito(p)">
+                  Agregar al carrito
+                </button>
+              }
+            </li>
+          }
+        </ul>
+
+        <div class="paginacion">
+          <button (click)="irAPagina(page() - 1)" [disabled]="page() === 0">
+            Anterior
+          </button>
+
+          <span>
+            Página {{ page() + 1 }} de {{ totalPages() }}
+            · {{ totalElements() }} productos
+          </span>
+
+          <button (click)="irAPagina(page() + 1)" [disabled]="page() + 1 >= totalPages()">
+            Siguiente
+          </button>
+        </div>
+      }
     </div>
 
-    }
-
-  </div>
+    <div class="acciones-detalle">
+      <a routerLink="/store/list" class="btn-volver">Volver al listado</a>
+    </div>
   }
-
-  <a routerLink="/store/list">Volver al listado</a>
-
-  }
-
+}
 </div>
