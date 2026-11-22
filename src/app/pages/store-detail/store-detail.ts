@@ -82,18 +82,21 @@ export class StoreDetail implements OnInit {
       });
   }
 
-  agregarAlCarrito(product: Product): void {
-
+agregarAlCarrito(product: Product): void {
     const currentStore = this.store();
 
     if (!currentStore) {
       return;
     }
 
-    const added = this.cartService.addProduct(
-      product,
-      currentStore
-    );
+    if (this.cantidadEnCarrito(product.id) >= this.cartService.MAX_UNIDADES) {
+      this.mensajeCarrito.set(
+        `Alcanzaste el máximo de ${this.cartService.MAX_UNIDADES} unidades iguales para ${product.name}.`
+      );
+      return;
+    }
+
+    const added = this.cartService.addProduct(product, currentStore);
 
     if (!added) {
       this.mensajeCarrito.set(
@@ -102,9 +105,21 @@ export class StoreDetail implements OnInit {
       return;
     }
 
-    this.mensajeCarrito.set(
-      `${product.name} agregado al carrito`
-    );
+    this.mensajeCarrito.set(`${product.name} agregado al carrito`);
+  }
+
+  cantidadEnCarrito(productId: number): number {
+    const cart = this.cartService.cart();
+    if (!cart || cart.storeId !== this.storeId) {
+      return 0;
+    }
+    return cart.items.find((item) => item.product.id === productId)?.quantity ?? 0;
+  }
+
+  decrementarProducto(product: Product): void {
+    const actual = this.cantidadEnCarrito(product.id);
+    this.cartService.updateQuantity(product.id, actual - 1);
+    this.mensajeCarrito.set(null);
   }
 
   abrirCarrito(): void {
