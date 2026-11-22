@@ -279,6 +279,15 @@
   transform: translate(1px, 1px);
   box-shadow: none;
 }
+/* Destaca el error general de stock arriba de los botones de confirmar */
+.checkout > .error-texto {
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  background-color: #FFF5F6;
+  border: 1.5px solid var(--terracota-error);
+  border-radius: var(--radio-input);
+}
 
 /* 7. Adaptación móvil */
 @media (max-width: 580px) {

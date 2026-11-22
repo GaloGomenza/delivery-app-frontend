@@ -25,6 +25,30 @@
     </div>
 
     <div class="grupo-form">
+      <label for="price">Precio</label>
+      <input id="price" type="number" step="0.01" min="0.01" formControlName="price">
+      @if (mensaje('price'); as m) { <p class="error-texto">{{ m }}</p> }
+    </div>
+
+    <div class="grupo-form">
+      <label for="stock">Stock</label>
+      <input id="stock" type="number" step="1" min="0" formControlName="stock">
+      @if (mensaje('stock'); as m) { <p class="error-texto">{{ m }}</p> }
+    </div>
+
+    <div class="grupo-form">
+      <label for="status">Estado</label>
+      <select id="status" formControlName="status">
+        <option
+          value="AVAILABLE"
+          [disabled]="formulario.controls.stock.value === null || formulario.controls.stock.value <= 0">
+          Disponible
+        </option>
+        <option value="UNAVAILABLE">No disponible</option>
+      </select>
+    </div>
+
+    <div class="grupo-form">
       <label for="status">Estado</label>
       <select id="status" formControlName="status">
         <option value="AVAILABLE">Disponible</option>
@@ -42,9 +66,13 @@
       <p class="error-texto">{{ error() }}</p>
     }
 
-    <a [routerLink]="['/store', storeId, 'products']">Cancelar</a>
-    <button type="submit" class="btn-submit" [disabled]="guardando()">
-      {{ guardando() ? 'Guardando…' : 'Guardar' }}
-    </button>
+    <div class="acciones">
+      <a [routerLink]="['/store', storeId, 'products']" class="btn-cancelar">
+        Cancelar
+      </a>
+      <button type="submit" class="btn-submit" [disabled]="guardando()">
+        {{ guardando() ? 'Guardando…' : 'Guardar' }}
+      </button>
+    </div>
   </form>
 </div>

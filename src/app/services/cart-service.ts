@@ -18,9 +18,9 @@ export interface CartState {
 export class CartService {
 
   private storageKey = 'deliveryCart';
-  readonly MAX_UNIDADES = 5;
 
   cart = signal<CartState | null>(this.loadCart());
+  
 
   private loadCart(): CartState | null {
     const stored = sessionStorage.getItem(this.storageKey);
@@ -51,6 +51,9 @@ export class CartService {
   }
 
   addProduct(product: Product, store: Store): boolean {
+    if (product.stock <= 0) {
+      return false;
+    }
 
     let currentCart = this.cart();
 
@@ -74,9 +77,10 @@ export class CartService {
     );
 
     if (existingItem) {
-      if (existingItem.quantity >= this.MAX_UNIDADES) {
+      if (existingItem.quantity >= product.stock) {
         return false;
       }
+      existingItem.product = product;
       existingItem.quantity++;
     } else {
       currentCart.items.push({
@@ -113,7 +117,6 @@ export class CartService {
   }
 
   updateQuantity(productId: number, quantity: number): void {
-
     const currentCart = this.cart();
 
     if (!currentCart) {
@@ -125,15 +128,11 @@ export class CartService {
       return;
     }
 
-    if (quantity > this.MAX_UNIDADES) {
-      return;
-    }
-
     const item = currentCart.items.find(
       item => item.product.id === productId
     );
 
-    if (!item) {
+    if (!item || quantity > item.product.stock) {
       return;
     }
 
@@ -173,5 +172,22 @@ export class CartService {
   clear(): void {
     this.cart.set(null);
     sessionStorage.removeItem(this.storageKey);
+  }
+
+  syncProducts(updatedProducts: Product[]): void {
+    const currentCart = this.cart();
+    if (!currentCart) {
+      return;
+    }
+
+    const byId = new Map(updatedProducts.map((p) => [p.id, p]));
+
+    currentCart.items = currentCart.items.map((item) => ({
+      ...item,
+      product: byId.get(item.product.id) ?? item.product,
+    }));
+
+    this.cart.set({ ...currentCart });
+    this.saveCart();
   }
 }

@@ -181,6 +181,79 @@
   border-radius: var(--radio-pill);
 }
 
+/* Botones superiores del comerciante (Administrar productos / Editar) */
+.acciones-comerciante {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.acciones-comerciante a {
+  display: inline-block;
+  padding: 0.65rem 1.3rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.acciones-comerciante .btn-productos {
+  background-color: var(--azul-denim);
+  color: #FFFFFF;
+}
+
+.acciones-comerciante .btn-productos:hover {
+  background-color: var(--azul-denim-hover);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+.acciones-comerciante .btn-editar {
+  background-color: var(--teal-acento);
+  color: #FFFFFF;
+}
+
+.acciones-comerciante .btn-editar:hover {
+  background-color: #498991;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px var(--tinta-oscura);
+}
+
+/* Aviso de escasez para el consumidor (1 o 2 unidades restantes) */
+.aviso-ultimas-unidades {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.16rem 0.6rem;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #8A4B08;
+  background-color: #FFF3D6;
+  border: 1.2px solid #D9822B;
+  border-radius: var(--radio-pill);
+}
+
+/* Etiqueta de stock visible para el comerciante */
+.badge-stock {
+  margin-left: auto;
+  padding: 0.32rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+  color: #1F6E3D;
+  background-color: #E7F6EC;
+  border: 1.2px solid #1F6E3D;
+  border-radius: var(--radio-pill);
+}
+
+.badge-stock.sin-stock {
+  color: var(--terracota-error);
+  background-color: #FFF5F6;
+  border-color: var(--terracota-error);
+}
+
 /* 6. Adaptación móvil */
 @media (max-width: 560px) {
   .contenedor > button {
