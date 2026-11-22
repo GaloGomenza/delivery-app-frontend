@@ -36,11 +36,32 @@ export class ProductForm implements OnInit {
     ],
     description: ['', [Validators.required, Validators.maxLength(50)]],
     imageURL: ['', [Validators.maxLength(250)]],
+    stock: [
+      null as number | null, 
+      [
+        Validators.required, 
+        Validators.min(0), 
+        Validators.pattern(/^\d+$/) 
+      ]
+    ],
     status: ['AVAILABLE' as ProductStatus, Validators.required],
   });
  
   ngOnInit(): void {
   const productId = this.route.snapshot.paramMap.get('productId');
+
+  this.formulario.controls.stock.valueChanges.subscribe((valor) => {
+      if (valor === null || (valor as unknown) === '') {
+        return;
+      }
+
+      const stockNum = Number(valor);
+      if (stockNum === 0) {
+        this.formulario.controls.status.setValue('UNAVAILABLE');
+      } else if (stockNum > 0) {
+        this.formulario.controls.status.setValue('AVAILABLE');
+      }
+    });
 
   if (productId) {
     this.id.set(Number(productId));
@@ -52,8 +73,11 @@ export class ProductForm implements OnInit {
           price: p.price,
           description: p.description,
           imageURL: p.imageURL ?? '',
+          stock: p.stock,
           status: p.status,
-        });
+        },
+            { emitEvent: false },
+      );
       },
       error: (err) => {
         console.log(err);
@@ -73,6 +97,17 @@ export class ProductForm implements OnInit {
     if (e['min']) return 'El precio debe ser mayor a 0';
     if (e['max']) return 'El precio no puede superar 999999,99';
     if (e['pattern']) return 'Usá hasta 2 decimales';
+    if (e['min']) {
+      return campo === 'stock'
+        ? 'El stock no puede ser negativo'
+        : 'El precio debe ser mayor a 0';
+    }
+    if (e['max']) return 'El precio no puede superar 999999,99';
+    if (e['pattern']) {
+      return campo === 'stock'
+        ? 'El stock debe ser un número entero'
+        : 'Usá hasta 2 decimales';
+    }
     return 'Valor inválido';
   }
  
@@ -90,6 +125,7 @@ export class ProductForm implements OnInit {
       price: Number(v.price),
       description: v.description!.trim(),
       imageURL: v.imageURL?.trim() || null,
+      stock: Number(v.stock),
       status: v.status!,
       storeId: this.storeId,
     };

@@ -1,0 +1,67 @@
+/* 1. Ancho cómodo para la grilla de 2 columnas del formulario */
+.contenedor {
+  max-width: 720px;
+}
+
+/* 2. Contador de caracteres debajo de la descripción (0/200) */
+.grupo-form > p:not(.error-texto) {
+  margin-top: 0.2rem;
+  text-align: right;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--texto-secundario);
+}
+
+/* 3. Error general del formulario ocupando todo el ancho */
+.formulario > .error-texto {
+  grid-column: 1 / -1;
+}
+
+/* 4. Barra de botones inferior (Cancelar + Guardar) */
+.formulario .acciones {
+  grid-column: 1 / -1;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.acciones .btn-submit {
+  margin-top: 0;
+}
+
+/* Botón secundario "Cancelar" con forma de píldora */
+.btn-cancelar {
+  display: inline-block;
+  padding: 0.72rem 1.4rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  color: var(--tinta-oscura);
+  background-color: var(--bg-crema);
+  border: var(--borde-fino);
+  border-radius: var(--radio-pill);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: #F4DFCE;
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px var(--tinta-oscura);
+}
+
+.btn-cancelar:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* 5. Adaptación móvil */
+@media (max-width: 560px) {
+  .acciones .btn-cancelar,
+  .acciones .btn-submit {
+    width: 100%;
+  }
+}

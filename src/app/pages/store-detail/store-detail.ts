@@ -44,9 +44,8 @@ export class StoreDetail implements OnInit {
       error: (e) => console.log(e)
     })
 
-    if (!this.esComerciante) {
-      this.cargarProductos();
-    }
+    this.cargarProductos();
+    
   }
 
   cargarProductos(): void {
@@ -89,9 +88,14 @@ agregarAlCarrito(product: Product): void {
       return;
     }
 
-    if (this.cantidadEnCarrito(product.id) >= this.cartService.MAX_UNIDADES) {
+    if (product.stock <= 0) {
+      this.mensajeCarrito.set(`No hay stock disponible de ${product.name}.`);
+      return;
+    }
+
+    if (this.cantidadEnCarrito(product.id) >= product.stock) {
       this.mensajeCarrito.set(
-        `Alcanzaste el máximo de ${this.cartService.MAX_UNIDADES} unidades iguales para ${product.name}.`
+        `Alcanzaste el stock máximo disponible (${product.stock}) para ${product.name}.`
       );
       return;
     }

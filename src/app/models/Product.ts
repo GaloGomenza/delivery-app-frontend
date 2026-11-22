@@ -6,6 +6,7 @@ export interface Product {
   price: number;
   description: string;
   imageURL: string | null;
+  stock: number;
   status: ProductStatus;
   storeId: number;
   storeName: string;

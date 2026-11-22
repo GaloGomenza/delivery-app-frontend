@@ -43,13 +43,17 @@
             <button
               type="button"
               (click)="incrementar(item.product.id)"
-              [disabled]="item.quantity >= cartService.MAX_UNIDADES">
+              [disabled]="item.quantity >= item.product.stock">
               +
             </button>
           </div>
 
-          @if (item.quantity >= cartService.MAX_UNIDADES) {
-            <span class="aviso-maximo">Máximo {{ cartService.MAX_UNIDADES }} iguales</span>
+          @if (item.product.stock <= 0) {
+            <span class="aviso-maximo">Sin stock disponible</span>
+          } @else if (item.quantity > item.product.stock) {
+            <span class="aviso-maximo">Stock disponible: {{ item.product.stock }}</span>
+          } @else if (item.quantity >= item.product.stock) {
+            <span class="aviso-maximo">Stock máximo ({{ item.product.stock }})</span>
           }
         </div>
 
