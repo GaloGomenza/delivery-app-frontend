@@ -134,7 +134,7 @@ export class StoreForm implements OnInit, AfterViewInit, OnDestroy {
             .addTo(this.map)
             .bindPopup('Tu comercio esta aqui. Mueve el marcador para posicionar exactamente tu comercio.')
             .openPopup();
-          //Agrego evento al marker  
+ 
           this.userMarker.on('dragend', (event) => {
             const marker = event.target;
             const position = marker.getLatLng();
@@ -142,9 +142,6 @@ export class StoreForm implements OnInit, AfterViewInit, OnDestroy {
             this.map.setView(position, 19);
             this.latitude = position.lat;
             this.longitude = position.lng;
-            //this.formStore.controls['latitude'].setValue(position.lat);
-            //this.formStore.controls['longitude'].setValue(position.lng);
-            console.log(`Marcador movido a: ${position.lat},${position.lng}`);
           })
       }
 
