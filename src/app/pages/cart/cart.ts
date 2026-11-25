@@ -1,4 +1,4 @@
-import { Component, inject, HostListener } from '@angular/core';
+import { Component, inject, HostListener, OnInit } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -17,7 +17,7 @@ import { CreateOrderRequest } from '../../models/CreateOrderRequest';
   templateUrl: './cart.html',
   styleUrl: './cart.css',
 })
-export class Cart {
+export class Cart implements OnInit{
 
   cartService = inject(CartService);
 
@@ -27,9 +27,29 @@ export class Cart {
 
   direccion = '';
   paymentType: PaymentType | '' = '';
+  private customerLatitude: number | null = null;
+  private customerLongitude: number | null = null;
+
 
   enviando = false;
   error = '';
+
+  ngOnInit(): void {
+    if (navigator.geolocation) {
+
+    navigator.geolocation.getCurrentPosition((position) => {
+
+      this.customerLatitude = position.coords.latitude;
+      this.customerLongitude = position.coords.longitude;
+      }, () => {
+        alert('No se pudo obtener la geolocalizacion.\nPara poder realizar un pedido activa la geolocalizacion en tu navegador o dispostivo');
+      }
+
+      )
+    } else {
+      alert('Geolocalizacion no soportada por el navegador\nPara poder realizar un pedido activa la geolocalizacion en tu navegador o dispostivo');
+    }
+  }
 
   incrementar(productId: number): void {
     const item = this.cartService.cart()?.items.find(
@@ -79,8 +99,14 @@ export class Cart {
       return;
     }
 
+    if(this.customerLatitude == null || this.customerLongitude == null){
+      return;
+    }
+
     const request: CreateOrderRequest = {
       customerAddress: this.direccion.trim() || undefined,
+      customerLatitude: this.customerLatitude,
+      customerLongitude: this.customerLongitude,
       paymentType: this.paymentType,
       items: currentCart.items.map((item) => ({
         productId: item.product.id,

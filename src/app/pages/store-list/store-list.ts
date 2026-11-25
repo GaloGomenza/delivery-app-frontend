@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../auth/service/auth-service';
 import { PageQuery, StoreSortBy } from '../../models/Pagination';
 import { Store } from '../../models/Store';
-import { Ubicacion_provisoria } from '../../models/Ubicacion-provisoria';
+import { Ubicacion_provisoria } from '../../models/Ubicacion_Provisoria';
 import { StoreService } from '../../services/store-service';
 
 @Component({

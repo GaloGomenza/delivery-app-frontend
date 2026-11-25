@@ -5,9 +5,9 @@ import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { PageQuery } from '../../../models/Pagination';
 import { Product } from '../../../models/Product';
-import { Ubicacion_provisoria } from '../../../models/Ubicacion-provisoria';
 import { ProductService } from '../../../services/product-service';
 import { CurrencyPipe } from '@angular/common';
+import { Ubicacion } from '../../../services/store-service';
 
 type ProductSortBy = 'id' | 'name' | 'price';
 
@@ -26,6 +26,7 @@ export class ConsumerProductList implements OnInit {
   size = signal(12);
   sortBy = signal<ProductSortBy>('name');
   direction = signal<'asc' | 'desc'>('asc');
+  ubicacion: Ubicacion | null = null;
 
   search = signal('');
   totalPages = signal(0);
@@ -37,7 +38,31 @@ export class ConsumerProductList implements OnInit {
   private timer?: ReturnType<typeof setTimeout>;
 
   ngOnInit(): void {
-    this.cargarProductos();
+
+    if (navigator.geolocation) {
+
+      navigator.geolocation.getCurrentPosition((position) => {
+
+        const coords: [number, number] = [position.coords.latitude, position.coords.longitude];
+        this.ubicacion = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          distance: 10000
+        };
+
+        this.cargarProductos();
+
+      }, () => {
+        alert('No se pudo obtener la geolocalizacion.\nPara poder visualizar productos activa la geolocalizacion en tu navegador o dispostivo');
+      }
+
+      )
+    } else {
+      alert('Geolocalizacion no soportada por el navegador\nPara poder visualizar productos activa la geolocalizacion en tu navegador o dispostivo');
+    }
+
+
+
   }
 
   cargarProductos(): void {
@@ -50,25 +75,26 @@ export class ConsumerProductList implements OnInit {
       sortBy: this.sortBy(),
       direction: this.direction(),
     };
-
-    this.productService
-      .getProducts(query, {
-        name: this.search(),
-        status: 'AVAILABLE',
-        location: Ubicacion_provisoria,
-      })
-      .pipe(finalize(() => this.loading.set(false)))
-      .subscribe({
-        next: (res) => {
-          this.products.set(res.content);
-          this.totalPages.set(res.totalPages);
-          this.totalElements.set(res.totalElements);
-        },
-        error: (err) => {
-          console.error(err);
-          this.error.set('No se pudieron cargar los productos.');
-        },
-      });
+    if (this.ubicacion) {
+      this.productService
+        .getProducts(query, {
+          name: this.search(),
+          status: 'AVAILABLE',
+          location: this.ubicacion,
+        })
+        .pipe(finalize(() => this.loading.set(false)))
+        .subscribe({
+          next: (res) => {
+            this.products.set(res.content);
+            this.totalPages.set(res.totalPages);
+            this.totalElements.set(res.totalElements);
+          },
+          error: (err) => {
+            console.error(err);
+            this.error.set('No se pudieron cargar los productos.');
+          },
+        });
+    }
   }
 
   buscar(value: string): void {
