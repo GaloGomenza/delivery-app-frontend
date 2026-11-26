@@ -1,3 +1,4 @@
+import { UpdateOrderLocationRequest } from './../../models/UpdateOrderLocationRequest';
 import { AfterViewInit, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrderService } from '../../services/order-service';
@@ -54,14 +55,30 @@ export class OrderStatusPage implements OnInit, AfterViewInit, OnDestroy {
             this.orderService.error.set('El ID del pedido no es válido.');
             return;
         }
+        if (this.authService.loggedUser()?.role === 'ROLE_RIDER') {
+            if (navigator.geolocation) {
 
+                navigator.geolocation.getCurrentPosition((position) => {
+                    //solamente verificando que estee activa la geolocalizacion
+  
+                }, () => {
+                    alert('No se pudo obtener la geolocalizacion.\nPara poder realizar envios activa la geolocalizacion en tu navegador o dispostivo');
+                }
+
+                )
+            } else {
+                alert('Geolocalizacion no soportada por el navegador\nPara poder realizar envios activa la geolocalizacion en tu navegador o dispostivo');
+            }
+        }
         this.orderService.getOrderById(this.orderId);
         this.updateMap();
         this.getProductsInOrder();
+        this.updateOrderCoords();
 
         this.refreshId = window.setInterval(() => {
             this.orderService.getOrderById(this.orderId);
             this.updateMap();
+            this.updateOrderCoords();
             if (this.productsInOrder().length == 0) {
                 this.getProductsInOrder();
             }
@@ -131,11 +148,18 @@ export class OrderStatusPage implements OnInit, AfterViewInit, OnDestroy {
             iconSize: [25, 41]
         })
 
-        if (this.orderLatitude != null && this.orderLongitude != null && this.orderService.order()?.status == 'DISPATCHED' ) {
+        if (this.orderLatitude != null && this.orderLongitude != null && this.orderService.order()?.status == 'DISPATCHED') {
             const orderCoords: [number, number] = [this.orderLatitude, this.orderLongitude];
 
             if (this.orderMarker) {
-                this.orderMarker = new Marker(orderCoords);
+                this.orderMarker.remove();
+                this.orderMarker = new Marker(orderCoords,
+                    {
+                    icon: orderIcon,
+                    draggable: false
+                }
+
+                ).addTo(this.map);
             } else {
                 this.orderMarker = new Marker(orderCoords, {
                     icon: orderIcon,
@@ -181,9 +205,32 @@ export class OrderStatusPage implements OnInit, AfterViewInit, OnDestroy {
 
         //this.map.setView(coords, 19);
 
-
     }
 
+    private updateOrderCoords() {
+
+        if (this.authService.loggedUser()?.role === 'ROLE_RIDER' && this.orderService.order()?.status == 'DISPATCHED' ) {
+            if (navigator.geolocation) {
+
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const updateOrderLocationRequest: UpdateOrderLocationRequest = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    }
+                    console.log('latitude:' + position.coords.latitude, 'longitude:' + position.coords.longitude )
+                    this.orderService.updateOrderLocation(this.orderId, updateOrderLocationRequest);
+
+                }, () => {
+                    alert('No se pudo obtener la geolocalizacion.\nPara poder realizar envios activa la geolocalizacion en tu navegador o dispostivo');
+                }
+
+                )
+            } else {
+                alert('Geolocalizacion no soportada por el navegador\nPara poder realizar envios activa la geolocalizacion en tu navegador o dispostivo');
+            }
+        }
+
+    }
 
     ngOnDestroy(): void {
         if (this.refreshId != null)

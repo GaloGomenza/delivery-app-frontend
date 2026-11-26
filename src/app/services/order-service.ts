@@ -7,6 +7,7 @@ import { PageQuery, PaginationResult } from '../models/Pagination';
 import { Observable } from 'rxjs';
 import { Order } from '../models/Order';
 import { CreateOrderRequest } from '../models/CreateOrderRequest';
+import { UpdateOrderLocationRequest } from '../models/UpdateOrderLocationRequest';
 
 export interface OrderFilter {
   status?: string;
@@ -88,6 +89,18 @@ export class OrderService {
                 this.error.set('Error asignando pedidos');
             }
 
+        });
+    }
+
+    updateOrderLocation(orderId: number, body: UpdateOrderLocationRequest) {
+        this.http.patch<OrderResponse>(this.url + '/' + orderId + '/location', body).subscribe({
+
+            next: (data) => {
+                console.log('Order location updated');
+            },
+            error: () => {
+                this.error.set('Error asignando pedidos');
+            }
         });
     }
 
