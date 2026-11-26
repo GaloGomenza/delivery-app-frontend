@@ -73,7 +73,7 @@ export class StoreForm implements OnInit, AfterViewInit, OnDestroy {
     if (navigator.geolocation) {
 
       const myIcon = new Icon({
-        iconUrl: '/assets/maps/marker-icon.png',
+        iconUrl: '/assets/maps/store-marker-icon.png',
         iconSize: [25, 41]
       })
 
@@ -119,7 +119,7 @@ export class StoreForm implements OnInit, AfterViewInit, OnDestroy {
   getStoreLocation(latitude: number, longitude: number) {
 
       const myIcon = new Icon({
-        iconUrl: '/assets/maps/marker-icon.png',
+        iconUrl: '/assets/maps/store-marker-icon.png',
         iconSize: [25, 41]
       })
       if (this.userMarker) {
