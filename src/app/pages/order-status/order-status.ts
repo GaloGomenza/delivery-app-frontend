@@ -6,6 +6,7 @@ import { AuthService } from '../../auth/service/auth-service';
 import { ProductService } from '../../services/product-service';
 import { Product } from '../../models/Product';
 import { Icon, LeafletMap, Marker, TileLayer } from 'leaflet';
+import { StoreService } from '../../services/store-service';
 
 @Component({
     selector: 'app-order-status',
@@ -18,6 +19,7 @@ export class OrderStatusPage implements OnInit, AfterViewInit, OnDestroy {
     route = inject(ActivatedRoute);
     orderService = inject(OrderService);
     authService = inject(AuthService);
+    storeService = inject(StoreService);
     productService = inject(ProductService);
 
     orderId: number = 0;
@@ -28,8 +30,12 @@ export class OrderStatusPage implements OnInit, AfterViewInit, OnDestroy {
     private map!: any;
     private orderMarker: Marker | undefined;
     private customerMarker: Marker | undefined;
+    private storeMarker: Marker | undefined;
+
+    private areCustomerCoordsSet = false;
     private customerLatitude: number | null = null;
     private customerLongitude: number | null = null;
+    private areStoreCoordsSet = false;
     private storeLatitude: number | null = null;
     private storeLongitude: number | null = null;
     private orderLatitude: number | null = null;
@@ -82,14 +88,23 @@ export class OrderStatusPage implements OnInit, AfterViewInit, OnDestroy {
         if (order != null && order.latitude != undefined && order.longitude != undefined) {
             this.orderLatitude = order.latitude;
             this.orderLongitude = order.longitude;
+            if (this.areStoreCoordsSet == false) {
+                this.storeService.getStoreById(order.storeId).subscribe({
+                    next: (store) => {
+                        this.storeLatitude = store.latitude;
+                        this.storeLongitude = store.longitude;
+                        this.areStoreCoordsSet = true;
+                    },
+                    error: (e) => console.log(e)
+                })
+            }
         }
-        if (order != null && order?.customerLatitude != undefined && order.customerLongitude != undefined){
+        if (this.areCustomerCoordsSet == false && order != null && order?.customerLatitude != undefined && order.customerLongitude != undefined) {
             this.customerLatitude = order.customerLatitude;
             this.customerLongitude = order.customerLongitude;
+            this.areCustomerCoordsSet = true;
         }
-
         this.setMarkers();
-
     }
 
 
@@ -106,9 +121,17 @@ export class OrderStatusPage implements OnInit, AfterViewInit, OnDestroy {
         const orderIcon = new Icon({
             iconUrl: '/assets/maps/order-marker-icon.png',
             iconSize: [36, 41]
+        });
+        const customerIcon = new Icon({
+            iconUrl: '/assets/maps/customer-marker-icon.png',
+            iconSize: [25, 41]
+        })
+        const storeIcon = new Icon({
+            iconUrl: '/assets/maps/store-marker-icon.png',
+            iconSize: [25, 41]
         })
 
-        if (this.orderLatitude != null && this.orderLongitude != null) {
+        if (this.orderLatitude != null && this.orderLongitude != null && this.orderService.order()?.status == 'DISPATCHED' ) {
             const orderCoords: [number, number] = [this.orderLatitude, this.orderLongitude];
 
             if (this.orderMarker) {
@@ -120,31 +143,40 @@ export class OrderStatusPage implements OnInit, AfterViewInit, OnDestroy {
                 })
                     .addTo(this.map)
 
-
-
                 this.map.setView(orderCoords, 19);
             }
 
-            const customerIcon = new Icon({
-                iconUrl: '/assets/maps/customer-marker-icon.png',
-                iconSize: [25, 41]
-            })
+        }
+        if (this.customerLatitude != null && this.customerLongitude != null) {
+            const customerCoords: [number, number] = [this.customerLatitude, this.customerLongitude];
 
-            if (this.customerLatitude != null && this.customerLongitude != null) {
-                const customerCoords: [number, number] = [this.customerLatitude, this.customerLongitude];
+            if (this.customerMarker) {
+                this.customerMarker = new Marker(customerCoords);
+            } else {
+                this.customerMarker = new Marker(customerCoords, {
+                    icon: customerIcon,
+                    draggable: false
+                })
+                    .addTo(this.map)
 
-                if (this.customerMarker) {
-                    this.customerMarker = new Marker(customerCoords);
-                } else {
-                    this.customerMarker = new Marker(customerCoords, {
-                        icon: customerIcon,
-                        draggable: false
-                    })
-                        .addTo(this.map)
-
-                }
             }
         }
+
+        if (this.storeLatitude != null && this.storeLongitude != null) {
+            const storeCoords: [number, number] = [this.storeLatitude, this.storeLongitude];
+
+            if (this.storeMarker) {
+                this.storeMarker = new Marker(storeCoords);
+            } else {
+                this.storeMarker = new Marker(storeCoords, {
+                    icon: storeIcon,
+                    draggable: false
+                })
+                    .addTo(this.map)
+
+            }
+        }
+
 
 
         //this.map.setView(coords, 19);
