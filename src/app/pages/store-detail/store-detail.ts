@@ -1,7 +1,7 @@
 import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { Store } from '../../models/Store';
-import { StoreService } from '../../services/store-service';
-import { Ubicacion_provisoria } from '../../models/Ubicacion-provisoria';
+import { StoreService, Ubicacion } from '../../services/store-service';
+import { Ubicacion_provisoria } from '../../models/Ubicacion_Provisoria';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product-service';
 import { AuthService } from '../../auth/service/auth-service';
@@ -37,6 +37,7 @@ export class StoreDetail implements OnInit {
   mensajeCarrito = signal<string | null>(null);
   confirmandoBorrado = signal(false);
   eliminando = signal(false);
+  ubicacion: Ubicacion | undefined = undefined;
 
   ngOnInit(): void {
     this.service.getStoreById(this.storeId).subscribe({
@@ -44,8 +45,33 @@ export class StoreDetail implements OnInit {
       error: (e) => console.log(e)
     })
 
-    this.cargarProductos();
-    
+    if (this.esConsumidor) {
+      if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition((position) => {
+
+          const coords: [number, number] = [position.coords.latitude, position.coords.longitude];
+          this.ubicacion = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            distance: 10000
+          };
+
+          this.cargarProductos();
+
+        }, () => {
+          alert('No se pudo obtener la geolocalizacion.\nPara poder visualizar productos activa la geolocalizacion en tu navegador o dispostivo');
+        }
+
+        )
+      } else {
+        alert('Geolocalizacion no soportada por el navegador\nPara poder visualizar productos activa la geolocalizacion en tu navegador o dispostivo');
+      }
+
+    } else {
+
+      this.cargarProductos();
+    }
   }
 
   cargarProductos(): void {
@@ -63,7 +89,7 @@ export class StoreDetail implements OnInit {
         {
           storeId: this.storeId,
           status: this.esConsumidor ? 'AVAILABLE' : '',
-          location: this.esConsumidor ? Ubicacion_provisoria : undefined,
+          location: this.esConsumidor ? this.ubicacion : undefined,
         }
       )
       .subscribe({
@@ -81,7 +107,7 @@ export class StoreDetail implements OnInit {
       });
   }
 
-agregarAlCarrito(product: Product): void {
+  agregarAlCarrito(product: Product): void {
     const currentStore = this.store();
 
     if (!currentStore) {
